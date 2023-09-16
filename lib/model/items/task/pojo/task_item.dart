@@ -1,4 +1,3 @@
-
 import 'package:kardone/model/items/category/pojo/category_item.dart';
 import 'package:kardone/model/items/priority/pojo/priority_item.dart';
 
@@ -7,16 +6,19 @@ class TaskItem {
   int _taskTimestamp;
   CategoryItem? _categoryItem;
   PriorityItem? _priorityItem;
+  bool _isDone;
 
   TaskItem(
       {required String title,
       required String description,
       CategoryItem? categoryItem,
       PriorityItem? priorityItem,
+      bool isDone = false,
       int taskTimestamp = 0})
       : _title = title,
         _description = description,
         _categoryItem = categoryItem,
+        _isDone = isDone,
         _priorityItem = priorityItem,
         _taskTimestamp = taskTimestamp;
 
@@ -24,6 +26,7 @@ class TaskItem {
       : _title = "",
         _description = "",
         _taskTimestamp = 0,
+        _isDone = false,
         _priorityItem = null,
         _categoryItem = null;
 
@@ -32,12 +35,14 @@ class TaskItem {
       String? description,
       CategoryItem? categoryItem,
       PriorityItem? priorityItem,
+      bool? isDone,
       int? taskTimestamp}) {
     return TaskItem(
         title: title ?? _title,
         description: description ?? _description,
         categoryItem: categoryItem ?? _categoryItem,
         priorityItem: priorityItem ?? _priorityItem,
+        isDone: isDone ?? _isDone,
         taskTimestamp: taskTimestamp ?? _taskTimestamp);
   }
 
@@ -67,6 +72,12 @@ class TaskItem {
 
   set priorityItem(PriorityItem? value) {
     _priorityItem = value;
+  }
+
+  bool get isDone => _isDone;
+
+  set isDone(bool value) {
+    _isDone = value;
   }
 
   int get taskTimestamp => _taskTimestamp;
