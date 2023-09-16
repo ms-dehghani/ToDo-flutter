@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/widgets/base/widget_view_template.dart';
+import 'package:kardone/ui/widgets/base/widget_view_template.dart';
 
 class TestWidget extends StatelessWidget with WidgetViewTemplate {
 
