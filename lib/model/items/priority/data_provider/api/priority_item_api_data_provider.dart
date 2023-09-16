@@ -23,7 +23,7 @@ class PriorityItemApiDataProvider extends BaseModel implements PriorityItemDataP
   }
 
   @override
-  Future<PriorityItem> getPriority(String priorityID) {
+  Future<PriorityItem?> getPriority(String priorityID) {
     // TODO: implement getPriority
     throw UnimplementedError();
   }

@@ -25,7 +25,7 @@ class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataPr
 
   @override
   Future<bool> deletePriority(String priorityID) async {
-    int result = await _database.delete(tableName, where: filedId, whereArgs: [priorityID]);
+    int result = await _database.delete(tableName, where: "$filedId = ?", whereArgs: [priorityID]);
     return result > 0;
   }
 
@@ -43,7 +43,12 @@ class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataPr
   }
 
   @override
-  Future<PriorityItem> getPriority(String priorityID) async {
-    return PriorityItem.empty();
+  Future<PriorityItem?> getPriority(String priorityID) async {
+    List<Map> list = await _database.query(tableName,
+        columns: PriorityItem.empty().toMap().keys.toList(),
+        where: "$filedId = ?",
+        whereArgs: [priorityID],
+        limit: 1);
+    return list.isEmpty ? null : PriorityItem.fromMap(list[0]);
   }
 }

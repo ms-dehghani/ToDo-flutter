@@ -1,3 +1,4 @@
+import 'category_static.dart';
 
 class CategoryItem {
   String _id;
@@ -17,6 +18,21 @@ class CategoryItem {
         _title = "",
         _description = "",
         _parentId = "";
+
+  Map<String, Object?> toMap() {
+    return {
+      filedId: _id,
+      filedTitle: _title,
+      filedDescription: _description,
+      filedParentID: _parentId,
+    };
+  }
+
+  CategoryItem.fromMap(Map data)
+      : _id = data[filedId],
+        _title = data[filedTitle],
+        _description = data[filedDescription],
+        _parentId = data[filedParentID];
 
   CategoryItem copyWith({String? id, String? title, String? parentId, String? description}) {
     return CategoryItem(id ?? _id, title ?? _title,

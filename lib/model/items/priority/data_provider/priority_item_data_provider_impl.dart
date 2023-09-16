@@ -2,7 +2,7 @@ import '../pojo/priority_item.dart';
 
 abstract class PriorityItemDataProviderImpl{
 
-  Future<PriorityItem> getPriority(String priorityID);
+  Future<PriorityItem?> getPriority(String priorityID);
 
   Future<List<PriorityItem>> getPriorities();
 

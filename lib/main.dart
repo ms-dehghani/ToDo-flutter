@@ -12,17 +12,16 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
 
-  void test() async{
+  void test() async {
     var db = await openDatabase('my_db.db');
     var pDB = PriorityItemDBDataProvider(db);
-    pDB.createOrUpdatePriority(PriorityItem("_id", "_title", "_color"));
-    pDB.createOrUpdatePriority(PriorityItem("_id2", "_title2", "_color3"));
-    pDB.createOrUpdatePriority(PriorityItem("_id3", "_title3", "_color3"));
+    await pDB.createOrUpdatePriority(PriorityItem("_id", "_title", "_color"));
+    await pDB.createOrUpdatePriority(PriorityItem("_id2", "_title2", "_color3"));
+    await pDB.createOrUpdatePriority(PriorityItem("_id3", "_title3", "_color3"));
 
-    pDB.getPriority("_id");
-    pDB.getPriorities();
-    pDB.deletePriority("_id2");
-
+    await pDB.getPriority("_id");
+    await pDB.getPriorities();
+    await pDB.deletePriority("_id2");
   }
 
   @override
