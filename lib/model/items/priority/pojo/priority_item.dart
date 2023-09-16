@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kardone/utils/color_extentions.dart';
+
+import 'priority_static.dart';
 
 class PriorityItem {
   String _id;
@@ -7,7 +10,7 @@ class PriorityItem {
 
   String _description;
 
-  Color _color;
+  String _color;
 
   PriorityItem(this._id, this._title, this._color, {String description = ""})
       : _description = description;
@@ -16,9 +19,24 @@ class PriorityItem {
       : _id = "",
         _title = "",
         _description = "",
-        _color = Colors.transparent;
+        _color = "#00000000";
 
-  PriorityItem copyWith({String? id, String? title, Color? color, String? description}) {
+  Map<String, Object?> toMap() {
+    return {
+      filedId: _id,
+      filedTitle: _title,
+      filedDescription: _description,
+      filedColor: _color,
+    };
+  }
+
+  PriorityItem.fromMap(Map data)
+      : _id = data[filedId],
+        _title = data[filedTitle],
+        _description = data[filedDescription],
+        _color = data[filedColor];
+
+  PriorityItem copyWith({String? id, String? title, String? color, String? description}) {
     return PriorityItem(id ?? _id, title ?? _title, color ?? _color,
         description: description ?? _description);
   }
@@ -45,9 +63,9 @@ class PriorityItem {
     _description = value;
   }
 
-  Color get color => _color;
+  Color get color => HexColor.fromHex(_color);
 
   set color(Color value) {
-    _color = value;
+    _color = value.toHex();
   }
 }

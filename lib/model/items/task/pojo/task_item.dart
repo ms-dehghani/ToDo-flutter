@@ -2,20 +2,25 @@ import 'package:kardone/model/items/category/pojo/category_item.dart';
 import 'package:kardone/model/items/priority/pojo/priority_item.dart';
 
 class TaskItem {
-  String _title, _description;
+
+  String _taskId;
+  String _title;
+  String _description;
   int _taskTimestamp;
   CategoryItem? _categoryItem;
   PriorityItem? _priorityItem;
   bool _isDone;
 
   TaskItem(
-      {required String title,
+      {required String id,
+      required String title,
       required String description,
       CategoryItem? categoryItem,
       PriorityItem? priorityItem,
       bool isDone = false,
       int taskTimestamp = 0})
       : _title = title,
+        _taskId = id,
         _description = description,
         _categoryItem = categoryItem,
         _isDone = isDone,
@@ -23,7 +28,8 @@ class TaskItem {
         _taskTimestamp = taskTimestamp;
 
   TaskItem.empty()
-      : _title = "",
+      : _taskId = "",
+        _title = "",
         _description = "",
         _taskTimestamp = 0,
         _isDone = false,
@@ -31,13 +37,15 @@ class TaskItem {
         _categoryItem = null;
 
   TaskItem copyWith(
-      {String? title,
+      {String? taskId,
+      String? title,
       String? description,
       CategoryItem? categoryItem,
       PriorityItem? priorityItem,
       bool? isDone,
       int? taskTimestamp}) {
     return TaskItem(
+        id: taskId ?? _taskId,
         title: title ?? _title,
         description: description ?? _description,
         categoryItem: categoryItem ?? _categoryItem,
@@ -48,6 +56,12 @@ class TaskItem {
 
   TaskItem clone() {
     return copyWith();
+  }
+
+  String get id => _taskId;
+
+  set id(String value) {
+    _taskId = value;
   }
 
   String get title => _title;
