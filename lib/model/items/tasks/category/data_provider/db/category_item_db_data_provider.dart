@@ -1,7 +1,7 @@
 import 'package:kardone/arch/base_model.dart';
-import 'package:kardone/model/items/category/pojo/category_item.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../../pojo/category_item.dart';
 import '../../pojo/category_static.dart';
 import '../category_item_data_provider_impl.dart';
 

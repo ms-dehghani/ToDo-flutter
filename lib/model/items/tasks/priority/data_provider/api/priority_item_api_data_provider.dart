@@ -1,5 +1,5 @@
 import 'package:kardone/arch/base_model.dart';
-import 'package:kardone/model/items/priority/pojo/priority_item.dart';
+import 'package:kardone/model/items/tasks/priority/pojo/priority_item.dart';
 
 import '../priority_item_data_provider_impl.dart';
 

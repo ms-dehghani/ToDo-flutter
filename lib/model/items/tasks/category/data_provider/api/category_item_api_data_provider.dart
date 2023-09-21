@@ -1,6 +1,6 @@
 import 'package:kardone/arch/base_model.dart';
-import 'package:kardone/model/items/category/pojo/category_item.dart';
 
+import '../../pojo/category_item.dart';
 import '../category_item_data_provider_impl.dart';
 
 class CategoryItemApiDataProvider extends BaseModel implements CategoryItemDataProviderImpl {

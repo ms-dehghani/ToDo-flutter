@@ -1,8 +1,8 @@
-import 'package:kardone/model/items/category/pojo/category_item.dart';
-import 'package:kardone/model/items/priority/pojo/priority_item.dart';
+import '../../category/pojo/category_item.dart';
+import '../../priority/pojo/priority_item.dart';
+import 'task_static.dart';
 
 class TaskItem {
-
   String _taskId;
   String _title;
   String _description;
@@ -36,6 +36,23 @@ class TaskItem {
         _priorityItem = null,
         _categoryItem = null;
 
+  Map<String, Object?> toMap() {
+    return {
+      filedId: _taskId,
+      filedTitle: _title,
+      filedDescription: _description,
+      filedTimestamp: _taskTimestamp,
+      filedDone: _isDone ? 1 : 0,
+    };
+  }
+
+  TaskItem.fromMap(Map data)
+      : _taskId = data[filedId],
+        _title = data[filedTitle],
+        _description = data[filedDescription],
+        _taskTimestamp = data[filedTimestamp],
+        _isDone = data[filedDone] == 1 ? true : false;
+
   TaskItem copyWith(
       {String? taskId,
       String? title,
@@ -58,9 +75,9 @@ class TaskItem {
     return copyWith();
   }
 
-  String get id => _taskId;
+  String get ID => _taskId;
 
-  set id(String value) {
+  set ID(String value) {
     _taskId = value;
   }
 

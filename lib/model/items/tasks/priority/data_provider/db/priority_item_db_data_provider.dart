@@ -1,12 +1,12 @@
 import 'package:kardone/arch/base_model.dart';
-import 'package:kardone/model/items/priority/pojo/priority_item.dart';
+import 'package:kardone/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../pojo/priority_static.dart';
 import '../priority_item_data_provider_impl.dart';
 
 class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataProviderImpl {
-  Database _database;
+  final Database _database;
 
   final String tableName = "Priority";
 

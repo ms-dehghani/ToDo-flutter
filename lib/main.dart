@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/model/items/priority/data_provider/db/priority_item_db_data_provider.dart';
-import 'package:kardone/model/items/priority/pojo/priority_item.dart';
+import 'package:kardone/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
+import 'package:kardone/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() {
