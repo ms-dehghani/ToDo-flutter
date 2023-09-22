@@ -98,4 +98,17 @@ void main() {
 
     expect(retrieveItem, isNull);
   });
+
+  test('Clear', () async {
+    await dataProvider.createOrUpdatePriority(getFakePriorityItem());
+    await dataProvider.createOrUpdatePriority(getFakePriorityItem());
+    await dataProvider.createOrUpdatePriority(getFakePriorityItem());
+    await dataProvider.createOrUpdatePriority(getFakePriorityItem());
+    await dataProvider.createOrUpdatePriority(getFakePriorityItem());
+    await dataProvider.clear();
+    var retrieveItem = await dataProvider.getPriorities();
+
+    expect(retrieveItem, isEmpty);
+  });
+
 }

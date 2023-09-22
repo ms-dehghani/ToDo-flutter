@@ -1,4 +1,3 @@
-
 import '../pojo/task_item.dart';
 
 abstract class TaskItemDataProviderImpl {
@@ -8,6 +7,8 @@ abstract class TaskItemDataProviderImpl {
 
   Future<List<TaskItem>> getTaskListFromData(int timestamp);
 
+  Future<List<TaskItem>> getAllTasks();
+
   Future<Map<int, bool>> isAnyTaskExistInRange(int fromTimestamp, int endTimestamp);
 
   Future<bool> isAnyTaskExistInDate(int date);
@@ -15,5 +16,4 @@ abstract class TaskItemDataProviderImpl {
   Future<bool> deleteTask(String taskID);
 
   Future<void> clear();
-
 }

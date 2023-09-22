@@ -98,4 +98,17 @@ void main() {
 
     expect(retrieveItem, isNull);
   });
+
+  test('Clear', () async {
+    await dataProvider.createOrUpdateCategory(getFakeCategoryItem());
+    await dataProvider.createOrUpdateCategory(getFakeCategoryItem());
+    await dataProvider.createOrUpdateCategory(getFakeCategoryItem());
+    await dataProvider.createOrUpdateCategory(getFakeCategoryItem());
+    await dataProvider.createOrUpdateCategory(getFakeCategoryItem());
+    await dataProvider.clear();
+    var retrieveItem = await dataProvider.getCategories();
+
+    expect(retrieveItem, isEmpty);
+  });
+
 }

@@ -10,7 +10,14 @@ class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataPr
 
   final String tableName = "Priority";
 
-  PriorityItemDBDataProvider(this._database) {
+  static PriorityItemDBDataProvider? _singleton;
+
+  factory PriorityItemDBDataProvider(Database database) {
+    _singleton ??= PriorityItemDBDataProvider._internal(database);
+    return _singleton!;
+  }
+
+  PriorityItemDBDataProvider._internal(this._database) {
     _database.execute("create table if not exists $tableName ($filedId TEXT PRIMARY KEY,"
         "$filedTitle TEXT, $filedDescription TEXT, $filedColor TEXT)");
   }

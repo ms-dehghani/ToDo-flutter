@@ -1,4 +1,3 @@
-
 import '../pojo/category_item.dart';
 
 abstract class CategoryItemDataProviderImpl {
@@ -11,5 +10,4 @@ abstract class CategoryItemDataProviderImpl {
   Future<bool> deleteCategory(String categoryID);
 
   Future<void> clear();
-
 }

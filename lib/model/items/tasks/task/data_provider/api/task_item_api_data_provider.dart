@@ -45,4 +45,10 @@ class TaskItemApiDataProvider extends BaseModel implements TaskItemDataProviderI
     // TODO: implement clear
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<TaskItem>> getAllTasks() {
+    // TODO: implement getAllTasks
+    throw UnimplementedError();
+  }
 }

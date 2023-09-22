@@ -42,6 +42,8 @@ class TaskItem {
       filedTitle: _title,
       filedDescription: _description,
       filedTimestamp: _taskTimestamp,
+      filedCategoryID: _categoryItem?.ID ?? "",
+      filedPriorityID: _priorityItem?.ID ?? "",
       filedDone: _isDone ? 1 : 0,
     };
   }

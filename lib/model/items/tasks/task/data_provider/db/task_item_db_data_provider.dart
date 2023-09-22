@@ -15,15 +15,33 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
   final CategoryItemDataProviderImpl _categoryItemDataProvider;
   final PriorityItemDataProviderImpl _priorityItemDataProvider;
 
-  TaskItemDBDataProvider(
+  static TaskItemDBDataProvider? _singleton;
+
+  factory TaskItemDBDataProvider(
+      Database database,
+      CategoryItemDataProviderImpl categoryItemDataProvider,
+      PriorityItemDataProviderImpl priorityItemDataProvider) {
+    _singleton ??= TaskItemDBDataProvider._internal(
+        database, categoryItemDataProvider, priorityItemDataProvider);
+    return _singleton!;
+  }
+
+  TaskItemDBDataProvider._internal(
       this._database, this._categoryItemDataProvider, this._priorityItemDataProvider) {
     _database.execute("create table if not exists $tableName ($filedId TEXT PRIMARY KEY,"
         "$filedTitle TEXT, $filedDescription TEXT, $filedTimestamp INTEGER ,$filedDone INTEGER,"
-        "$filedCategoryID TEXT,$filedPriorityID TEXT ))");
+        "$filedCategoryID TEXT,$filedPriorityID TEXT )");
   }
 
   @override
   Future<TaskItem> createOrUpdateTask(TaskItem taskItem) async {
+    if (taskItem.categoryItem != null) {
+      _categoryItemDataProvider.createOrUpdateCategory(taskItem.categoryItem!);
+    }
+    if (taskItem.priorityItem != null) {
+      _priorityItemDataProvider.createOrUpdatePriority(taskItem.priorityItem!);
+    }
+
     int id = await _database.insert(tableName, taskItem.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     if (taskItem.ID.isEmpty) taskItem.ID = id.toString();
@@ -53,11 +71,26 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
     List<Map> list = await _database.query(
       tableName,
       columns: TaskItem.empty().toMap().keys.toList(),
-      where: "$filedTimestamp > ? and $filedTimestamp < ?",
+      where: "$filedTimestamp >= ? and $filedTimestamp <= ?",
       whereArgs: [
-        time.copyWith(hour: 0, minute: 0, second: 1).millisecondsSinceEpoch,
-        time.copyWith(hour: 23, minute: 59, second: 59).millisecondsSinceEpoch
+        time.copyWith(hour: 0, minute: 0, second: 0, millisecond: 1).millisecondsSinceEpoch,
+        time.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
       ],
+    );
+    List<TaskItem> result = [];
+    if (list.isNotEmpty) {
+      for (var item in list) {
+        result.add(await _getItemFromMap(item));
+      }
+    }
+    return result;
+  }
+
+  @override
+  Future<List<TaskItem>> getAllTasks() async {
+    List<Map> list = await _database.query(
+      tableName,
+      columns: TaskItem.empty().toMap().keys.toList(),
     );
     List<TaskItem> result = [];
     if (list.isNotEmpty) {
@@ -76,8 +109,8 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
         columns: TaskItem.empty().toMap().keys.toList(),
         where: "$filedTimestamp > ? and $filedTimestamp < ?",
         whereArgs: [
-          time.copyWith(hour: 0, minute: 0, second: 1).millisecondsSinceEpoch,
-          time.copyWith(hour: 23, minute: 59, second: 59).millisecondsSinceEpoch
+          time.copyWith(hour: 0, minute: 0, second: 1, millisecond: 1).millisecondsSinceEpoch,
+          time.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
         ],
         limit: 1);
     return list.isNotEmpty;
@@ -93,8 +126,8 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
       columns: [filedTimestamp],
       where: "$filedTimestamp > ? and $filedTimestamp < ?",
       whereArgs: [
-        startTime.copyWith(hour: 0, minute: 0, second: 1).millisecondsSinceEpoch,
-        endTime.copyWith(hour: 23, minute: 59, second: 59).millisecondsSinceEpoch
+        startTime.copyWith(hour: 0, minute: 0, second: 1, millisecond: 1).millisecondsSinceEpoch,
+        endTime.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
       ],
     );
     Map<int, bool> result = {};

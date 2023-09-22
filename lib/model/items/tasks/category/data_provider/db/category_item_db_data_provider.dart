@@ -10,7 +10,14 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryItemDataPr
 
   final String tableName = "Category";
 
-  CategoryItemDBDataProvider(this._database) {
+  static CategoryItemDBDataProvider? _singleton;
+
+  factory CategoryItemDBDataProvider(Database database) {
+    _singleton ??= CategoryItemDBDataProvider._internal(database);
+    return _singleton!;
+  }
+
+  CategoryItemDBDataProvider._internal(this._database) {
     _database.execute("create table if not exists $tableName ($filedId TEXT PRIMARY KEY,"
         "$filedTitle TEXT, $filedDescription TEXT, $filedParentID TEXT)");
   }
