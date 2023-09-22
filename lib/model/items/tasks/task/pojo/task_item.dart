@@ -49,11 +49,11 @@ class TaskItem {
   }
 
   TaskItem.fromMap(Map data)
-      : _taskId = data[filedId],
-        _title = data[filedTitle],
-        _description = data[filedDescription],
-        _taskTimestamp = data[filedTimestamp],
-        _isDone = data[filedDone] == 1 ? true : false;
+      : _taskId = data[filedId] ?? "",
+        _title = data[filedTitle] ?? "",
+        _description = data[filedDescription] ?? "",
+        _taskTimestamp = data[filedTimestamp] ?? "",
+        _isDone = (data[filedDone] ?? 1) == 1 ? true : false;
 
   TaskItem copyWith(
       {String? taskId,

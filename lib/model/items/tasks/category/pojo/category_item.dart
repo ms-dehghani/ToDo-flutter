@@ -29,10 +29,10 @@ class CategoryItem {
   }
 
   CategoryItem.fromMap(Map data)
-      : _id = data[filedId],
-        _title = data[filedTitle],
-        _description = data[filedDescription],
-        _parentId = data[filedParentID];
+      : _id = data[filedId] ?? "",
+        _title = data[filedTitle] ?? "",
+        _description = data[filedDescription] ?? "",
+        _parentId = data[filedParentID] ?? "";
 
   CategoryItem copyWith({String? id, String? title, String? parentId, String? description}) {
     return CategoryItem(id ?? _id, title ?? _title,

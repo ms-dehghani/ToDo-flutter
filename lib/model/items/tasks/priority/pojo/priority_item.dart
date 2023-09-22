@@ -31,10 +31,10 @@ class PriorityItem {
   }
 
   PriorityItem.fromMap(Map data)
-      : _id = data[filedId],
-        _title = data[filedTitle],
-        _description = data[filedDescription],
-        _color = data[filedColor];
+      : _id = data[filedId] ?? "",
+        _title = data[filedTitle] ?? "",
+        _description = data[filedDescription] ?? "",
+        _color = data[filedColor] ?? "#00000000";
 
   PriorityItem copyWith({String? id, String? title, String? color, String? description}) {
     return PriorityItem(id ?? _id, title ?? _title, color ?? _color,
