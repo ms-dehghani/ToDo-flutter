@@ -51,4 +51,9 @@ class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataPr
         limit: 1);
     return list.isEmpty ? null : PriorityItem.fromMap(list[0]);
   }
+
+  @override
+  Future<void> clear() async {
+    await _database.delete(tableName);
+  }
 }

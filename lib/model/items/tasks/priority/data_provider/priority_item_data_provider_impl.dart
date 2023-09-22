@@ -10,4 +10,6 @@ abstract class PriorityItemDataProviderImpl{
 
   Future<bool> deletePriority(String priorityID);
 
+  Future<void> clear();
+
 }

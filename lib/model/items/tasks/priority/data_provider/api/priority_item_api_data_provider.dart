@@ -27,5 +27,9 @@ class PriorityItemApiDataProvider extends BaseModel implements PriorityItemDataP
     // TODO: implement getPriority
     throw UnimplementedError();
   }
-  
+
+  @override
+  Future<void> clear() async {
+    throw UnimplementedError();
+  }
 }

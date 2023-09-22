@@ -9,4 +9,7 @@ abstract class CategoryItemDataProviderImpl {
   Future<CategoryItem> createOrUpdateCategory(CategoryItem categoryItem);
 
   Future<bool> deleteCategory(String categoryID);
+
+  Future<void> clear();
+
 }

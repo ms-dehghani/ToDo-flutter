@@ -51,4 +51,9 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryItemDataPr
     int result = await _database.delete(tableName, where: "$filedId = ?", whereArgs: [categoryID]);
     return result > 0;
   }
+
+  @override
+  Future<void> clear() async {
+    await _database.delete(tableName);
+  }
 }

@@ -27,4 +27,9 @@ class CategoryItemApiDataProvider extends BaseModel implements CategoryItemDataP
     // TODO: implement getCategory
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> clear() async {
+    throw UnimplementedError();
+  }
 }
