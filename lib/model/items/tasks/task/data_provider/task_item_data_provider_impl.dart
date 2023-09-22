@@ -13,4 +13,7 @@ abstract class TaskItemDataProviderImpl {
   Future<bool> isAnyTaskExistInDate(int date);
 
   Future<bool> deleteTask(String taskID);
+
+  Future<void> clear();
+
 }

@@ -39,4 +39,10 @@ class TaskItemApiDataProvider extends BaseModel implements TaskItemDataProviderI
     // TODO: implement isAnyTaskExistInRange
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> clear() {
+    // TODO: implement clear
+    throw UnimplementedError();
+  }
 }

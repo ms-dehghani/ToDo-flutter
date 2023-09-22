@@ -1,9 +1,7 @@
 import 'package:kardone/arch/base_model.dart';
-import 'package:kardone/model/items/tasks/category/data_provider/db/category_item_db_data_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../../category/data_provider/category_item_data_provider_impl.dart';
-import '../../../priority/data_provider/db/priority_item_db_data_provider.dart';
 import '../../../priority/data_provider/priority_item_data_provider_impl.dart';
 import '../../pojo/task_item.dart';
 import '../../pojo/task_static.dart';
@@ -124,5 +122,10 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
 
   Future<void> _setPriorityItemToItem(TaskItem taskItem, String priorityID) async {
     taskItem.priorityItem = await _priorityItemDataProvider.getPriority(priorityID);
+  }
+
+  @override
+  Future<void> clear() async {
+    await _database.delete(tableName);
   }
 }

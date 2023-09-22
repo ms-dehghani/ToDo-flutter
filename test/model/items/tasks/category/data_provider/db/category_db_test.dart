@@ -5,6 +5,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
+import '../../../../../../fake_items.dart';
+
 void main() {
   late CategoryItemDBDataProvider dataProvider;
   late Faker faker;
@@ -20,42 +22,38 @@ void main() {
   });
 
   test('Insert Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    dataProvider.createOrUpdateCategory(item);
+    var item = getFakeCategoryItem();
+
+    await dataProvider.createOrUpdateCategory(item);
     var retrieveItem = await dataProvider.getCategory(item.ID);
 
     expect(retrieveItem, isNotNull);
-
     expect(retrieveItem!.ID, item.ID);
     expect(retrieveItem.title, item.title);
     expect(retrieveItem.description, item.description);
   });
 
   test('Multiple insert Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    var item2 = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    var item3 = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    dataProvider.createOrUpdateCategory(item);
-    dataProvider.createOrUpdateCategory(item2);
-    dataProvider.createOrUpdateCategory(item3);
+    var item = getFakeCategoryItem();
+    var item2 = item.copyWith(id: faker.lorem.sentence());
+    var item3 = item.copyWith(id: faker.lorem.sentence());
+
+    await dataProvider.createOrUpdateCategory(item);
+    await dataProvider.createOrUpdateCategory(item2);
+    await dataProvider.createOrUpdateCategory(item3);
 
     var retrieveItem = await dataProvider.getCategories();
 
     expect(retrieveItem, isNotEmpty);
-
     expect(retrieveItem.length, 3);
   });
 
   test('Update Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    dataProvider.createOrUpdateCategory(item);
+    var item = getFakeCategoryItem();
+
+    await dataProvider.createOrUpdateCategory(item);
     item.title = "new title";
-    dataProvider.createOrUpdateCategory(item);
+    await dataProvider.createOrUpdateCategory(item);
 
     var retrieveItem = await dataProvider.getCategory(item.ID);
 
@@ -66,36 +64,34 @@ void main() {
   });
 
   test('Get Correct Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    var item2 = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    var item3 = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    dataProvider.createOrUpdateCategory(item);
-    dataProvider.createOrUpdateCategory(item2);
-    dataProvider.createOrUpdateCategory(item3);
+    var item = getFakeCategoryItem();
+    var item2 = item.copyWith(id: faker.lorem.sentence());
+    var item3 = item.copyWith(id: faker.lorem.sentence());
+
+    await dataProvider.createOrUpdateCategory(item);
+    await dataProvider.createOrUpdateCategory(item2);
+    await dataProvider.createOrUpdateCategory(item3);
+
     var retrieveItem = await dataProvider.getCategory(item2.ID);
 
     expect(retrieveItem, isNotNull);
-
     expect(retrieveItem!.ID, item2.ID);
     expect(retrieveItem.title, item2.title);
     expect(retrieveItem.description, item2.description);
   });
 
   test('Get Incorrect Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
-    dataProvider.createOrUpdateCategory(item);
+    var item = getFakeCategoryItem();
+
+    await dataProvider.createOrUpdateCategory(item);
     var retrieveItem = await dataProvider.getCategory("sss");
 
     expect(retrieveItem, isNull);
   });
 
   test('Delete Item', () async {
-    var item = CategoryItem(faker.lorem.sentence(), faker.lorem.sentence(),
-        description: faker.lorem.sentence());
+    var item = getFakeCategoryItem();
+
     await dataProvider.createOrUpdateCategory(item);
     await dataProvider.deleteCategory(item.ID);
     var retrieveItem = await dataProvider.getCategory(item.ID);

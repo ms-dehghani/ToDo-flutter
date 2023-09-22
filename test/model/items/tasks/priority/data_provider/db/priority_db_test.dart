@@ -1,11 +1,10 @@
 import 'package:faker/faker.dart';
-import 'package:kardone/model/items/tasks/category/data_provider/db/category_item_db_data_provider.dart';
-import 'package:kardone/model/items/tasks/category/pojo/category_item.dart';
 import 'package:kardone/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
-import 'package:kardone/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
+
+import '../../../../../../fake_items.dart';
 
 void main() {
   late PriorityItemDBDataProvider dataProvider;
@@ -22,13 +21,12 @@ void main() {
   });
 
   test('Insert Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+
     await dataProvider.createOrUpdatePriority(item);
     var retrieveItem = await dataProvider.getPriority(item.ID);
 
     expect(retrieveItem, isNotNull);
-
     expect(retrieveItem!.ID, item.ID);
     expect(retrieveItem.title, item.title);
     expect(retrieveItem.color, item.color);
@@ -36,12 +34,10 @@ void main() {
   });
 
   test('Multiple insert Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
-    var item2 = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
-    var item3 = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+    var item2 = item.copyWith(id: faker.lorem.sentence());
+    var item3 = item.copyWith(id: faker.lorem.sentence());
+
     await dataProvider.createOrUpdatePriority(item);
     await dataProvider.createOrUpdatePriority(item2);
     await dataProvider.createOrUpdatePriority(item3);
@@ -49,17 +45,15 @@ void main() {
     var retrieveItem = await dataProvider.getPriorities();
 
     expect(retrieveItem, isNotEmpty);
-
     expect(retrieveItem.length, 3);
   });
 
   test('Update Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+
     await dataProvider.createOrUpdatePriority(item);
     item.title = "new title";
     await dataProvider.createOrUpdatePriority(item);
-
     var retrieveItem = await dataProvider.getPriority(item.ID);
 
     expect(retrieveItem, isNotNull);
@@ -70,19 +64,16 @@ void main() {
   });
 
   test('Get Correct Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
-    var item2 = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
-    var item3 = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+    var item2 = item.copyWith(id: faker.lorem.sentence());
+    var item3 = item.copyWith(id: faker.lorem.sentence());
+
     await dataProvider.createOrUpdatePriority(item);
     await dataProvider.createOrUpdatePriority(item2);
     await dataProvider.createOrUpdatePriority(item3);
     var retrieveItem = await dataProvider.getPriority(item2.ID);
 
     expect(retrieveItem, isNotNull);
-
     expect(retrieveItem!.ID, item2.ID);
     expect(retrieveItem.title, item2.title);
     expect(retrieveItem.color, item.color);
@@ -90,8 +81,8 @@ void main() {
   });
 
   test('Get Incorrect Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+
     await dataProvider.createOrUpdatePriority(item);
     var retrieveItem = await dataProvider.getPriority("sss");
 
@@ -99,8 +90,8 @@ void main() {
   });
 
   test('Delete Item', () async {
-    var item = PriorityItem(faker.lorem.sentence(), faker.lorem.sentence(), "#00000000",
-        description: faker.lorem.sentence());
+    var item = getFakePriorityItem();
+
     await dataProvider.createOrUpdatePriority(item);
     await dataProvider.deletePriority(item.ID);
     var retrieveItem = await dataProvider.getPriority(item.ID);
