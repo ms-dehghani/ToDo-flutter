@@ -18,4 +18,13 @@ class UiColors {
   static const Color primaryText = Color(0xFF141115);
   static const Color secondaryText = Color(0xFF626262);
   static const Color disableColor = Color(0xFFABABAB);
+
+  static const Color borderColor = Color(0xFFABABAB);
+  static const Color itemFillColor = Color(0xFFFFFFFF);
+
+  static const Color priorityHighColor = Color(0xFFFF3B3B);
+  static const Color priorityMidColor = Color(0xFFFF8800);
+  static const Color priorityLowColor = Color(0xFF06C270);
+
+  static const Color shadowColor = Color(0x55626262);
 }

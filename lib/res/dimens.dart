@@ -15,6 +15,8 @@ class Insets {
 
   static double get xl => 32 * scale;
 
+  static double get buttonHeight => 48 * scale;
+
   // Offset, used for the edge of the window, or to separate large sections in the app
   static double get offset => 40 * offsetScale;
 }
@@ -33,23 +35,20 @@ class Corners {
   static const Radius lgRadius = Radius.circular(lg);
 }
 
+class ItemSplitter {
+  static const Widget thinSplitter = SizedBox(
+    width: 5,
+    height: 5,
+  );
+  static const Widget thickSplitter = SizedBox(
+    width: 20,
+    height: 20,
+  );
+}
+
 class Strokes {
   static const double thin = 1;
   static const double thick = 4;
-}
-
-class Shadows {
-  static List<BoxShadow> get universal => [
-        BoxShadow(color: const Color(0xff333333).withOpacity(.15), spreadRadius: 0, blurRadius: 10),
-      ];
-
-  static List<BoxShadow> get small => [
-        BoxShadow(
-            color: const Color(0xff333333).withOpacity(.15),
-            spreadRadius: 0,
-            blurRadius: 3,
-            offset: const Offset(0, 1)),
-      ];
 }
 
 class FontSizes {
@@ -64,6 +63,10 @@ class FontSizes {
   static double get s14 => 14 * scale;
 
   static double get s16 => 16 * scale;
+
+  static double get s18 => 18 * scale;
+
+  static double get s20 => 20 * scale;
 
   static double get s24 => 24 * scale;
 

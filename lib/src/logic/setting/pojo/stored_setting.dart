@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kardone/res/theme/theme_color.dart';
 import 'package:kardone/res/theme/themes.dart';
 import 'package:kardone/src/model/pref/pref_manager.dart';
 
@@ -18,7 +19,8 @@ class StoredSetting {
   Future<SettingItem> getSetting() async {
     var theme = await _getTheme();
     var layoutDirection = await _getLayoutDirection();
-    return Future.value(SettingItem(theme: theme, layoutDirection: layoutDirection));
+    return Future.value(
+        SettingItem(theme: theme, layoutDirection: layoutDirection, themeColor: lightThemeColors));
   }
 
   Future<void> _setTheme(bool dark) async {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kardone/res/theme/themes.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefManager {
   final String THEME = "THEME";
@@ -16,34 +16,37 @@ class PrefManager {
 
   PrefManager._internal();
 
-  SharedPreferences? _prefs;
+  // SharedPreferences? _prefs;
 
   _initPref() async {
-    _prefs ??= await SharedPreferences.getInstance();
+    // _prefs ??= await SharedPreferences.getInstance();
   }
 
   Future<void> setTheme(bool isDark) async {
     await _initPref();
-    await _prefs!.setBool(THEME, isDark);
+    // await _prefs!.setBool(THEME, isDark);
   }
 
   Future<ThemeData> getTheme() async {
-    bool isDarkTheme = _prefs!.getBool(THEME) ?? true;
-    return isDarkTheme ? Themes.dark : Themes.light;
+    // bool isDarkTheme = _prefs!.getBool(THEME) ?? true;
+    // return isDarkTheme ? Themes.dark : Themes.light;
+    return Themes.light;
   }
 
   Future<void> setLayoutDirection(bool isRtl) async {
-    await _initPref();
-    await _prefs!.setBool(LAYOUT_DIRECTION, isRtl);
+    // await _initPref();
+    // await _prefs!.setBool(LAYOUT_DIRECTION, isRtl);
   }
 
   Future<TextDirection> getLayoutDirection() async {
-    bool isRtl = _prefs!.getBool(LAYOUT_DIRECTION) ?? true;
-    return isRtl ? TextDirection.rtl : TextDirection.ltr;
+    // bool isRtl = _prefs!.getBool(LAYOUT_DIRECTION) ?? true;
+    // return isRtl ? TextDirection.rtl : TextDirection.ltr;
+    return TextDirection.rtl;
   }
 
   Future<bool> clear() async {
-    await _initPref();
-    return _prefs!.clear();
+    // await _initPref();
+    // return _prefs!.clear();
+    return true;
   }
 }
