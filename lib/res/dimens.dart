@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kardone/res/color.dart';
+import 'package:kardone/src/utils/theme_utils.dart';
 
 class Insets {
   static double scale = 1;
@@ -17,6 +19,8 @@ class Insets {
 
   static double get buttonHeight => 48 * scale;
 
+  static double get taskRowItemMinHeight => 100 * scale;
+
   // Offset, used for the edge of the window, or to separate large sections in the app
   static double get offset => 40 * offsetScale;
 }
@@ -33,17 +37,43 @@ class Corners {
   static const double lg = 8;
   static const BorderRadius lgBorder = BorderRadius.all(lgRadius);
   static const Radius lgRadius = Radius.circular(lg);
+
+  static const double hg = 12;
+  static const BorderRadius hgBorder = BorderRadius.all(hgRadius);
+  static const Radius hgRadius = Radius.circular(hg);
+
+}
+
+class Borders {
+  static RoundedRectangleBorder thinAndMedRadiosBorder =
+      RoundedRectangleBorder(borderRadius: Corners.medBorder, side: thinBorder);
+
+  static RoundedRectangleBorder thinAndHighRadiosBorder =
+  RoundedRectangleBorder(borderRadius: Corners.hgBorder, side: thinBorder);
+
+  static BorderSide thinBorder =
+      BorderSide(width: Strokes.thin, color: getSelectedThemeColors().borderColor);
 }
 
 class ItemSplitter {
-  static const Widget thinSplitter = SizedBox(
-    width: 5,
-    height: 5,
+  static Widget thinSplitter = SizedBox(
+    width: Insets.xs,
+    height: Insets.xs,
   );
-  static const Widget thickSplitter = SizedBox(
-    width: 20,
-    height: 20,
+  static Widget thickSplitter = SizedBox(
+    width: Insets.lg,
+    height: Insets.lg,
   );
+
+  static Widget medSplitter = SizedBox(
+    width: Insets.med,
+    height: Insets.med,
+  );
+
+  static Widget splitter(double value) => SizedBox(
+        width: value,
+        height: value,
+      );
 }
 
 class Strokes {

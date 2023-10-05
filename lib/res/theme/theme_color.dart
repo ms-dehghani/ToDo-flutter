@@ -15,6 +15,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   Color borderColor;
   Color itemFillColor;
   Color shadowColor;
+  Color pageBackground;
+  Color primaryColor;
 
   ThemeColor({
     required this.iconBlue,
@@ -29,6 +31,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.borderColor,
     required this.itemFillColor,
     required this.shadowColor,
+    required this.pageBackground,
+    required this.primaryColor,
   });
 
   @override
@@ -45,6 +49,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? borderColor,
     Color? itemFillColor,
     Color? shadowColor,
+    Color? pageBackground,
+    Color? primaryColor,
   }) {
     return ThemeColor(
         iconBlue: iconBlue ?? this.iconBlue,
@@ -58,6 +64,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
         borderColor: borderColor ?? this.borderColor,
         itemFillColor: itemFillColor ?? this.itemFillColor,
         shadowColor: shadowColor ?? this.shadowColor,
+        pageBackground: pageBackground ?? this.pageBackground,
+        primaryColor: primaryColor ?? this.primaryColor,
         iconGray: iconGray ?? this.iconGray);
   }
 
@@ -79,6 +87,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       borderColor: Color.lerp(borderColor, other.borderColor, t)!,
       itemFillColor: Color.lerp(itemFillColor, other.itemFillColor, t)!,
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t)!,
+      pageBackground: Color.lerp(pageBackground, other.pageBackground, t)!,
+      primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
     );
   }
 }
@@ -95,6 +105,8 @@ ThemeColor lightThemeColors = ThemeColor(
     borderColor: UiColors.borderColor,
     itemFillColor: UiColors.itemFillColor,
     shadowColor: UiColors.shadowColor,
+    pageBackground: UiColors.pageBackground,
+    primaryColor: UiColors.green,
     iconGray: UiColors.iconGray);
 
 ThemeColor darkThemeColors = ThemeColor(
@@ -109,4 +121,6 @@ ThemeColor darkThemeColors = ThemeColor(
     borderColor: UiColors.borderColor,
     itemFillColor: UiColors.itemFillColor,
     shadowColor: UiColors.shadowColor,
+    pageBackground: UiColors.pageBackground,
+    primaryColor: UiColors.green,
     iconGray: UiColors.iconGray);

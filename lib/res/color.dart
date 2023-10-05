@@ -19,7 +19,7 @@ class UiColors {
   static const Color secondaryText = Color(0xFF626262);
   static const Color disableColor = Color(0xFFABABAB);
 
-  static const Color borderColor = Color(0xFFABABAB);
+  static const Color borderColor = Color(0xFFE5E5E5);
   static const Color itemFillColor = Color(0xFFFFFFFF);
 
   static const Color priorityHighColor = Color(0xFFFF3B3B);
@@ -27,4 +27,5 @@ class UiColors {
   static const Color priorityLowColor = Color(0xFF06C270);
 
   static const Color shadowColor = Color(0x55626262);
+  static const Color pageBackground = Color(0xFFD9D9D9);
 }

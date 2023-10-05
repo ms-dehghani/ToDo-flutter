@@ -4,6 +4,11 @@ import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/theme/theme_color.dart';
 
 class Drawable {
+
+  static BoxDecoration simpleRoundCorner(Color color) => BoxDecoration(
+      color: color,
+      borderRadius: Corners.lgBorder,);
+
   static BoxDecoration simpleBorder(ThemeColor color) => BoxDecoration(
       color: color.itemFillColor,
       borderRadius: Corners.medBorder,
