@@ -1,15 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
-import 'package:kardone/res/theme/theme_color.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
-import 'package:kardone/src/ui/widgets/form_items/button_filed_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-import 'animaited_container_item.dart';
 import 'priority_button_widget.dart';
 
 class PrioritySelectorFiledItem extends StatefulWidget {

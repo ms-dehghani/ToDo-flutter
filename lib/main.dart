@@ -9,7 +9,6 @@ import 'package:kardone/res/theme/theme_color.dart';
 import 'package:kardone/res/theme/themes.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/pages/task/list/task_list_page.dart';
-import 'package:kardone/src/ui/widgets/form_items/priority_selector_filed_item.dart';
 import 'package:sqflite/sqflite.dart';
 
 void main() {
@@ -24,12 +23,23 @@ class MyApp extends StatelessWidget {
   Future<void> test() async {
     await DI.instance().provideDependencies();
 
-    await DI.instance().getPriorityRepository().createOrUpdatePriority(PriorityItem("_id", "High", "#FF3B3B"));
-    await DI.instance().getPriorityRepository().createOrUpdatePriority(PriorityItem("_id2", "Mid", "#FF8800"));
-    await DI.instance().getPriorityRepository().createOrUpdatePriority(PriorityItem("_id3", "Low", "#06C270"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("_id", "High", "#FF3B3B"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("_id2", "Mid", "#FF8800"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("_id3", "Low", "#06C270"));
 
-    await DI.instance().getCategoryRepository().createOrUpdateCategory(CategoryItem("_id", "cat "
-        "title"));
+    await DI.instance().getCategoryRepository().createOrUpdateCategory(CategoryItem(
+        "_id",
+        "cat "
+            "title"));
 
     DI.instance().getTaskRepository().createOrUpdateTask(TaskItem(
         id: "id",
@@ -152,16 +162,6 @@ class _ThemeExtensionExampleAppState extends State<ThemeExtensionExampleApp> {
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                child: PrioritySelectorFiledItem(
-                  selectedItem: selected,
-                  onPriorityChange: (item) {
-                    selected = item;
-                  },
-                  priorityList: priorityList,
-                ),
-              )
             ],
           ),
         ),

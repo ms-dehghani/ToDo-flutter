@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
+import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-class AnimatedContainerItem extends StatelessWidget {
+class TaskDetailRowItem extends StatelessWidget {
   String title;
+  String? icon;
   Widget child;
   Color? titleColor;
   BoxDecoration? decoration;
 
   Function()? onTap;
 
-  AnimatedContainerItem(
+  TaskDetailRowItem(
       {super.key,
       required this.title,
       required this.child,
+      this.icon,
       this.titleColor,
       this.decoration,
       this.onTap}) {
@@ -35,14 +38,18 @@ class AnimatedContainerItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(
-                  title,
-                  style: TextStyles.h3Bold.copyWith(color: titleColor),
+                ImageView(src: "",size: Insets.iconSizeM,),
+                ItemSplitter.thinSplitter,
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyles.h3Bold.copyWith(color: titleColor),
+                  ),
                 ),
               ],
             ),
-            ItemSplitter.thinSplitter,
-            child
+            ItemSplitter.medSplitter,
+            SizedBox(width: double.infinity, child: child)
           ],
         ),
       ),

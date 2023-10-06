@@ -5,7 +5,7 @@ class UiColors {
   static const Color orange = Color(0xFFFC7753);
 
   static const Color white = Color(0xFFF7F7FF);
-  static const Color liteBackground = Color(0xFFF8F8F8);
+  static const Color liteBackground = Color(0xFFFAFAFA);
   static const Color whiteBackground = Color(0xFFFFFFFF);
 
   static const Color iconGreen = Color(0xFF33CA7F);
@@ -13,6 +13,7 @@ class UiColors {
   static const Color iconPink = Color(0xFFCA33C4);
   static const Color iconBlue = Color(0xFF3394CA);
   static const Color iconDeepBlue = Color(0xFF094D92);
+  static const Color iconRed = Color(0xFFFF3B3B);
   static const Color iconGray = Color(0xFFABABAB);
 
   static const Color primaryText = Color(0xFF141115);
@@ -27,5 +28,5 @@ class UiColors {
   static const Color priorityLowColor = Color(0xFF06C270);
 
   static const Color shadowColor = Color(0x55626262);
-  static const Color pageBackground = Color(0xFFD9D9D9);
+  static const Color pageBackground = Color(0xFFF8F8F8);
 }

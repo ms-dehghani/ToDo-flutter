@@ -21,8 +21,21 @@ class Insets {
 
   static double get taskRowItemMinHeight => 100 * scale;
 
+  static double get calenderItemHeight => 72 * scale;
+  static double get calenderItemWidth => 48 * scale;
+  static double get calenderListInTaskHeight => 92 * scale;
+
+  static double get appBarHeight => 64 * scale;
+  static double get taskActionBarHeight => 64 * scale;
+
   // Offset, used for the edge of the window, or to separate large sections in the app
   static double get offset => 40 * offsetScale;
+
+
+  static double get iconSizeS => 12 * scale;
+  static double get iconSizeM => 16 * scale;
+  static double get iconSizeL => 20 * scale;
+
 }
 
 class Corners {
@@ -41,6 +54,14 @@ class Corners {
   static const double hg = 12;
   static const BorderRadius hgBorder = BorderRadius.all(hgRadius);
   static const Radius hgRadius = Radius.circular(hg);
+
+  static const double xxl = 24;
+  static const BorderRadius  xxlBorder = BorderRadius.all(xxlRadius);
+  static const Radius xxlRadius = Radius.circular(xxl);
+
+  static const double xxxl = 36;
+  static const BorderRadius  xxxlBorder = BorderRadius.all(xxxlRadius);
+  static const Radius xxxlRadius = Radius.circular(xxxl);
 
 }
 

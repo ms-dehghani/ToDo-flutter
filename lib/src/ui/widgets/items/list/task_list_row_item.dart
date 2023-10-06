@@ -5,10 +5,11 @@ import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/widgets/check_box/check_box_item.dart';
+import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:kardone/src/utils/time_util.dart';
 
-import '../round_colored_container.dart';
+import '../../round_colored_container.dart';
 
 class TaskListRowItem extends StatefulWidget {
   TaskItem taskItem;
@@ -23,37 +24,42 @@ class TaskListRowItem extends StatefulWidget {
 class _TaskListRowItemState extends State<TaskListRowItem> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: Insets.sm),
-      elevation: widget.taskItem.isDone ? 0 : Insets.xs,
-      color: getSelectedThemeColors().itemFillColor,
-      shadowColor: getSelectedThemeColors().shadowColor,
-      shape: Borders.thinAndHighRadiosBorder,
-      child: Stack(
-        children: [
-          Container(
-            width: 6,
-            height: 24,
-            margin: EdgeInsets.only(top: Insets.med),
-            decoration: BoxDecoration(
-                borderRadius: Corners.smBorder,
-                color: widget.taskItem.isDone
-                    ? getSelectedThemeColors().disableColor
-                    : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(Insets.med, Insets.sm, Insets.med, Insets.med),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                _rowTitle(),
-                _rowDetail(),
-                _rowReminder(),
-              ],
+    return GestureDetector(
+      onTap: (){
+        widget.onTap?.call();
+      },
+      child: Card(
+        margin: EdgeInsets.symmetric(vertical: Insets.sm),
+        elevation: widget.taskItem.isDone ? 0 : Insets.xs,
+        color: getSelectedThemeColors().itemFillColor,
+        shadowColor: getSelectedThemeColors().shadowColor,
+        shape: Borders.thinAndHighRadiosBorder,
+        child: Stack(
+          children: [
+            Container(
+              width: 6,
+              height: 24,
+              margin: EdgeInsets.only(top: Insets.med),
+              decoration: BoxDecoration(
+                  borderRadius: Corners.smBorder,
+                  color: widget.taskItem.isDone
+                      ? getSelectedThemeColors().disableColor
+                      : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(Insets.med, Insets.sm, Insets.med, Insets.med),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  _rowTitle(),
+                  _rowDetail(),
+                  _rowReminder(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -108,7 +114,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                   : getSelectedThemeColors().disableColor.withOpacity(0.1),
               child: Row(
                 children: [
-                  Container(),
+                  ImageView(src: "",size: Insets.iconSizeS,),
                   ItemSplitter.thinSplitter,
                   Text(
                     widget.taskItem.categoryItem?.title ?? "",

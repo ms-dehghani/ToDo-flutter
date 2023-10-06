@@ -7,6 +7,7 @@ class Themes {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
       },
     ),
     extensions: <ThemeExtension<dynamic>>[
@@ -18,6 +19,7 @@ class Themes {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
+        TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
       },
     ),
     extensions: <ThemeExtension<dynamic>>[

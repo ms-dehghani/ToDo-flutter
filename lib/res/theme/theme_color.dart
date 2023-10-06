@@ -7,6 +7,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   Color iconPurple;
   Color iconPink;
   Color iconBlue;
+  Color iconRed;
   Color iconDeepBlue;
   Color iconGray;
   Color primaryText;
@@ -17,6 +18,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   Color shadowColor;
   Color pageBackground;
   Color primaryColor;
+  Color accentColor;
+  Color textOnAccentColor;
 
   ThemeColor({
     required this.iconBlue,
@@ -33,6 +36,9 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.shadowColor,
     required this.pageBackground,
     required this.primaryColor,
+    required this.accentColor,
+    required this.iconRed,
+    required this.textOnAccentColor,
   });
 
   @override
@@ -47,10 +53,13 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? iconDeepBlue,
     Color? iconGray,
     Color? borderColor,
+    Color? iconRed,
     Color? itemFillColor,
     Color? shadowColor,
     Color? pageBackground,
     Color? primaryColor,
+    Color? accentColor,
+    Color? textOnAccentColor,
   }) {
     return ThemeColor(
         iconBlue: iconBlue ?? this.iconBlue,
@@ -66,6 +75,9 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
         shadowColor: shadowColor ?? this.shadowColor,
         pageBackground: pageBackground ?? this.pageBackground,
         primaryColor: primaryColor ?? this.primaryColor,
+        accentColor: accentColor ?? this.accentColor,
+        iconRed: iconRed ?? this.iconRed,
+        textOnAccentColor: textOnAccentColor ?? this.textOnAccentColor,
         iconGray: iconGray ?? this.iconGray);
   }
 
@@ -89,6 +101,9 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t)!,
       pageBackground: Color.lerp(pageBackground, other.pageBackground, t)!,
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
+      accentColor: Color.lerp(accentColor, other.accentColor, t)!,
+      iconRed: Color.lerp(iconRed, other.iconRed, t)!,
+      textOnAccentColor: Color.lerp(textOnAccentColor, other.textOnAccentColor, t)!,
     );
   }
 }
@@ -107,6 +122,9 @@ ThemeColor lightThemeColors = ThemeColor(
     shadowColor: UiColors.shadowColor,
     pageBackground: UiColors.pageBackground,
     primaryColor: UiColors.green,
+    accentColor: UiColors.orange,
+    iconRed: UiColors.iconRed,
+    textOnAccentColor: UiColors.whiteBackground,
     iconGray: UiColors.iconGray);
 
 ThemeColor darkThemeColors = ThemeColor(
@@ -123,4 +141,7 @@ ThemeColor darkThemeColors = ThemeColor(
     shadowColor: UiColors.shadowColor,
     pageBackground: UiColors.pageBackground,
     primaryColor: UiColors.green,
+    iconRed: UiColors.iconRed,
+    accentColor: UiColors.orange,
+    textOnAccentColor: UiColors.whiteBackground,
     iconGray: UiColors.iconGray);

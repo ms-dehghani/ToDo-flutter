@@ -8,9 +8,11 @@ import 'package:kardone/src/logic/task/list/bloc/task_list_bloc.dart';
 import 'package:kardone/src/logic/task/list/bloc/task_list_event.dart';
 import 'package:kardone/src/logic/task/list/bloc/task_list_page_data.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/ui/pages/task/detail/task_detail.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
+import 'package:kardone/src/ui/widgets/items/list/calender_row_item.dart';
 import 'package:kardone/src/ui/widgets/progress/in_page_progress.dart';
-import 'package:kardone/src/ui/widgets/task_list/task_list_row_item.dart';
+import 'package:kardone/src/ui/widgets/items/list/task_list_row_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 class TaskListPage extends StatefulWidget {
@@ -23,18 +25,9 @@ class TaskListPage extends StatefulWidget {
 class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   @override
   Widget build(BuildContext context) {
-    int startTime = DateTime
-        .now()
-        .subtract(Duration(days: 3))
-        .millisecondsSinceEpoch;
-    int endTime = DateTime
-        .now()
-        .add(Duration(days: 3))
-        .millisecondsSinceEpoch;
     return BlocProvider(
-      create: (context) =>
-      TaskListBloc(taskRepository: DI.instance().getTaskRepository())
-        ..add(GetAllTaskInCalenderEvent(startTime: startTime, endTime: endTime)),
+      create: (context) => TaskListBloc(taskRepository: DI.instance().getTaskRepository())
+        ..add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch)),
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
     );
   }
@@ -43,18 +36,32 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   Widget phoneView() {
     return Container(
       color: getSelectedThemeColors().pageBackground,
-      child: Column(
-        children: [
-          _calender(),
-          Expanded(child: _taskList()),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            _calender(),
+            Expanded(child: _taskList()),
+          ],
+        ),
       ),
     );
   }
 
   Widget _calender() {
-    return Container(
-      height: 100,
+    return SizedBox(
+      height: Insets.calenderListInTaskHeight,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        padding:
+            EdgeInsets.only(top: (Insets.calenderListInTaskHeight - Insets.calenderItemHeight) / 2),
+        shrinkWrap: true,
+        children: List.generate(40, growable: false, (index) {
+          return CalenderRowItem(
+            timestamp: DateTime.now().add(Duration(days: index)).millisecondsSinceEpoch,
+            isSelected: index == 1,
+          );
+        }),
+      ),
     );
   }
 
@@ -65,9 +72,9 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
             margin: EdgeInsets.only(top: Insets.lg * 2),
             padding: EdgeInsets.all(Insets.med),
             color: getSelectedThemeColors().itemFillColor,
-            child: state.pageStatus == PageStatus.finish ? _taskListDetail(state.taskList) :
-            _loadingWidget()
-        );
+            child: state.pageStatus == PageStatus.finish
+                ? _taskListDetail(state.taskList)
+                : _loadingWidget());
       },
     );
   }
@@ -79,10 +86,22 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   Widget _taskListDetail(List<TaskItem> tasklist) {
     return ListView(
       shrinkWrap: true,
-      children: tasklist.map((e) => TaskListRowItem(taskItem: e)).toList(),
+      children: tasklist
+          .map((e) => TaskListRowItem(
+                taskItem: e,
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) {
+                        return TaskDetailPage(taskItem: e);
+                      },
+                    ),
+                  );
+                },
+              ))
+          .toList(),
     );
   }
-
 }
 
 class RPSCustomPainter extends CustomPainter {
@@ -101,8 +120,7 @@ class RPSCustomPainter extends CustomPainter {
     path_0.lineTo(0, size.height * 0.5839956);
     path_0.close();
 
-    Paint paint_0_fill = Paint()
-      ..style = PaintingStyle.fill;
+    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
     paint_0_fill.color = getSelectedThemeColors().itemFillColor;
     canvas.drawShadow(path_0, getSelectedThemeColors().shadowColor, 6.0, true);
     canvas.drawPath(path_0, paint_0_fill);
