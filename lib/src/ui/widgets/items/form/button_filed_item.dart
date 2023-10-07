@@ -54,7 +54,7 @@ class _ButtonFiledItemState extends State<ButtonFiledItem> {
           overlayColor: MaterialStateProperty.all<Color>(widget.rippleColor!),
           minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity , Insets.buttonHeight)),
           shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
-            borderRadius: Corners.medBorder,
+            borderRadius: Corners.hgBorder,
             side: BorderSide(width: Strokes.thin, color: widget.borderColor!),
           )),
         ),

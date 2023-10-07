@@ -21,15 +21,9 @@ import 'package:kardone/src/utils/theme_utils.dart';
 
 import '../create/create_task_item_page.dart';
 
-class TaskListPage extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _TaskListPageState();
-  }
-}
-
-class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
+class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   late TaskGetBloc _taskGetBloc;
+
   late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
 
   @override
@@ -53,7 +47,7 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   }
 
   @override
-  Widget phoneView() {
+  Widget phoneView(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

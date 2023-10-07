@@ -77,8 +77,8 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
             if (widget.isSelected) widget.onSelect?.call();
           },
           child: Container(
-            width: 60,
-            height: 34,
+            width: 64,
+            height: 48,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
             decoration: Drawable.simpleBorder(getSelectedThemeColors()).copyWith(

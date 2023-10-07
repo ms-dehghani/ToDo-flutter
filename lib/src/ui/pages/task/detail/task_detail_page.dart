@@ -23,19 +23,13 @@ import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:animations/animations.dart';
 import 'package:kardone/src/utils/time_util.dart';
 
-class TaskDetailPage extends StatefulWidget {
+class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
 
   TaskDetailPage({required this.taskItem});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _TaskDetailPageState();
-  }
-}
-
-class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate {
   late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+
   late TaskDeleteBloc _taskDeleteBloc;
 
   @override
@@ -55,7 +49,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
   }
 
   @override
-  Widget phoneView() {
+  Widget phoneView(BuildContext context) {
     return Container(
       color: getSelectedThemeColors().pageBackground,
       child: SafeArea(
@@ -63,7 +57,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
           children: [
             ApplicationAppBar(
                 leftWidget: AppBarBackButton(
-                  onTap: () => Navigator.of(context).maybePop(widget.taskItem),
+                  onTap: () => Navigator.of(context).maybePop(taskItem),
                 ),
                 centerWidget: Text(
                   "detail page",
@@ -88,7 +82,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
           icon: AppIcons.descriptionFill,
           titleColor: getSelectedThemeColors().iconPurple,
           child: Text(
-            widget.taskItem.description,
+            taskItem.description,
             style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
           ),
         ),
@@ -106,7 +100,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.taskItem.title,
+            taskItem.title,
             style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
           ),
           ItemSplitter.thickSplitter,
@@ -124,7 +118,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
       children: [
         _taskPriority(),
         ItemSplitter.thickSplitter,
-        (widget.taskItem.categoryItem == null
+        (taskItem.categoryItem == null
             ? Container()
             : Row(
                 children: [
@@ -147,17 +141,17 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
         ImageView(
           src: AppIcons.priorityFill,
           size: Insets.iconSizeM,
-          color: widget.taskItem.priorityItem?.color,
+          color: taskItem.priorityItem?.color,
         ),
         ItemSplitter.thinSplitter,
         Text(
           "priority",
-          style: TextStyles.h3.copyWith(color: widget.taskItem.priorityItem?.color),
+          style: TextStyles.h3.copyWith(color: taskItem.priorityItem?.color),
         ),
         ItemSplitter.thinSplitter,
         Text(
-          widget.taskItem.priorityItem?.title ?? "",
-          style: TextStyles.h3Bold.copyWith(color: widget.taskItem.priorityItem?.color),
+          taskItem.priorityItem?.title ?? "",
+          style: TextStyles.h3Bold.copyWith(color: taskItem.priorityItem?.color),
         )
       ],
     );
@@ -178,7 +172,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
         ),
         ItemSplitter.thinSplitter,
         Text(
-          widget.taskItem.categoryItem?.title ?? "",
+          taskItem.categoryItem?.title ?? "",
           style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().iconBlue),
         )
       ],
@@ -215,7 +209,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
                       color: getSelectedThemeColors().iconGreen,
                     )),
                 Text(
-                  timeToText(widget.taskItem.taskTimestamp),
+                  timeToText(taskItem.taskTimestamp),
                   style: TextStyles.h3Bold.copyWith(
                     color: getSelectedThemeColors().iconGreen,
                   ),
@@ -237,7 +231,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
         BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
           listener: (context, state) {
             if (state.pageStatus == PageStatus.success) {
-              Navigator.of(context).maybePop(widget.taskItem);
+              Navigator.of(context).maybePop(taskItem);
             }
           },
         ),
@@ -255,8 +249,8 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
               icon: AppIcons.doneChecked,
               color: getSelectedThemeColors().iconGreen,
               onTap: () {
-                widget.taskItem.isDone = !widget.taskItem.isDone;
-                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(widget.taskItem));
+                taskItem.isDone = !taskItem.isDone;
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
               },
             ),
             TaskActionButton(
@@ -274,7 +268,7 @@ class _TaskDetailPageState extends State<TaskDetailPage> with WidgetViewTemplate
               icon: AppIcons.delete,
               color: getSelectedThemeColors().iconRed,
               onTap: () {
-                _taskDeleteBloc.add(TaskDeleteEvent(id: widget.taskItem.ID));
+                _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
               },
             ),
           ],

@@ -20,18 +20,11 @@ import 'package:kardone/src/ui/widgets/items/form/priority_selector_filed_item.d
 import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-class CreateTaskItemPage extends StatefulWidget {
+class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
 
   CreateTaskItemPage({required this.taskItem});
 
-  @override
-  State<StatefulWidget> createState() {
-    return _CreateTaskItemPageState();
-  }
-}
-
-class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetViewTemplate {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -49,7 +42,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
   }
 
   @override
-  Widget phoneView() {
+  Widget phoneView(BuildContext context) {
     return Column(
       children: [
         ApplicationAppBar(
@@ -80,13 +73,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       ItemSplitter.thickSplitter,
       _categoryWidget(),
       ItemSplitter.thickSplitter,
-      PrioritySelectorFiledItem(
-        priorityList: DI.instance().prioritiesItem,
-        selectedItem: widget.taskItem.priorityItem,
-        onPriorityChange: (item) {
-          widget.taskItem.priorityItem = item;
-        },
-      ),
+      _priorityWidget(),
       ItemSplitter.thickSplitter,
       _descriptionWidget(),
       ItemSplitter.thickSplitter,
@@ -107,11 +94,24 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
         title: "title",
         child: TextFiledItem(
           hint: 'text',
-          text: widget.taskItem.title,
+          text: taskItem.title,
           onValueChange: (title) {
-            widget.taskItem.title = title;
+            taskItem.title = title;
           },
         ));
+  }
+
+  Widget _priorityWidget() {
+    return FormItem(
+      title: "title",
+      child: PrioritySelectorFiledItem(
+        priorityList: DI.instance().prioritiesItem,
+        selectedItem: taskItem.priorityItem,
+        onPriorityChange: (item) {
+          taskItem.priorityItem = item;
+        },
+      ),
+    );
   }
 
   Widget _descriptionWidget() {
@@ -121,14 +121,14 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           minLines: 5,
           maxLines: 25,
           hint: 'desc',
-          text: widget.taskItem.description,
+          text: taskItem.description,
           icon: ImageView(
             src: "desc",
             size: Insets.iconSizeS,
           ),
           iconColor: getSelectedThemeColors().primaryText,
           onValueChange: (desc) {
-            widget.taskItem.description = desc;
+            taskItem.description = desc;
           },
         ));
   }
@@ -138,11 +138,12 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
         title: "category",
         child: ButtonFiledItem(
           icon: ImageView(
-            src: "",
+            src: AppIcons.categoryOutline,
             size: Insets.iconSizeS,
+            color: getSelectedThemeColors().secondaryText,
           ),
           child: Text(
-            widget.taskItem.categoryItem?.title ?? "add category",
+            taskItem.categoryItem?.title ?? "add category",
             style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
           ),
         ));
@@ -166,7 +167,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
-              context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(widget.taskItem));
+              context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(taskItem));
             },
           ),
         );

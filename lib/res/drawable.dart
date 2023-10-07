@@ -12,7 +12,7 @@ class Drawable {
 
   static BoxDecoration simpleBorder(ThemeColor color) => BoxDecoration(
       color: color.itemFillColor,
-      borderRadius: Corners.medBorder,
+      borderRadius: Corners.hgBorder,
       border: Border.all(color: color.borderColor, width: Strokes.thin));
 
   static BoxDecoration calendarItemBorder(ThemeColor color) => BoxDecoration(

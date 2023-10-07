@@ -5,11 +5,11 @@ class TestWidget extends StatelessWidget with WidgetViewTemplate {
 
   @override
   Widget build(BuildContext context) {
-    return phoneView();
+    return phoneView(context);
   }
 
   @override
-  Widget phoneView() {
+  Widget phoneView(BuildContext context) {
     return Container();
   }
 

@@ -7,20 +7,20 @@ abstract mixin class WidgetViewTemplate {
   Widget showPage(BuildContext context) {
     screenType = getFormFactor(context);
     return switch (screenType) {
-      ScreenType.desktop => desktopView(),
-      ScreenType.tablet => tabletView(),
-      ScreenType.handset => phoneView(),
-      ScreenType.watch => phoneView(),
+      ScreenType.desktop => desktopView(context),
+      ScreenType.tablet => tabletView(context),
+      ScreenType.handset => phoneView(context),
+      ScreenType.watch => phoneView(context),
     };
   }
 
-  Widget phoneView();
+  Widget phoneView(BuildContext context);
 
-  Widget tabletView() {
-    return phoneView();
+  Widget tabletView(BuildContext context) {
+    return phoneView(context);
   }
 
-  Widget desktopView() {
-    return tabletView();
+  Widget desktopView(BuildContext context) {
+    return tabletView(context);
   }
 }
