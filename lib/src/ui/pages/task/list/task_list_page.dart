@@ -1,19 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kardone/res/dimens.dart';
-import 'package:kardone/src/dart/di.dart';
+import 'package:kardone/res/drawable.dart';
+import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/logic/base/page_status.dart';
-import 'package:kardone/src/logic/task/list/bloc/task_list_bloc.dart';
-import 'package:kardone/src/logic/task/list/bloc/task_list_event.dart';
-import 'package:kardone/src/logic/task/list/bloc/task_list_page_data.dart';
+import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_bloc.dart';
+import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_event.dart';
+import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:kardone/src/logic/task/get/bloc/task_get_bloc.dart';
+import 'package:kardone/src/logic/task/get/bloc/task_get_event.dart';
+import 'package:kardone/src/logic/task/get/bloc/task_get_page_data.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
-import 'package:kardone/src/ui/pages/task/detail/task_detail.dart';
+import 'package:kardone/src/ui/pages/task/detail/task_detail_page.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
+import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/list/calender_row_item.dart';
 import 'package:kardone/src/ui/widgets/progress/in_page_progress.dart';
 import 'package:kardone/src/ui/widgets/items/list/task_list_row_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
+
+import '../create/create_task_item_page.dart';
 
 class TaskListPage extends StatefulWidget {
   @override
@@ -23,25 +29,62 @@ class TaskListPage extends StatefulWidget {
 }
 
 class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
+  late TaskGetBloc _taskGetBloc;
+  late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskListBloc(taskRepository: DI.instance().getTaskRepository())
-        ..add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TaskGetBloc>(
+          create: (BuildContext context) {
+            _taskGetBloc = TaskGetBloc(taskRepository: DI.instance().getTaskRepository());
+            _taskGetBloc.add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch));
+            return _taskGetBloc;
+          },
+        ),
+        BlocProvider<TaskCreateOrUpdateBloc>(
+          create: (BuildContext context) => _taskCreateOrUpdateBloc =
+              TaskCreateOrUpdateBloc(taskRepository: DI.instance().getTaskRepository()),
+        ),
+      ],
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
     );
   }
 
   @override
   Widget phoneView() {
-    return Container(
-      color: getSelectedThemeColors().pageBackground,
-      child: SafeArea(
-        child: Column(
-          children: [
-            _calender(),
-            Expanded(child: _taskList()),
-          ],
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (BuildContext context) {
+                return CreateTaskItemPage(
+                  taskItem: TaskItem.empty(),
+                );
+              },
+            ),
+          ).then((value) {
+            _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
+          });
+        },
+        backgroundColor: getSelectedThemeColors().primaryColor,
+        child: ImageView(
+          src: AppIcons.addFill,
+          color: getSelectedThemeColors().textOnAccentColor,
+          size: Insets.iconSize2XL,
+        ),
+      ),
+      body: Container(
+        color: getSelectedThemeColors().pageBackground,
+        child: SafeArea(
+          child: Column(
+            children: [
+              _calender(),
+              Expanded(child: _taskList()),
+            ],
+          ),
         ),
       ),
     );
@@ -66,13 +109,13 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   }
 
   Widget _taskList() {
-    return BlocBuilder<TaskListBloc, TaskListPageData>(
+    return BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
       builder: (context, state) {
         return Container(
             margin: EdgeInsets.only(top: Insets.lg * 2),
             padding: EdgeInsets.all(Insets.med),
             color: getSelectedThemeColors().itemFillColor,
-            child: state.pageStatus == PageStatus.finish
+            child: state.pageStatus == PageStatus.success
                 ? _taskListDetail(state.taskList)
                 : _loadingWidget());
       },
@@ -80,26 +123,42 @@ class _TaskListPageState extends State<TaskListPage> with WidgetViewTemplate {
   }
 
   Widget _loadingWidget() {
-    return InPageProgress();
+    return Center(child: InPageProgress());
   }
 
-  Widget _taskListDetail(List<TaskItem> tasklist) {
+  Widget _taskListDetail(List<TaskItem> taskList) {
     return ListView(
       shrinkWrap: true,
-      children: tasklist
-          .map((e) => TaskListRowItem(
-                taskItem: e,
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (BuildContext context) {
-                        return TaskDetailPage(taskItem: e);
-                      },
-                    ),
-                  );
-                },
-              ))
-          .toList(),
+      children: taskList.map((e) {
+        return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
+          buildWhen: (previous, current) {
+            return true;
+            if (previous.item == null || current.item == null) return true;
+            return previous.item != current.item;
+          },
+          builder: (context, state) {
+            return TaskListRowItem(
+              taskItem: e,
+              onDone: (done) {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+              },
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute<TaskItem>(
+                    builder: (BuildContext context) {
+                      return TaskDetailPage(taskItem: e);
+                    },
+                  ),
+                ).then((value) {
+                  if (value != null) {
+                    _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
+                  }
+                });
+              },
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }

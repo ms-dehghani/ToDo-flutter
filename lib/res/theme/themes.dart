@@ -4,6 +4,7 @@ import 'theme_color.dart';
 
 class Themes {
   static ThemeData light = ThemeData.light().copyWith(
+    useMaterial3: false,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
@@ -16,6 +17,7 @@ class Themes {
   );
 
   static ThemeData dark = ThemeData.dark().copyWith(
+    useMaterial3: false,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: <TargetPlatform, PageTransitionsBuilder>{
         TargetPlatform.android: ZoomPageTransitionsBuilder(),

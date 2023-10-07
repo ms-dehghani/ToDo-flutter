@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
+import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 class AppBarBackButton extends StatelessWidget{
@@ -14,9 +15,15 @@ class AppBarBackButton extends StatelessWidget{
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: Insets.buttonHeight,
-        height: Insets.buttonHeight,
+        width: Insets.backButtonHeight,
+        height: Insets.backButtonHeight,
+        padding: EdgeInsets.all(Insets.sm),
         decoration: Drawable.backButtonDecoration(getSelectedThemeColors()),
+        child: ImageView(
+          src: AppIcons.back,
+          size: Insets.iconSizeXL,
+          color: getSelectedThemeColors().primaryText,
+        ),
       ),
     );
   }

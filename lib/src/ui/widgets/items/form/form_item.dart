@@ -12,10 +12,15 @@ class FormItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Insets.sm),
+          child: Text(
+            title,
+            style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+          ),
         ),
         ItemSplitter.thinSplitter,
         child

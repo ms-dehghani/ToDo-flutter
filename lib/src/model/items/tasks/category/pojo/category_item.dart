@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import 'category_static.dart';
 
-class CategoryItem {
+class CategoryItem extends Equatable{
   String _id;
 
   String _title;
@@ -66,4 +68,7 @@ class CategoryItem {
   set parentID(String value) {
     _parentId = value;
   }
+
+  @override
+  List<Object?> get props => [_id,_title,_description,_parentId];
 }

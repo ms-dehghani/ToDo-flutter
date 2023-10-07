@@ -19,6 +19,8 @@ class Insets {
 
   static double get buttonHeight => 48 * scale;
 
+  static double get backButtonHeight => 38 * scale;
+
   static double get taskRowItemMinHeight => 100 * scale;
 
   static double get calenderItemHeight => 72 * scale;
@@ -32,9 +34,11 @@ class Insets {
   static double get offset => 40 * offsetScale;
 
 
-  static double get iconSizeS => 12 * scale;
-  static double get iconSizeM => 16 * scale;
+  static double get iconSizeS => 16 * scale;
+  static double get iconSizeM => 18 * scale;
   static double get iconSizeL => 20 * scale;
+  static double get iconSizeXL => 24 * scale;
+  static double get iconSize2XL => 32 * scale;
 
 }
 

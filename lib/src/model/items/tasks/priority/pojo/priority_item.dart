@@ -1,9 +1,10 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/src/utils/extentions/color_extentions.dart';
 
 import 'priority_static.dart';
 
-class PriorityItem {
+class PriorityItem extends Equatable{
   String _id;
 
   String _title;
@@ -68,4 +69,8 @@ class PriorityItem {
   set color(Color value) {
     _color = value.toHex();
   }
+
+  @override
+  @override
+  List<Object?> get props => [_id,_title,_description,_color];
 }

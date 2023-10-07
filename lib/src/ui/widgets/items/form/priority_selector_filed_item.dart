@@ -38,6 +38,7 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
                 element.onDeselect();
               }
             }
+            widget.onPriorityChange?.call(e);
           },
         );
       }).toList();

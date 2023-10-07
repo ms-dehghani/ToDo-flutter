@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 
 class ApplicationAppBar extends StatelessWidget {
   Widget? leftWidget;
   Widget? rightWidget;
   Widget? centerWidget;
+  Color? color;
 
-  ApplicationAppBar({super.key, this.centerWidget, this.leftWidget, this.rightWidget}) {
+  ApplicationAppBar({super.key, this.centerWidget, this.leftWidget, this.rightWidget , this.color}) {
     centerWidget ??= SizedBox(width: Insets.buttonHeight,);
     leftWidget ??= Container();
     rightWidget ??= Container(width: Insets.buttonHeight);
@@ -17,6 +19,7 @@ class ApplicationAppBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: Insets.appBarHeight,
+      color: color ?? Colors.transparent,
       padding: EdgeInsets.symmetric(horizontal: Insets.med),
       alignment: Alignment.center,
       child: Row(

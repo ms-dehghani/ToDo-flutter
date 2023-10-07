@@ -38,7 +38,12 @@ class TaskDetailRowItem extends StatelessWidget {
           children: [
             Row(
               children: [
-                ImageView(src: "",size: Insets.iconSizeM,),
+                ImageView(
+                  src: icon ?? "",
+                  color: titleColor ?? Colors.transparent,
+                  size: Insets.iconSizeL,
+                ),
+                ItemSplitter.thinSplitter,
                 ItemSplitter.thinSplitter,
                 Expanded(
                   child: Text(

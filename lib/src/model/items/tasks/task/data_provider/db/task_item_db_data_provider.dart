@@ -41,9 +41,11 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
     if (taskItem.priorityItem != null) {
       _priorityItemDataProvider.createOrUpdatePriority(taskItem.priorityItem!);
     }
-
-    int id = await _database.insert(tableName, taskItem.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    if (taskItem.ID.isEmpty) {
+      taskItem.ID = DateTime.now().millisecondsSinceEpoch.toString();
+    }
+    var map = taskItem.toMap();
+    int id = await _database.insert(tableName, map, conflictAlgorithm: ConflictAlgorithm.replace);
     if (taskItem.ID.isEmpty) taskItem.ID = id.toString();
     return taskItem;
   }
@@ -76,6 +78,7 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
         time.copyWith(hour: 0, minute: 0, second: 0, millisecond: 1).millisecondsSinceEpoch,
         time.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
       ],
+      orderBy: "$filedDone ASC , $filedPriorityID ASC",
     );
     List<TaskItem> result = [];
     if (list.isNotEmpty) {
@@ -91,6 +94,7 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
     List<Map> list = await _database.query(
       tableName,
       columns: TaskItem.empty().toMap().keys.toList(),
+      orderBy: "$filedDone ASC , $filedPriorityID ASC",
     );
     List<TaskItem> result = [];
     if (list.isNotEmpty) {
@@ -112,6 +116,7 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
           time.copyWith(hour: 0, minute: 0, second: 1, millisecond: 1).millisecondsSinceEpoch,
           time.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
         ],
+        orderBy: "$filedDone ASC , $filedPriorityID ASC",
         limit: 1);
     return list.isNotEmpty;
   }
@@ -129,6 +134,7 @@ class TaskItemDBDataProvider extends BaseModel implements TaskItemDataProviderIm
         startTime.copyWith(hour: 0, minute: 0, second: 1, millisecond: 1).millisecondsSinceEpoch,
         endTime.copyWith(hour: 23, minute: 59, second: 59, millisecond: 999).millisecondsSinceEpoch
       ],
+      orderBy: "$filedDone ASC , $filedPriorityID ASC",
     );
     Map<int, bool> result = {};
     if (list.isNotEmpty) {

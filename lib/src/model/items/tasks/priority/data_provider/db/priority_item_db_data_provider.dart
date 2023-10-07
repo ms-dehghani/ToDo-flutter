@@ -42,6 +42,7 @@ class PriorityItemDBDataProvider extends BaseModel implements PriorityItemDataPr
     List<Map> list = await _database.query(
       tableName,
       columns: PriorityItem.empty().toMap().keys.toList(),
+      orderBy: "$filedId ASC",
     );
     for (var items in list) {
       result.add(PriorityItem.fromMap(items));

@@ -20,12 +20,12 @@ class TaskActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ImageView(
             src: icon,
-            size: Insets.iconSizeM,
+            size: Insets.iconSizeXL,
             color: color,
           ),
           Text(

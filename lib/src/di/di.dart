@@ -3,6 +3,7 @@ import 'package:kardone/src/model/items/tasks/category/data_provider/db/category
 import 'package:kardone/src/model/items/tasks/category/repo/category_repository.dart';
 import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
 import 'package:kardone/src/model/items/tasks/priority/data_provider/priority_item_data_provider_impl.dart';
+import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:kardone/src/model/items/tasks/priority/repo/priority_repository.dart';
 import 'package:kardone/src/model/items/tasks/task/data_provider/db/task_item_db_data_provider.dart';
 import 'package:kardone/src/model/items/tasks/task/data_provider/task_item_data_provider_impl.dart';
@@ -24,6 +25,8 @@ class DI {
   late final CategoryRepository _categoryRepository;
   late final PriorityRepository _priorityRepository;
 
+  late List<PriorityItem> prioritiesItem;
+
   Future<bool> provideDependencies() async {
     _database = await openDatabase('my_db.db');
 
@@ -31,8 +34,17 @@ class DI {
     _priorityRepository = PriorityRepository.init(_getLocalPriorityDB(), null);
     _taskRepository = TaskRepository.init(_getLocalTaskDB(), null);
 
+    await providePriorityList();
+
     return Future.value(true);
   }
+
+  Future<bool> providePriorityList() async {
+    prioritiesItem = await _priorityRepository.getPriorities();
+    return Future.value(true);
+  }
+
+
 
   Database getDB() {
     return _database;

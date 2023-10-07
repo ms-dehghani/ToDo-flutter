@@ -10,9 +10,9 @@ class CalenderRowItem extends StatefulWidget {
   bool isSelected;
   Function()? onSelect;
 
-  late AnimationController textAnimationController;
-  late AnimationController backgroundAnimationController;
-  late AnimationController borderAnimationController;
+  AnimationController? textAnimationController;
+  AnimationController? backgroundAnimationController;
+  AnimationController? borderAnimationController;
 
   CalenderRowItem({
     super.key,
@@ -27,9 +27,9 @@ class CalenderRowItem extends StatefulWidget {
   }
 
   void onDeselect() {
-    textAnimationController.reverse();
-    backgroundAnimationController.reverse();
-    borderAnimationController.reverse();
+    textAnimationController?.reverse();
+    backgroundAnimationController?.reverse();
+    borderAnimationController?.reverse();
     isSelected = false;
   }
 }
@@ -37,13 +37,21 @@ class CalenderRowItem extends StatefulWidget {
 class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProviderStateMixin {
   Duration duration = const Duration(milliseconds: 300);
 
-  late Animation<Color?> _animationText;
-  late Animation<Color?> _borderContainer;
-  late Animation<Color?> _animationBackground;
+  Animation<Color?>? _animationText;
+  Animation<Color?>? _borderContainer;
+  Animation<Color?>? _animationBackground;
 
   @override
   void initState() {
     super.initState();
+    setData();
+  }
+
+  void setData() {
+    if (widget.textAnimationController != null) {
+      return;
+    }
+
     widget.textAnimationController = AnimationController(vsync: this, duration: duration);
     widget.backgroundAnimationController = AnimationController(vsync: this, duration: duration);
     widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
@@ -51,34 +59,42 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
     _animationText = ColorTween(
       begin: getSelectedThemeColors().primaryText,
       end: getSelectedThemeColors().textOnAccentColor,
-    ).animate(widget.textAnimationController);
+    ).animate(widget.textAnimationController!);
 
     _borderContainer = ColorTween(
       begin: getSelectedThemeColors().borderColor,
       end: getSelectedThemeColors().accentColor,
-    ).animate(widget.borderAnimationController);
+    ).animate(widget.borderAnimationController!);
 
     _animationBackground = ColorTween(
       begin: getSelectedThemeColors().itemFillColor,
       end: getSelectedThemeColors().accentColor,
-    ).animate(widget.backgroundAnimationController);
+    ).animate(widget.backgroundAnimationController!);
+  }
+
+  @override
+  void dispose() {
+    widget.textAnimationController?.dispose();
+    widget.backgroundAnimationController?.dispose();
+    widget.borderAnimationController?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.backgroundAnimationController,
+      animation: widget.backgroundAnimationController!,
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
             if (!widget.isSelected) {
-              widget.textAnimationController.forward();
-              widget.backgroundAnimationController.forward();
-              widget.borderAnimationController.forward();
+              widget.textAnimationController?.forward();
+              widget.backgroundAnimationController?.forward();
+              widget.borderAnimationController?.forward();
             } else {
-              widget.textAnimationController.reverse();
-              widget.backgroundAnimationController.reverse();
-              widget.borderAnimationController.reverse();
+              widget.textAnimationController?.reverse();
+              widget.backgroundAnimationController?.reverse();
+              widget.borderAnimationController?.reverse();
             }
             widget.isSelected = !widget.isSelected;
             if (widget.isSelected) widget.onSelect?.call();
@@ -89,18 +105,18 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
             decoration: Drawable.calendarItemBorder(getSelectedThemeColors()).copyWith(
-                color: _animationBackground.value,
-                border: Border.all(color: _borderContainer.value!, width: Strokes.thin)),
+                color: _animationBackground?.value,
+                border: Border.all(color: _borderContainer!.value!, width: Strokes.thin)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   dayOfMonth(widget.timestamp),
-                  style: TextStyles.h1Bold.copyWith(color: _animationText.value),
+                  style: TextStyles.h1Bold.copyWith(color: _animationText!.value),
                 ),
                 Text(
                   dayOfWeek(widget.timestamp),
-                  style: TextStyles.h3Bold.copyWith(color: _animationText.value),
+                  style: TextStyles.h3Bold.copyWith(color: _animationText!.value),
                 ),
               ],
             ),

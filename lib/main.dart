@@ -1,7 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
-import 'package:kardone/src/dart/di.dart';
+import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
 import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
@@ -23,23 +23,28 @@ class MyApp extends StatelessWidget {
   Future<void> test() async {
     await DI.instance().provideDependencies();
 
-    await DI
-        .instance()
-        .getPriorityRepository()
-        .createOrUpdatePriority(PriorityItem("_id", "High", "#FF3B3B"));
-    await DI
-        .instance()
-        .getPriorityRepository()
-        .createOrUpdatePriority(PriorityItem("_id2", "Mid", "#FF8800"));
-    await DI
-        .instance()
-        .getPriorityRepository()
-        .createOrUpdatePriority(PriorityItem("_id3", "Low", "#06C270"));
+    await DI.instance().getPriorityRepository().clear();
 
-    await DI.instance().getCategoryRepository().createOrUpdateCategory(CategoryItem(
-        "_id",
-        "cat "
-            "title"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("1", "High", "#FF3B3B"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("2", "Mid", "#FF8800"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("3", "Low", "#06C270"));
+
+    await DI.instance().providePriorityList();
+
+
+    await DI
+        .instance()
+        .getCategoryRepository()
+        .createOrUpdateCategory(CategoryItem("1", "cat title"));
 
     DI.instance().getTaskRepository().createOrUpdateTask(TaskItem(
         id: "id",
@@ -81,6 +86,7 @@ class MyApp extends StatelessWidget {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: ThemeMode.light,
+      debugShowCheckedModeBanner: false,
       // home: TaskListPage(),
       home: Directionality(
         textDirection: TextDirection.ltr,
