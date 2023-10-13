@@ -117,7 +117,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _loadingWidget() {
-    return Center(child: InPageProgress());
+    return Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: getSelectedThemeColors().onBackground,
+        child: Center(child: InPageProgress()));
   }
 
   Widget _taskListDetail(List<TaskItem> taskList) {

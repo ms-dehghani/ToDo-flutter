@@ -24,6 +24,8 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryItemDataPr
 
   @override
   Future<CategoryItem> createOrUpdateCategory(CategoryItem categoryItem) async {
+    if (categoryItem.ID.isEmpty) categoryItem.ID = DateTime.now().millisecondsSinceEpoch.toString();
+
     int id = await _database.insert(tableName, categoryItem.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
     if (categoryItem.ID.isEmpty) categoryItem.ID = id.toString();
@@ -36,8 +38,10 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryItemDataPr
     List<Map> list = await _database.query(
       tableName,
       columns: CategoryItem.empty().toMap().keys.toList(),
+      orderBy: "$filedId DESC",
     );
     for (var items in list) {
+      print(items);
       result.add(CategoryItem.fromMap(items));
     }
     return result;

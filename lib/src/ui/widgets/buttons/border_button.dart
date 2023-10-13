@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 
-class CustomButton extends StatelessWidget {
+class BorderButton extends StatelessWidget {
   Size? size;
-  Color? fillColor;
+  Color? borderColor;
+  Color? backColor;
   Color? rippleColor;
 
   Function()? onTap;
 
   Widget child;
 
-  CustomButton(
-      {super.key, required this.child, this.size, this.fillColor, this.rippleColor, this.onTap});
+  BorderButton(
+      {super.key, required this.child, this.size, this.borderColor,this.backColor, this.rippleColor, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class CustomButton extends StatelessWidget {
       onPressed: () => onTap?.call(),
       style: ElevatedButton.styleFrom(
           fixedSize: size,
-          backgroundColor: fillColor,
+          backgroundColor: backColor??Colors.transparent,
           foregroundColor: rippleColor,
           shape: Borders.thinAndHighRadiosBorder.copyWith(
               side: Borders.thinAndHighRadiosBorder.side
-                  .copyWith(color: fillColor ?? Colors.transparent))),
+                  .copyWith(color: borderColor ?? Colors.transparent))),
       child: child,
     );
   }

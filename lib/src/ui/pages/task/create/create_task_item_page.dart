@@ -8,23 +8,33 @@ import 'package:kardone/src/logic/base/page_status.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/ui/pages/category/list/category_list_page.dart';
 import 'package:kardone/src/ui/widgets/app_bar.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
-import 'package:kardone/src/ui/widgets/buttons/CustomButton.dart';
+import 'package:kardone/src/ui/widgets/bottomsheet/round_bottom_sheet.dart';
+import 'package:kardone/src/ui/widgets/buttons/custom_raised_button.dart';
 import 'package:kardone/src/ui/widgets/buttons/back_button.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/form/button_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/form_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/priority_selector_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
+import 'package:kardone/src/ui/widgets/items/title/bottomsheet_title_item.dart';
+import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
+class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
 
   CreateTaskItemPage({required this.taskItem});
 
+  @override
+  State<CreateTaskItemPage> createState() => _CreateTaskItemPageState();
+}
+
+class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetViewTemplate {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -58,7 +68,7 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
           child: Padding(
             padding: EdgeInsets.all(Insets.med),
             child: Column(
-              children: [Expanded(child: _taskRows()), _createButton()],
+              children: [Expanded(child: _taskRows(context)), _createButton()],
             ),
           ),
         )
@@ -66,26 +76,18 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
     );
   }
 
-  Widget _taskRows() {
+  Widget _taskRows(BuildContext context) {
     return ListView(children: [
       ItemSplitter.thickSplitter,
       _titleWidget(),
       ItemSplitter.thickSplitter,
-      _categoryWidget(),
+      _categoryWidget(context),
       ItemSplitter.thickSplitter,
+      ItemSplitter.thinSplitter,
       _priorityWidget(),
       ItemSplitter.thickSplitter,
       _descriptionWidget(),
       ItemSplitter.thickSplitter,
-      // PrioritySelectorFiledItem(
-      //   priorityList: DI.instance().getPriorityRepository().getPriorities(),
-      //   selectedItem: widget.taskItem.priorityItem,
-      //   onPriorityChange: (selectedItem) {
-      //     setState(() {
-      //       widget.taskItem.priorityItem = selectedItem;
-      //     });
-      //   },
-      // )
     ]);
   }
 
@@ -94,9 +96,9 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
         title: "title",
         child: TextFiledItem(
           hint: 'text',
-          text: taskItem.title,
+          text: widget.taskItem.title,
           onValueChange: (title) {
-            taskItem.title = title;
+            widget.taskItem.title = title;
           },
         ));
   }
@@ -104,12 +106,15 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
   Widget _priorityWidget() {
     return FormItem(
       title: "title",
-      child: PrioritySelectorFiledItem(
-        priorityList: DI.instance().prioritiesItem,
-        selectedItem: taskItem.priorityItem,
-        onPriorityChange: (item) {
-          taskItem.priorityItem = item;
-        },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: Insets.med),
+        child: PrioritySelectorFiledItem(
+          priorityList: DI.instance().prioritiesItem,
+          selectedItem: widget.taskItem.priorityItem,
+          onPriorityChange: (item) {
+            widget.taskItem.priorityItem = item;
+          },
+        ),
       ),
     );
   }
@@ -121,31 +126,49 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
           minLines: 5,
           maxLines: 25,
           hint: 'desc',
-          text: taskItem.description,
-          icon: ImageView(
-            src: "desc",
-            size: Insets.iconSizeS,
-          ),
+          text: widget.taskItem.description,
+          icon: AppIcons.descriptionOutline,
           iconColor: getSelectedThemeColors().primaryText,
           onValueChange: (desc) {
-            taskItem.description = desc;
+            widget.taskItem.description = desc;
           },
         ));
   }
 
-  Widget _categoryWidget() {
+  Widget _categoryWidget(BuildContext context) {
+    Color color = (widget.taskItem.categoryItem?.title ?? "").isNotEmpty
+        ? getSelectedThemeColors().primaryText
+        : getSelectedThemeColors().secondaryText;
     return FormItem(
         title: "category",
         child: ButtonFiledItem(
           icon: ImageView(
             src: AppIcons.categoryOutline,
             size: Insets.iconSizeS,
-            color: getSelectedThemeColors().secondaryText,
+            color: color,
           ),
-          child: Text(
-            taskItem.categoryItem?.title ?? "add category",
-            style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
-          ),
+          child: Text(widget.taskItem.categoryItem?.title ?? "add category",
+              style: TextStyles.h3.copyWith(
+                color: color,
+              )),
+          onTap: () {
+            showRoundBottomSheet(
+                    context,
+                    titleView: BottomSheetTitleItem(
+                        color: getSelectedThemeColors().iconGreen,
+                        title: "select cat",
+                        iconSrc: AppIcons.categoryOutline),
+                    SizedBox(
+                        height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
+                        child: CategoryListPage()))
+                .then((value) {
+              if (value != null && value is CategoryItem) {
+                setState(() {
+                  widget.taskItem.categoryItem = value;
+                });
+              }
+            });
+          },
         ));
   }
 
@@ -159,7 +182,7 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
       builder: (context, state) {
         return SizedBox(
           width: double.infinity,
-          child: CustomButton(
+          child: CustomRaisedButton(
             size: Size(double.infinity, Insets.buttonHeight),
             fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
@@ -167,7 +190,7 @@ class CreateTaskItemPage extends StatelessWidget with WidgetViewTemplate {
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
-              context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(taskItem));
+              context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(widget.taskItem));
             },
           ),
         );

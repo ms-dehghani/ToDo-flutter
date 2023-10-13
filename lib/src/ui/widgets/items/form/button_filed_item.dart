@@ -52,19 +52,24 @@ class _ButtonFiledItemState extends State<ButtonFiledItem> {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all<Color>(widget.fillColor!),
           overlayColor: MaterialStateProperty.all<Color>(widget.rippleColor!),
-          minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity , Insets.buttonHeight)),
+          elevation: MaterialStateProperty.all<double>(2),
+          minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, Insets.buttonHeight)),
           shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
             borderRadius: Corners.hgBorder,
             side: BorderSide(width: Strokes.thin, color: widget.borderColor!),
           )),
         ),
-        child: widget.icon != null ? Row(
-          children: [
-            Expanded(
-              child: widget.child,
-            )
-          ],
-        ):
-        widget.child);
+        child: widget.icon != null
+            ? Row(
+                children: [
+                  ItemSplitter.thinSplitter,
+                  widget.icon!,
+                  ItemSplitter.thinSplitter,
+                  Expanded(
+                    child: widget.child,
+                  )
+                ],
+              )
+            : widget.child);
   }
 }

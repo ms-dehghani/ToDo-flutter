@@ -18,8 +18,13 @@ class TaskCreateOrUpdateBloc extends Bloc<TaskCreateOrUpdateEvent, TaskCreateUpd
   Future<void> _createOrUpdateTask(
       TaskCreateOrUpdateEvent event, Emitter<TaskCreateUpdateBlocPageData> emit) async {
     emit.call(state.copyWith(status: PageStatus.loading));
-    TaskItem taskItem = await _taskRepository.createOrUpdateTask(event.taskItem);
-    emit.call(state.copyWith(
-        status: taskItem.ID.isNotEmpty ? PageStatus.success : PageStatus.failure, item: taskItem));
+    if (event.taskItem.title.isEmpty || event.taskItem.priorityItem == null) {
+      emit.call(state.copyWith(status: PageStatus.failure));
+    } else {
+      TaskItem taskItem = await _taskRepository.createOrUpdateTask(event.taskItem);
+      emit.call(state.copyWith(
+          status: taskItem.ID.isNotEmpty ? PageStatus.success : PageStatus.failure,
+          item: taskItem));
+    }
   }
 }

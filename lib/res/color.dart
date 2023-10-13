@@ -3,6 +3,7 @@ import 'dart:ui';
 class UiColors {
   static const Color green = Color(0xFF00A693);
   static const Color orange = Color(0xFFFC7753);
+  static const Color orangeLite = Color(0xFFFED6CC);
 
   static const Color white = Color(0xFFF7F7FF);
   static const Color liteBackground = Color(0xFFFAFAFA);

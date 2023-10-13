@@ -37,15 +37,19 @@ void main() {
     var item = getFakeCategoryItem();
     var item2 = item.copyWith(id: faker.lorem.sentence());
     var item3 = item.copyWith(id: faker.lorem.sentence());
+    var item4 = item.copyWith(id: faker.lorem.sentence());
+    var item5 = item.copyWith(id: faker.lorem.sentence());
 
     await dataProvider.createOrUpdateCategory(item);
     await dataProvider.createOrUpdateCategory(item2);
     await dataProvider.createOrUpdateCategory(item3);
+    await dataProvider.createOrUpdateCategory(item4);
+    await dataProvider.createOrUpdateCategory(item5);
 
     var retrieveItem = await dataProvider.getCategories();
 
     expect(retrieveItem, isNotEmpty);
-    expect(retrieveItem.length, 3);
+    expect(retrieveItem.length, 5);
   });
 
   test('Update Item', () async {

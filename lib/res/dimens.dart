@@ -57,6 +57,7 @@ class Corners {
 
   static const double hg = 12;
   static const BorderRadius hgBorder = BorderRadius.all(hgRadius);
+  static const BorderRadius hgTopBorder = BorderRadius.only(topLeft: hgRadius, topRight: hgRadius);
   static const Radius hgRadius = Radius.circular(hg);
 
   static const double xxl = 24;
