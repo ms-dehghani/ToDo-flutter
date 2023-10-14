@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
+import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/logic/base/page_status.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_bloc.dart';
@@ -20,6 +21,7 @@ import 'package:kardone/src/ui/widgets/buttons/back_button.dart';
 import 'package:kardone/src/ui/widgets/buttons/task_action_button.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:kardone/src/utils/time_util.dart';
@@ -27,7 +29,7 @@ import 'package:kardone/src/utils/time_util.dart';
 class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
 
-  TaskDetailPage({required this.taskItem});
+  TaskDetailPage({super.key, required this.taskItem});
 
   late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
 
@@ -61,7 +63,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                   onTap: () => Navigator.of(context).maybePop(taskItem),
                 ),
                 centerWidget: Text(
-                  "detail page",
+                  Texts.taskDetailPageTitle.translate,
                   style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
                 )),
             Expanded(child: _taskDetail()),
@@ -79,7 +81,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         _taskTitle(),
         ItemSplitter.thickSplitter,
         TaskDetailRowItem(
-          title: "detail",
+          title: Texts.addTaskRowDescription.translate,
           icon: AppIcons.descriptionFill,
           titleColor: getSelectedThemeColors().iconPink,
           child: Text(
@@ -146,12 +148,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ),
         ItemSplitter.thinSplitter,
         Text(
-          "priority",
+          Texts.taskDetailPagePriority.translate,
           style: TextStyles.h3.copyWith(color: taskItem.priorityItem?.color),
         ),
         ItemSplitter.thinSplitter,
         Text(
-          taskItem.priorityItem?.title ?? "",
+          taskItem.priorityItem?.title.translate ?? "",
           style: TextStyles.h3Bold.copyWith(color: taskItem.priorityItem?.color),
         )
       ],
@@ -168,7 +170,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ),
         ItemSplitter.thinSplitter,
         Text(
-          "cat",
+          Texts.taskDetailPageCategory.translate,
           style: TextStyles.h3.copyWith(color: getSelectedThemeColors().iconBlue),
         ),
         ItemSplitter.thinSplitter,
@@ -205,7 +207,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("date",
+                Text(Texts.addTaskRowDescription.translate,
                     style: TextStyles.h3.copyWith(
                       color: getSelectedThemeColors().iconGreen,
                     )),
@@ -246,7 +248,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             TaskActionButton(
-              title: "action",
+              title: Texts.taskDetailButtonDone.translate,
               icon: AppIcons.doneChecked,
               color: getSelectedThemeColors().iconGreen,
               onTap: () {
@@ -255,12 +257,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               },
             ),
             TaskActionButton(
-              title: "action",
+              title: Texts.taskDetailButtonChangeDate.translate,
               icon: AppIcons.changeDate,
               color: getSelectedThemeColors().accentColor,
             ),
             TaskActionButton(
-              title: "action",
+              title: Texts.taskDetailButtonEdit.translate,
               icon: AppIcons.edit,
               color: getSelectedThemeColors().iconBlue,
               onTap: () {
@@ -272,7 +274,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               },
             ),
             TaskActionButton(
-              title: "action",
+              title: Texts.taskDetailButtonDelete.translate,
               icon: AppIcons.delete,
               color: getSelectedThemeColors().iconRed,
               onTap: () {

@@ -1,24 +1,45 @@
-import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
-import 'package:kardone/res/theme/theme_color.dart';
 import 'package:kardone/res/theme/themes.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/pages/task/list/task_list_page.dart';
-import 'package:sqflite/sqflite.dart';
+import 'package:kardone/src/utils/ht/html.dart';
+
+import 'applic.dart';
+import 'translations.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late SpecificLocalizationDelegate _localeOverrideDelegate;
+
+  @override
+  void initState() {
+    HtmlFormatter.format();
+    super.initState();
+    _localeOverrideDelegate = SpecificLocalizationDelegate(Locale("fa"));
+    applic.onLocaleChanged = onLocaleChange;
+  }
+
+  onLocaleChange(Locale locale) {
+    setState(() {
+      _localeOverrideDelegate = SpecificLocalizationDelegate(locale);
+    });
+  }
 
   Future<void> test() async {
     await DI.instance().provideDependencies();
@@ -39,7 +60,6 @@ class MyApp extends StatelessWidget {
         .createOrUpdatePriority(PriorityItem("3", "Low", "#06C270"));
 
     await DI.instance().providePriorityList();
-
 
     await DI
         .instance()
@@ -88,6 +108,16 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
       // home: TaskListPage(),
+      localizationsDelegates: [
+        _localeOverrideDelegate,
+        GlobalCupertinoLocalizations.delegate,
+        DefaultCupertinoLocalizations.delegate,
+        const TranslationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: applic.supportedLocales(),
+      locale: Locale("fa"),
       home: Directionality(
         textDirection: TextDirection.ltr,
         child: FutureBuilder(

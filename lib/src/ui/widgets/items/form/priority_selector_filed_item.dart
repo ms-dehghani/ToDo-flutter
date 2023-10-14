@@ -6,6 +6,7 @@ import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 import 'priority_button_widget.dart';
@@ -61,7 +62,7 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
         ),
         ItemSplitter.thinSplitter,
         Text(
-          Texts.selectPriority,
+          Texts.addTaskRowPrioritySelect.translate,
           style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
         ),
         ItemSplitter.thinSplitter,

@@ -1,0 +1,51 @@
+{
+  "appName" : "Kardone",
+  "version" : "Ver 1.0.0",
+
+  "addTaskPageTitle" : "ثبت کار جدید",
+  "addTaskButtonAdd" : "ثبت کار و بازگشت",
+  "editTaskButtonAdd" : "ویرایش کار و بازگشت",
+
+  "addTaskRowTitle" : "عنوان",
+  "addTaskRowTitleHint" : "عنوان کار را بنویسید",
+
+  "addTaskRowCategory" : "دسته بندی",
+  "addTaskRowCategoryHint" : "انتخاب یا تعریف کنید",
+
+  "addTaskRowPriority" : "اولویت",
+  "addTaskRowPrioritySelect" : "انتخاب کنید",
+
+  "addTaskRowDate" : "تاریخ",
+
+  "addTaskRowDescription" : "توضیحات",
+  "addTaskRowDescriptionHint" : "هر توضیحی که لازم است تایپ کنید.",
+
+  "taskDetailPageTitle" : "جزپیات کار",
+
+  "taskDetailPagePriority" : "اولویت:",
+  "taskDetailPageCategory" : "دسته:",
+
+  "taskDetailButtonDone" : "تکمیل",
+  "taskDetailButtonEdit" : "ویرایش",
+  "taskDetailButtonDelete" : "حذف",
+  "taskDetailButtonChangeDate" : "انتقال",
+
+
+  "categoryListPageTitle" : "انتخاب یا تعریف دسته بندی",
+  "categoryEditPageTitle" : "ویرایش دسته بندی",
+  "categoryAddPageTitle" : "تعریف دسته بندی",
+  "categoryListPageDescription" : "یک دسته بندی را انتخاب و یا دسته بندی جدید ثبت کنید.",
+  "categoryListPageButtonAdd" : "تعریف دسته بندی جدید",
+  "categoryEditPageButtonEdit" : "ویرایش و بازگشت",
+  "categoryAddPageButtonAdd" : "ثبت و بازگشت",
+  "categoryAddPageRowTitle" : "عنوان",
+  "categoryAddPageRowTitleHint" : "یک عنوان برای دسته بندی بنویسید.",
+
+  "priorityHigh" : "بالا",
+  "priorityMed" : "متوسط",
+  "priorityLow" : "پایین",
+
+  "menuHome" : "خانه"
+
+
+}

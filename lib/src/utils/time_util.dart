@@ -17,10 +17,3 @@ String dayOfMonth(int timestamp) {
   var jalali = Jalali.fromDateTime(date);
   return "${jalali.day}";
 }
-
-extension DateOnlyCompare on DateTime {
-  bool isSameDate(DateTime other) {
-    return year == other.year && month == other.month
-        && day == other.day;
-  }
-}

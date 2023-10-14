@@ -5,6 +5,7 @@ import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 class PriorityButtonWidget extends StatefulWidget {
@@ -55,8 +56,10 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
       begin: getSelectedThemeColors().itemFillColor,
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
-    if(widget.isSelected)
+
+    if(widget.isSelected) {
       _doAnimate(!widget.isSelected);
+    }
   }
 
   @override
@@ -79,7 +82,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
                 color: _animationBackground.value,
                 border: Border.all(color: widget.priorityItem.color, width: Strokes.thin)),
             child: Text(
-              widget.priorityItem.title,
+              widget.priorityItem.title.translate,
               style: TextStyles.h3.copyWith(color: _animationText.value),
             ),
           ),

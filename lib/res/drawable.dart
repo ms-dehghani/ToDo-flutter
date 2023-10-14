@@ -42,6 +42,7 @@ class Drawable {
 class AppIcons{
 
   static const  String addFill = "assets/images/ic_add_fill.svg";
+  static const  String addCategory = "assets/images/ic_add_category.svg";
   static const  String back = "assets/images/ic_back.svg";
   static const  String calendar = "assets/images/ic_calendar.svg";
   static const  String calendarFill = "assets/images/ic_calendar_fill.svg";

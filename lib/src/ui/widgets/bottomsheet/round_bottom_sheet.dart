@@ -23,14 +23,14 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
               child: (showClose
                   ? Row(
                       children: [
+                        Expanded(child: titleView ?? Container()),
+                        ItemSplitter.thickSplitter,
                         GestureDetector(
                           child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
                           onTap: () {
                             Navigator.of(context).maybePop();
                           },
                         ),
-                        ItemSplitter.thickSplitter,
-                        Expanded(child: titleView ?? Container())
                       ],
                     )
                   : titleView ?? Container()),

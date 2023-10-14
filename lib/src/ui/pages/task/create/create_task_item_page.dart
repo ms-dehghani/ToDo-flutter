@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
+import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/logic/base/page_status.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_bloc.dart';
@@ -21,15 +22,16 @@ import 'package:kardone/src/ui/widgets/items/form/button_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/form_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/priority_selector_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
-import 'package:kardone/src/ui/widgets/items/title/bottomsheet_title_item.dart';
+import 'package:kardone/src/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:kardone/src/utils/device.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:kardone/src/utils/time_util.dart';
 
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
 
-  CreateTaskItemPage({required this.taskItem});
+  CreateTaskItemPage({super.key,required this.taskItem});
 
   @override
   State<CreateTaskItemPage> createState() => _CreateTaskItemPageState();
@@ -62,7 +64,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               onTap: () => Navigator.of(context).maybePop(),
             ),
             centerWidget: Text(
-              "add page",
+              Texts.addTaskPageTitle.translate,
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
             )),
         Expanded(
@@ -96,9 +98,9 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
 
   Widget _titleWidget() {
     return FormItem(
-        title: "title",
+        title: Texts.addTaskRowTitle.translate,
         child: TextFiledItem(
-          hint: 'text',
+          hint: Texts.addTaskRowTitleHint.translate,
           text: widget.taskItem.title,
           onValueChange: (title) {
             widget.taskItem.title = title;
@@ -108,7 +110,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
 
   Widget _priorityWidget() {
     return FormItem(
-      title: "title",
+      title: Texts.addTaskRowPriority.translate,
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: Insets.med),
         child: PrioritySelectorFiledItem(
@@ -125,7 +127,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
   Widget _dateWidget() {
     Color color = getSelectedThemeColors().primaryText;
     return FormItem(
-      title: "Date",
+      title: Texts.addTaskRowDate.translate,
       child: ButtonFiledItem(
         icon: ImageView(
           src: AppIcons.calendar,
@@ -141,7 +143,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
                   context,
                   titleView: BottomSheetTitleItem(
                       color: getSelectedThemeColors().iconGreen,
-                      title: "select cat",
+                      title: Texts.addTaskRowCategoryHint.translate,
                       iconSrc: AppIcons.categoryOutline),
                   SizedBox(
                       height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
@@ -160,11 +162,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
 
   Widget _descriptionWidget() {
     return FormItem(
-        title: "desc",
+        title: Texts.addTaskRowDescription.translate,
         child: TextFiledItem(
           minLines: 5,
           maxLines: 25,
-          hint: 'desc',
+          hint: Texts.addTaskRowDescriptionHint.translate,
           text: widget.taskItem.description,
           icon: AppIcons.descriptionOutline,
           iconColor: getSelectedThemeColors().primaryText,
@@ -179,14 +181,14 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
         ? getSelectedThemeColors().primaryText
         : getSelectedThemeColors().secondaryText;
     return FormItem(
-        title: "category",
+        title: Texts.addTaskRowCategory.translate,
         child: ButtonFiledItem(
           icon: ImageView(
             src: AppIcons.categoryOutline,
             size: Insets.iconSizeS,
             color: color,
           ),
-          child: Text(widget.taskItem.categoryItem?.title ?? "add category",
+          child: Text(widget.taskItem.categoryItem?.title ?? Texts.addTaskRowCategoryHint.translate,
               style: TextStyles.h3.copyWith(
                 color: color,
               )),
@@ -195,7 +197,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
                     context,
                     titleView: BottomSheetTitleItem(
                         color: getSelectedThemeColors().iconGreen,
-                        title: "select cat",
+                        title: Texts.categoryListPageTitle.translate,
                         iconSrc: AppIcons.categoryOutline),
                     SizedBox(
                         height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
@@ -225,7 +227,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             size: Size(double.infinity, Insets.buttonHeight),
             fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
-              "add",
+              Texts.addTaskButtonAdd.translate,
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/text_style.dart';
+import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/logic/base/page_status.dart';
 import 'package:kardone/src/logic/category/create_update/bloc/category_create_update_bloc.dart';
@@ -12,14 +13,15 @@ import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/ui/widgets/buttons/custom_raised_button.dart';
 import 'package:kardone/src/ui/widgets/items/form/form_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
-  late CategoryCreateOrUpdateBloc bloc;
+  late final CategoryCreateOrUpdateBloc bloc;
 
   CategoryItem categoryItem;
 
-  CreateCategoryItemPage({required this.categoryItem});
+  CreateCategoryItemPage({super.key, required this.categoryItem});
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +58,9 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _titleWidget() {
     return FormItem(
-        title: "title",
+        title: Texts.categoryAddPageRowTitle.translate,
         child: TextFiledItem(
-          hint: 'text',
+          hint: Texts.categoryAddPageRowTitleHint.translate,
           text: categoryItem.title,
           onValueChange: (title) {
             categoryItem.title = title;
@@ -80,7 +82,9 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
                 : getSelectedThemeColors().accentColor,
             rippleColor: getSelectedThemeColors().accentColor,
             child: Text(
-              "add",
+              categoryItem.ID.isEmpty
+                  ? Texts.categoryAddPageButtonAdd.translate
+                  : Texts.categoryEditPageButtonEdit.translate,
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {

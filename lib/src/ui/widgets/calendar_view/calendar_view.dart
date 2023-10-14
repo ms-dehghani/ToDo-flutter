@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:kardone/src/utils/extentions/date_extentions.dart';
 
 import 'calender_row_item.dart';
 
