@@ -13,10 +13,11 @@ import 'package:kardone/src/logic/task/get/bloc/task_get_page_data.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/pages/task/detail/task_detail_page.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
+import 'package:kardone/src/ui/widgets/calendar_view/calendar_view.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/ui/widgets/items/list/calender_row_item.dart';
 import 'package:kardone/src/ui/widgets/progress/in_page_progress.dart';
 import 'package:kardone/src/ui/widgets/items/list/task_list_row_item.dart';
+import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
 import '../create/create_task_item_page.dart';
@@ -25,6 +26,10 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   late TaskGetBloc _taskGetBloc;
 
   late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+
+  DateTime selectedDay = DateTime.now();
+
+  TaskListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,15 +56,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (BuildContext context) {
-                return CreateTaskItemPage(
-                  taskItem: TaskItem.empty(),
-                );
-              },
-            ),
-          ).then((value) {
+          navigateToPage(
+              context,
+              CreateTaskItemPage(
+                taskItem: TaskItem.empty(),
+              )).then((value) {
             _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
           });
         },
@@ -85,20 +86,12 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _calender() {
-    return SizedBox(
-      height: Insets.calenderListInTaskHeight,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding:
-            EdgeInsets.only(top: (Insets.calenderListInTaskHeight - Insets.calenderItemHeight) / 2),
-        shrinkWrap: true,
-        children: List.generate(40, growable: false, (index) {
-          return CalenderRowItem(
-            timestamp: DateTime.now().add(Duration(days: index)).millisecondsSinceEpoch,
-            isSelected: index == 1,
-          );
-        }),
-      ),
+    return CalenderView(
+      start: DateTime.now().subtract(Duration(days: 5)),
+      end: DateTime.now().add(Duration(days: 5)),
+      onSelect: (dateTime) {
+        _taskGetBloc.add(GetAllTaskInDayEvent(dateTime.millisecondsSinceEpoch));
+      },
     );
   }
 
@@ -141,13 +134,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                 _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
               },
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute<TaskItem>(
-                    builder: (BuildContext context) {
-                      return TaskDetailPage(taskItem: e);
-                    },
-                  ),
-                ).then((value) {
+                navigateToPage(
+                    context,
+                    TaskDetailPage(
+                      taskItem: e,
+                    )).then((value) {
                   if (value != null) {
                     _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
                   }

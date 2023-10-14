@@ -1,11 +1,9 @@
-import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/theme/theme_color.dart';
 import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
@@ -57,6 +55,8 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
       begin: getSelectedThemeColors().itemFillColor,
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
+    if(widget.isSelected)
+      _doAnimate(!widget.isSelected);
   }
 
   @override
@@ -66,13 +66,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
-            if (!widget.isSelected) {
-              widget.textAnimationController.forward();
-              widget.backgroundAnimationController.forward();
-            } else {
-              widget.textAnimationController.reverse();
-              widget.backgroundAnimationController.reverse();
-            }
+            _doAnimate(!widget.isSelected);
             widget.isSelected = !widget.isSelected;
             if (widget.isSelected) widget.onSelect?.call();
           },
@@ -92,5 +86,15 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
         );
       },
     );
+  }
+
+  void _doAnimate(bool forward) {
+    if (forward) {
+      widget.textAnimationController.forward();
+      widget.backgroundAnimationController.forward();
+    } else {
+      widget.textAnimationController.reverse();
+      widget.backgroundAnimationController.reverse();
+    }
   }
 }

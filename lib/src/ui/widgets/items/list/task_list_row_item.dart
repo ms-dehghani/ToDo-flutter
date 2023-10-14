@@ -39,6 +39,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
           children: [
+            ItemSplitter.medSplitter,
             _rowTitle(),
             _rowDetail(),
             _rowReminder(),

@@ -13,14 +13,15 @@ import 'package:kardone/src/logic/task/delete/bloc/task_delete_bloc.dart';
 import 'package:kardone/src/logic/task/delete/bloc/task_delete_event.dart';
 import 'package:kardone/src/logic/task/delete/bloc/task_delete_page_data.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/ui/pages/task/create/create_task_item_page.dart';
 import 'package:kardone/src/ui/widgets/app_bar.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/ui/widgets/buttons/back_button.dart';
 import 'package:kardone/src/ui/widgets/buttons/task_action_button.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:animations/animations.dart';
 import 'package:kardone/src/utils/time_util.dart';
 
 class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
@@ -64,7 +65,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                   style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
                 )),
             Expanded(child: _taskDetail()),
-            _taskActions()
+            _taskActions(context)
           ],
         ),
       ),
@@ -80,7 +81,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         TaskDetailRowItem(
           title: "detail",
           icon: AppIcons.descriptionFill,
-          titleColor: getSelectedThemeColors().iconPurple,
+          titleColor: getSelectedThemeColors().iconPink,
           child: Text(
             taskItem.description,
             style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
@@ -222,7 +223,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
     );
   }
 
-  Widget _taskActions() {
+  Widget _taskActions(BuildContext context) {
     return MultiBlocListener(
       listeners: [
         BlocListener<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
@@ -262,6 +263,13 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               title: "action",
               icon: AppIcons.edit,
               color: getSelectedThemeColors().iconBlue,
+              onTap: () {
+                navigateToPage(
+                    context,
+                    CreateTaskItemPage(
+                      taskItem: taskItem,
+                    ));
+              },
             ),
             TaskActionButton(
               title: "action",

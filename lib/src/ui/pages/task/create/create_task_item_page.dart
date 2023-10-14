@@ -24,6 +24,7 @@ import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/title/bottomsheet_title_item.dart';
 import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:kardone/src/utils/time_util.dart';
 
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
@@ -86,6 +87,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       ItemSplitter.thinSplitter,
       _priorityWidget(),
       ItemSplitter.thickSplitter,
+      _dateWidget(),
+      ItemSplitter.thickSplitter,
       _descriptionWidget(),
       ItemSplitter.thickSplitter,
     ]);
@@ -115,6 +118,42 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             widget.taskItem.priorityItem = item;
           },
         ),
+      ),
+    );
+  }
+
+  Widget _dateWidget() {
+    Color color = getSelectedThemeColors().primaryText;
+    return FormItem(
+      title: "Date",
+      child: ButtonFiledItem(
+        icon: ImageView(
+          src: AppIcons.calendar,
+          size: Insets.iconSizeS,
+          color: color,
+        ),
+        child: Text(timeToText(widget.taskItem.taskTimestamp),
+            style: TextStyles.h3.copyWith(
+              color: color,
+            )),
+        onTap: () {
+          showRoundBottomSheet(
+                  context,
+                  titleView: BottomSheetTitleItem(
+                      color: getSelectedThemeColors().iconGreen,
+                      title: "select cat",
+                      iconSrc: AppIcons.categoryOutline),
+                  SizedBox(
+                      height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
+                      child: CategoryListPage()))
+              .then((value) {
+            if (value != null && value is CategoryItem) {
+              setState(() {
+                widget.taskItem.categoryItem = value;
+              });
+            }
+          });
+        },
       ),
     );
   }

@@ -8,7 +8,7 @@ import 'package:kardone/src/utils/time_util.dart';
 class CalenderRowItem extends StatefulWidget {
   int timestamp;
   bool isSelected;
-  Function()? onSelect;
+  Function(DateTime)? onSelect;
 
   AnimationController? textAnimationController;
   AnimationController? backgroundAnimationController;
@@ -48,10 +48,6 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
   }
 
   void setData() {
-    if (widget.textAnimationController != null) {
-      return;
-    }
-
     widget.textAnimationController = AnimationController(vsync: this, duration: duration);
     widget.backgroundAnimationController = AnimationController(vsync: this, duration: duration);
     widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
@@ -70,14 +66,10 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
       begin: getSelectedThemeColors().itemFillColor,
       end: getSelectedThemeColors().accentColor,
     ).animate(widget.backgroundAnimationController!);
-  }
 
-  @override
-  void dispose() {
-    widget.textAnimationController?.dispose();
-    widget.backgroundAnimationController?.dispose();
-    widget.borderAnimationController?.dispose();
-    super.dispose();
+    if (widget.isSelected) {
+      _doAnimate(true);
+    }
   }
 
   @override
@@ -87,17 +79,11 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
-            if (!widget.isSelected) {
-              widget.textAnimationController?.forward();
-              widget.backgroundAnimationController?.forward();
-              widget.borderAnimationController?.forward();
-            } else {
-              widget.textAnimationController?.reverse();
-              widget.backgroundAnimationController?.reverse();
-              widget.borderAnimationController?.reverse();
-            }
+            _doAnimate(!widget.isSelected);
             widget.isSelected = !widget.isSelected;
-            if (widget.isSelected) widget.onSelect?.call();
+            if (widget.isSelected) {
+              widget.onSelect?.call(DateTime.fromMillisecondsSinceEpoch(widget.timestamp));
+            }
           },
           child: Container(
             width: Insets.calenderItemWidth,
@@ -124,5 +110,17 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
         );
       },
     );
+  }
+
+  void _doAnimate(bool forward) {
+    if (forward) {
+      widget.textAnimationController?.forward();
+      widget.backgroundAnimationController?.forward();
+      widget.borderAnimationController?.forward();
+    } else {
+      widget.textAnimationController?.reverse();
+      widget.backgroundAnimationController?.reverse();
+      widget.borderAnimationController?.reverse();
+    }
   }
 }
