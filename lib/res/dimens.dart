@@ -29,6 +29,8 @@ class Insets {
   static double get calenderItemWidth => 48 * scale;
   static double get calenderListInTaskHeight => 144 * scale;
 
+  static double get emptyImageSize => 300 * scale;
+
   static double get appBarHeight => 64 * scale;
   static double get taskActionBarHeight => 64 * scale;
 

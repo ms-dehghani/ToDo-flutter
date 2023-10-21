@@ -23,7 +23,7 @@ class ImageView extends StatelessWidget {
   Widget _localIcon() {
     return SvgPicture.asset(
       src,
-      colorFilter: ColorFilter.mode(color ?? Colors.black45, BlendMode.srcIn),
+      colorFilter: color != null ? ColorFilter.mode(color!, BlendMode.srcIn) : null,
     );
   }
 }

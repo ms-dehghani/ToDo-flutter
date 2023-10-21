@@ -24,6 +24,8 @@
   "addTaskRowDescription" : "توضیحات",
   "addTaskRowDescriptionHint" : "هر توضیحی که لازم است تایپ کنید.",
 
+  "taskEmptyMessage" : "کاری برای % وجود ندارد.",
+
   "taskDetailPageTitle" : "جزپیات کار",
 
   "taskDetailPagePriority" : "اولویت:",
@@ -71,13 +73,21 @@
   "month11" : "بهمن",
   "month12" : "اسفند",
 
-  "day1" : "۲ ش",
-  "day2" : "۳ ش",
-  "day3" : "۴ ش",
-  "day4" : "۵ ش",
-  "day5" : "ج",
-  "day6" : "ش",
-  "day7" : "۱ ش",
+  "day1" : "دوشنبه",
+  "day2" : "سه شنبه",
+  "day3" : "چهارشنبه",
+  "day4" : "پنجشنبه",
+  "day5" : "جمعه",
+  "day6" : "شنبه",
+  "day7" : "یکشنبه",
+
+  "day1m" : "۲ ش",
+  "day2m" : "۳ ش",
+  "day3m" : "۴ ش",
+  "day4m" : "۵ ش",
+  "day5m" : "ج",
+  "day6m" : "ش",
+  "day7m" : "۱ ش",
 
   "menuHome" : "خانه"
 

@@ -4,7 +4,7 @@ import '../../category/pojo/category_item.dart';
 import '../../priority/pojo/priority_item.dart';
 import 'task_static.dart';
 
-class TaskItem extends Equatable{
+class TaskItem extends Equatable {
   String _taskId;
   String _title;
   String _description;
@@ -29,11 +29,11 @@ class TaskItem extends Equatable{
         _priorityItem = priorityItem,
         _taskTimestamp = taskTimestamp;
 
-  TaskItem.empty()
+  TaskItem.empty({int? timestamp})
       : _taskId = "",
         _title = "",
         _description = "",
-        _taskTimestamp = DateTime.now().millisecondsSinceEpoch,
+        _taskTimestamp = timestamp ?? DateTime.now().millisecondsSinceEpoch,
         _isDone = false,
         _priorityItem = null,
         _categoryItem = null;
@@ -122,6 +122,13 @@ class TaskItem extends Equatable{
   }
 
   @override
-  List<Object?> get props => [_taskId,_taskTimestamp,_taskTimestamp,_description,_categoryItem,
-    _priorityItem , _isDone];
+  List<Object?> get props => [
+        _taskId,
+        _taskTimestamp,
+        _taskTimestamp,
+        _description,
+        _categoryItem,
+        _priorityItem,
+        _isDone
+      ];
 }

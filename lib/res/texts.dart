@@ -43,6 +43,8 @@ class Texts {
   static const String taskDetailButtonDelete = "taskDetailButtonDelete";
   static const String taskDetailButtonChangeDate = "taskDetailButtonChangeDate";
 
+  static const String taskEmptyMessage = "taskEmptyMessage";
+
   ///////// category
   static const String categoryListPageTitle = "addTaskPageTitle";
   static const String categoryEditPageTitle = "categoryEditPageTitle";
@@ -60,7 +62,6 @@ class Texts {
   static const String deleteQuestion = "deleteQuestion";
   static const String deleteLeftButton = "deleteLeftButton";
   static const String deleteRightButton = "deleteRightButton";
-
 
   ///////// priority
   static const String priorityHigh = "priorityHigh";
@@ -83,6 +84,16 @@ class Texts {
   ];
 
 
+  static const List<String> weekNameMini = [
+    "day1m",
+    "day2m",
+    "day3m",
+    "day4m",
+    "day5m",
+    "day6m",
+    "day7m",
+  ];
+
   static const List<String> weekName = [
     "day1",
     "day2",
@@ -92,5 +103,6 @@ class Texts {
     "day6",
     "day7",
   ];
+
 
 }

@@ -24,6 +24,7 @@ import 'package:kardone/src/utils/extentions/date_extentions.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:kardone/src/utils/time_util.dart';
 
 import '../create/create_task_item_page.dart';
 
@@ -64,7 +65,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           navigateToPage(
               context,
               CreateTaskItemPage(
-                taskItem: TaskItem.empty(),
+                taskItem: TaskItem.empty(timestamp: selectedDay.millisecondsSinceEpoch),
               )).then((value) {
             _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
           });
@@ -133,7 +134,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         return Container(
             margin: EdgeInsets.only(top: Insets.buttonHeight),
             child: state.pageStatus == PageStatus.success
-                ? _taskListDetail(state.taskList)
+                ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
                 : _loadingWidget());
       },
     );
@@ -175,6 +176,31 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           },
         );
       }).toList(),
+    );
+  }
+
+  Widget _emptyView() {
+    return Center(
+      child: Column(
+        children: [
+          ItemSplitter.thickSplitter,
+          RichText(
+            text: TextSpan(
+              style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+              children: <TextSpan>[
+                TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
+                TextSpan(
+                    text:
+                        " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate
+                            : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
+                    style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
+                TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
+              ],
+            ),
+          ),
+          ImageView(src: AppIcons.emptyTask, size: Insets.emptyImageSize),
+        ],
+      ),
     );
   }
 }

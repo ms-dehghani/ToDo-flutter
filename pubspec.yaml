@@ -45,6 +45,7 @@ dependencies:
   scroll_to_index: ^3.0.1
   dotted_border: ^2.1.0
   flutter_svg: ^2.0.7
+  lottie: ^2.7.0
 #  shared_preferences: ^2.2.1
 
 dev_dependencies:
@@ -71,6 +72,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/lottie/
     - i18n/en.json
     - i18n/fa.json
 

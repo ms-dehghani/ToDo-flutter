@@ -15,9 +15,22 @@ String timeToText(int timestamp, {bool withDay = true}) {
   }
 }
 
-String dayOfWeek(int timestamp) {
+String fullTimeToText(int timestamp) {
   var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
-  return Texts.weekName[date.weekday - 1].translate;
+  if (isRTL()) {
+    var jalali = Jalali.fromDateTime(date);
+    return "${dayOfWeek(timestamp, fullText: true)} ${jalali.day} ${Texts.monthName[jalali.month - 1].translate}"
+        " ${jalali.year}";
+  } else {
+    return "${dayOfWeek(timestamp, fullText: true)} ${date.year} ${Texts.monthName[date.month - 1].translate} ${date.day}";
+  }
+}
+
+String dayOfWeek(int timestamp, {bool fullText = false}) {
+  var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+  return fullText
+      ? Texts.weekName[date.weekday - 1].translate
+      : Texts.weekNameMini[date.weekday - 1].translate;
 }
 
 String dayOfMonth(int timestamp) {
