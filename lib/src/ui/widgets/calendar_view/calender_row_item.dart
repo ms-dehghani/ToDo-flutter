@@ -26,11 +26,30 @@ class CalenderRowItem extends StatefulWidget {
     return _CalenderRowItemWidgetState();
   }
 
-  void onDeselect() {
-    textAnimationController?.reverse();
-    backgroundAnimationController?.reverse();
-    borderAnimationController?.reverse();
+  void deselect() {
     isSelected = false;
+    _doAnimate(isSelected);
+  }
+
+  void select({bool selected = true}) {
+    if (!selected) {
+      deselect();
+      return;
+    }
+    isSelected = true;
+    _doAnimate(isSelected);
+  }
+
+  void _doAnimate(bool forward) {
+    if (forward) {
+      textAnimationController?.forward();
+      backgroundAnimationController?.forward();
+      borderAnimationController?.forward();
+    } else {
+      textAnimationController?.reverse();
+      backgroundAnimationController?.reverse();
+      borderAnimationController?.reverse();
+    }
   }
 }
 
@@ -68,7 +87,7 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
     ).animate(widget.backgroundAnimationController!);
 
     if (widget.isSelected) {
-      _doAnimate(true);
+      widget._doAnimate(true);
     }
   }
 
@@ -79,10 +98,12 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
       builder: (context, child) {
         return GestureDetector(
           onTap: () {
-            _doAnimate(!widget.isSelected);
-            widget.isSelected = !widget.isSelected;
-            if (widget.isSelected) {
-              widget.onSelect?.call(DateTime.fromMillisecondsSinceEpoch(widget.timestamp));
+            if (widget.onSelect != null) {
+              if (!widget.isSelected) {
+                widget.onSelect?.call(DateTime.fromMillisecondsSinceEpoch(widget.timestamp));
+              }
+            } else {
+              widget.select(selected: !widget.isSelected);
             }
           },
           child: Container(
@@ -110,17 +131,5 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
         );
       },
     );
-  }
-
-  void _doAnimate(bool forward) {
-    if (forward) {
-      widget.textAnimationController?.forward();
-      widget.backgroundAnimationController?.forward();
-      widget.borderAnimationController?.forward();
-    } else {
-      widget.textAnimationController?.reverse();
-      widget.backgroundAnimationController?.reverse();
-      widget.borderAnimationController?.reverse();
-    }
   }
 }

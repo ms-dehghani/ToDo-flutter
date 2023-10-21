@@ -41,9 +41,13 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryItemDataPr
       orderBy: "$filedId DESC",
     );
     for (var items in list) {
-      print(items);
       result.add(CategoryItem.fromMap(items));
     }
+
+    var catItem = CategoryItem.empty();
+    catItem.ID = "0";
+    catItem.title = "noCat";
+    result.add(catItem);
     return result;
   }
 

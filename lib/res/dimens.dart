@@ -15,6 +15,8 @@ class Insets {
 
   static double get lg => 16 * scale;
 
+  static double get d24 =>24 * scale;
+
   static double get xl => 32 * scale;
 
   static double get buttonHeight => 48 * scale;
@@ -25,7 +27,7 @@ class Insets {
 
   static double get calenderItemHeight => 72 * scale;
   static double get calenderItemWidth => 48 * scale;
-  static double get calenderListInTaskHeight => 92 * scale;
+  static double get calenderListInTaskHeight => 144 * scale;
 
   static double get appBarHeight => 64 * scale;
   static double get taskActionBarHeight => 64 * scale;

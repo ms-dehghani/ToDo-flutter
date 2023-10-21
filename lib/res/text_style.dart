@@ -5,7 +5,8 @@ import 'fonts.dart';
 
 class TextStyles {
   static const TextStyle raleway =
-      TextStyle(fontFamily: Fonts.raleway, fontWeight: FontWeight.w400 ,decoration: TextDecoration.none);
+      TextStyle(fontFamily: 'Iran', fontWeight: FontWeight.w400 ,decoration: TextDecoration
+          .none);
 
   static TextStyle get h1 => raleway.copyWith(
         fontWeight: FontWeight.normal,

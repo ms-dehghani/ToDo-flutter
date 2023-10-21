@@ -1,8 +1,6 @@
-
-
 extension DateOnlyCompare on DateTime {
-  bool isSameDate(DateTime other) {
-    return year == other.year && month == other.month
-        && day == other.day;
+  bool isSameDay({DateTime? date, int timestamp = 0}) {
+    date ??= DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return year == date.year && month == date.month && day == date.day;
   }
 }

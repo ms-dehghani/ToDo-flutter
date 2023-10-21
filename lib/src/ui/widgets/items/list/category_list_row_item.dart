@@ -4,15 +4,11 @@ import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
-import 'package:kardone/src/ui/widgets/check_box/check_box_item.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
 
 import '../../buttons/custom_flat_button.dart';
-import '../../buttons/custom_raised_button.dart';
-import '../../round_colored_container.dart';
 
 class CategoryListRowItem extends StatefulWidget {
   CategoryItem categoryItem;
@@ -41,7 +37,9 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  widget.categoryItem.title,
+                  widget.categoryItem.ID == "0"
+                      ? widget.categoryItem.title.translate
+                      : widget.categoryItem.title,
                   style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
                 ),
               ),
@@ -51,19 +49,25 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
             ),
           ),
           ItemSplitter.thinSplitter,
-          CustomFlatButton(
-            elevation: 0,
-            size: Size(Insets.buttonHeight, Insets.buttonHeight),
-            fillColor: getSelectedThemeColors().iconBlue.withOpacity(0.05),
-            rippleColor: getSelectedThemeColors().iconBlue.withOpacity(0.5),
-            child: Align(
-              alignment: Alignment.center,
-              child: ImageView(src:AppIcons.edit, size: Insets.iconSizeXL,color: getSelectedThemeColors()
-                  .iconBlue,),
+          Visibility(
+            visible: widget.categoryItem.ID != "0",
+            child: CustomFlatButton(
+              elevation: 0,
+              size: Size(Insets.buttonHeight, Insets.buttonHeight),
+              fillColor: getSelectedThemeColors().iconBlue.withOpacity(0.05),
+              rippleColor: getSelectedThemeColors().iconBlue.withOpacity(0.5),
+              child: Align(
+                alignment: Alignment.center,
+                child: ImageView(
+                  src: AppIcons.edit,
+                  size: Insets.iconSizeXL,
+                  color: getSelectedThemeColors().iconBlue,
+                ),
+              ),
+              onTap: () {
+                widget.onEditTap?.call();
+              },
             ),
-            onTap: () {
-              widget.onEditTap?.call();
-            },
           ),
           ItemSplitter.thinSplitter,
         ],

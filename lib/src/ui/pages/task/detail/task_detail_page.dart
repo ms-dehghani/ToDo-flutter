@@ -17,10 +17,12 @@ import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/pages/task/create/create_task_item_page.dart';
 import 'package:kardone/src/ui/widgets/app_bar.dart';
 import 'package:kardone/src/ui/widgets/base/widget_view_template.dart';
+import 'package:kardone/src/ui/widgets/bottomsheet/round_bottom_sheet.dart';
 import 'package:kardone/src/ui/widgets/buttons/back_button.dart';
 import 'package:kardone/src/ui/widgets/buttons/task_action_button.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:kardone/src/ui/widgets/picker/date_picker.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
@@ -47,7 +49,15 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               _taskDeleteBloc = TaskDeleteBloc(taskRepository: DI.instance().getTaskRepository()),
         ),
       ],
-      child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
+      child: BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
+        buildWhen: (previous, current) {
+          return true;
+        },
+        builder: (context, state) {
+          return Container(
+              color: getSelectedThemeColors().pageBackground, child: showPage(context));
+        },
+      ),
     );
   }
 
@@ -250,7 +260,9 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
             TaskActionButton(
               title: Texts.taskDetailButtonDone.translate,
               icon: AppIcons.doneChecked,
-              color: getSelectedThemeColors().iconGreen,
+              color: taskItem.isDone
+                  ? getSelectedThemeColors().disableColor
+                  : getSelectedThemeColors().iconGreen,
               onTap: () {
                 taskItem.isDone = !taskItem.isDone;
                 _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
@@ -259,6 +271,13 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
             TaskActionButton(
               title: Texts.taskDetailButtonChangeDate.translate,
               icon: AppIcons.changeDate,
+              onTap: () {
+                showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
+                    onDateSelected: (timestamp) {
+                  taskItem.taskTimestamp = timestamp;
+                  _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+                });
+              },
               color: getSelectedThemeColors().accentColor,
             ),
             TaskActionButton(
@@ -267,10 +286,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               color: getSelectedThemeColors().iconBlue,
               onTap: () {
                 navigateToPage(
-                    context,
-                    CreateTaskItemPage(
-                      taskItem: taskItem,
-                    ));
+                        context,
+                        CreateTaskItemPage(
+                          taskItem: taskItem,
+                        ))
+                    .then(
+                        (value) => _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem)));
               },
             ),
             TaskActionButton(

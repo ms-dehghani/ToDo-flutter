@@ -1,7 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
+import 'package:kardone/res/text_style.dart';
+import 'package:kardone/res/texts.dart';
+import 'package:kardone/src/utils/direction_util.dart';
 import 'package:kardone/src/utils/extentions/date_extentions.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
+import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:kardone/src/utils/time_util.dart';
 
 import 'calender_row_item.dart';
 
@@ -27,10 +35,21 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
   List<CalenderRowItem> items = [];
   DateTime selectedDay = DateTime.now();
 
+  var controller = FixedExtentScrollController();
+  int _selectedItemIndex = 0;
+
   @override
   void initState() {
     super.initState();
     setData();
+    animateToItem(((items.length - 1) ~/ 2));
+  }
+
+  void animateToItem(int index, {Duration duration = const Duration(milliseconds: 100)}) {
+    Timer(duration, () {
+      controller.animateToItem(index,
+          duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
+    });
   }
 
   void setData() {
@@ -39,49 +58,100 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
       items.add(CalenderRowItem(
         key: ObjectKey(time.millisecondsSinceEpoch),
         timestamp: time.millisecondsSinceEpoch,
-        isSelected: time.isSameDate(selectedDay),
+        isSelected: time.isSameDay(date: selectedDay),
         onSelect: (dTime) {
-          items
-              .firstWhere((element) => element.timestamp == selectedDay.millisecondsSinceEpoch)
-              .onDeselect();
-          selectedDay = dTime;
-          widget.onSelect?.call(selectedDay);
+          _setItemClicked(dTime);
         },
       ));
-      if (time.isSameDate(selectedDay)) selectedDay = time;
+      if (time.isSameDay(date: selectedDay)) selectedDay = time;
       time = time.add(const Duration(days: 1));
     }
+  }
+
+  void _setItemClicked(DateTime dTime) {
+    items.firstWhere((element) => selectedDay.isSameDay(timestamp: element.timestamp)).deselect();
+    items.firstWhere((element) => dTime.isSameDay(timestamp: element.timestamp)).select();
+    selectedDay = dTime;
+    widget.onSelect?.call(selectedDay);
+    animateToItem(_findItem(selectedDay));
+    setState(() {
+      selectedDay = dTime;
+    });
+  }
+
+  int _findItem(DateTime item) {
+    for (int i = 0; i < items.length; i++) {
+      if (item.isSameDay(timestamp: items[i].timestamp)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: Insets.calenderListInTaskHeight,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding:
-            EdgeInsets.only(top: (Insets.calenderListInTaskHeight - Insets.calenderItemHeight) / 2),
-        shrinkWrap: true,
-        children: items,
+      child: Column(
+        children: [
+          calenderTitle(),
+          Expanded(
+            child: RotatedBox(
+              quarterTurns: isRTL() ? -3 : -1,
+              child: ListWheelScrollView(
+                diameterRatio: 3,
+                offAxisFraction: isRTL() ? -1.25 : 1.25,
+                itemExtent: Insets.calenderItemWidth + Insets.med,
+                physics: const FixedExtentScrollPhysics(),
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    _selectedItemIndex = value;
+                  });
+                },
+                controller: controller,
+                children: items
+                    .map((e) => RotatedBox(
+                          quarterTurns: isRTL() ? 3 : 1,
+                          child: e,
+                        ))
+                    .toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildItem(int i) {
-    return Center(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(40),
-        child: Container(
-          width: 80,
-          padding: const EdgeInsets.all(20),
-          color: Colors.blue[100 * ((i % 8) + 1)],
-          child: Center(
-            child: Text(
-              i.toString(),
-            ),
-          ),
-        ),
+  Widget calenderTitle() {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: Insets.sm, horizontal: Insets.d24),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [_calenderMonth(), _calenderGoToToday()],
       ),
     );
+  }
+
+  Widget _calenderMonth() {
+    return Row(
+      children: [
+        Text(
+          timeToText(items[_selectedItemIndex].timestamp, withDay: false),
+          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryText),
+        )
+      ],
+    );
+  }
+
+  Widget _calenderGoToToday() {
+    return GestureDetector(
+        onTap: () {
+          _setItemClicked(DateTime.now());
+        },
+        child: Text(
+          Texts.goToday.translate,
+          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+        ));
   }
 }

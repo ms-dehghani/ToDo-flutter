@@ -23,6 +23,7 @@ import 'package:kardone/src/ui/widgets/items/form/form_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/priority_selector_filed_item.dart';
 import 'package:kardone/src/ui/widgets/items/form/text_filed_item.dart';
 import 'package:kardone/src/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
+import 'package:kardone/src/ui/widgets/picker/date_picker.dart';
 import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
@@ -31,7 +32,7 @@ import 'package:kardone/src/utils/time_util.dart';
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
 
-  CreateTaskItemPage({super.key,required this.taskItem});
+  CreateTaskItemPage({super.key, required this.taskItem});
 
   @override
   State<CreateTaskItemPage> createState() => _CreateTaskItemPageState();
@@ -139,21 +140,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               color: color,
             )),
         onTap: () {
-          showRoundBottomSheet(
-                  context,
-                  titleView: BottomSheetTitleItem(
-                      color: getSelectedThemeColors().iconGreen,
-                      title: Texts.addTaskRowCategoryHint.translate,
-                      iconSrc: AppIcons.categoryOutline),
-                  SizedBox(
-                      height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
-                      child: CategoryListPage()))
-              .then((value) {
-            if (value != null && value is CategoryItem) {
-              setState(() {
-                widget.taskItem.categoryItem = value;
-              });
-            }
+          showDatePickerDialog(context,initialTime: widget.taskItem.taskTimestamp, onDateSelected:
+              (timestamp) {
+            setState(() {
+              widget.taskItem.taskTimestamp = timestamp;
+            });
           });
         },
       ),

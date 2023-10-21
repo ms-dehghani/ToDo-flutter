@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
+import 'package:kardone/res/text_style.dart';
+import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/logic/base/page_status.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_bloc.dart';
@@ -17,6 +19,9 @@ import 'package:kardone/src/ui/widgets/calendar_view/calendar_view.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/progress/in_page_progress.dart';
 import 'package:kardone/src/ui/widgets/items/list/task_list_row_item.dart';
+import 'package:kardone/src/utils/device.dart';
+import 'package:kardone/src/utils/extentions/date_extentions.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
@@ -61,7 +66,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(),
               )).then((value) {
-            _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
+            _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
           });
         },
         backgroundColor: getSelectedThemeColors().primaryColor,
@@ -74,10 +79,33 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       body: Container(
         color: getSelectedThemeColors().pageBackground,
         child: SafeArea(
-          child: Column(
+          child: Stack(
             children: [
               _calender(),
-              Expanded(child: _taskList()),
+              Padding(
+                padding: EdgeInsets.only(top: Insets.calenderListInTaskHeight - Insets.sm),
+                child: Stack(
+                  children: [
+                    CustomPaint(
+                      size: Size(getWidth(context), Insets.buttonHeight * 1.5),
+                      painter: RPSCustomPainter(),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: Insets.xl),
+                      child: Container(
+                        width: getWidth(context),
+                        height: double.infinity,
+                        padding: EdgeInsets.symmetric(horizontal: Insets.med),
+                        color: getSelectedThemeColors().onBackground,
+                        child: Text(Texts.taskListTitle.translate,
+                            style: TextStyles.h1Bold
+                                .copyWith(color: getSelectedThemeColors().primaryColor)),
+                      ),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: Insets.lg), child: _taskList()),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -87,21 +115,23 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _calender() {
     return CalenderView(
-      start: DateTime.now().subtract(Duration(days: 5)),
-      end: DateTime.now().add(Duration(days: 5)),
+      start: DateTime.now().subtract(Duration(days: 10)),
+      end: DateTime.now().add(Duration(days: 10)),
       onSelect: (dateTime) {
-        _taskGetBloc.add(GetAllTaskInDayEvent(dateTime.millisecondsSinceEpoch));
+        selectedDay = dateTime;
+        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
       },
     );
   }
 
   Widget _taskList() {
     return BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
+      buildWhen: (previous, current) {
+        return true;
+      },
       builder: (context, state) {
         return Container(
-            margin: EdgeInsets.only(top: Insets.lg * 2),
-            padding: EdgeInsets.all(Insets.med),
-            color: getSelectedThemeColors().itemFillColor,
+            margin: EdgeInsets.only(top: Insets.buttonHeight),
             child: state.pageStatus == PageStatus.success
                 ? _taskListDetail(state.taskList)
                 : _loadingWidget());
@@ -120,12 +150,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   Widget _taskListDetail(List<TaskItem> taskList) {
     return ListView(
       shrinkWrap: true,
+      padding: EdgeInsets.symmetric(horizontal: Insets.med),
       children: taskList.map((e) {
         return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {
             return true;
-            if (previous.item == null || current.item == null) return true;
-            return previous.item != current.item;
           },
           builder: (context, state) {
             return TaskListRowItem(
@@ -139,9 +168,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                     TaskDetailPage(
                       taskItem: e,
                     )).then((value) {
-                  if (value != null) {
-                    _taskGetBloc.add(RefreshTaskListEvent(DateTime.now().millisecondsSinceEpoch));
-                  }
+                  _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
                 });
               },
             );

@@ -1,5 +1,7 @@
+import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/model/items/tasks/category/data_provider/category_item_data_provider_impl.dart';
 import 'package:kardone/src/model/items/tasks/category/data_provider/db/category_item_db_data_provider.dart';
+import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
 import 'package:kardone/src/model/items/tasks/category/repo/category_repository.dart';
 import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
 import 'package:kardone/src/model/items/tasks/priority/data_provider/priority_item_data_provider_impl.dart';
@@ -40,11 +42,21 @@ class DI {
   }
 
   Future<bool> providePriorityList() async {
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("1", Texts.priorityHigh, "#FF3B3B"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("2", Texts.priorityMed, "#FF8800"));
+    await DI
+        .instance()
+        .getPriorityRepository()
+        .createOrUpdatePriority(PriorityItem("3", Texts.priorityLow, "#06C270"));
     prioritiesItem = await _priorityRepository.getPriorities();
     return Future.value(true);
   }
-
-
 
   Database getDB() {
     return _database;

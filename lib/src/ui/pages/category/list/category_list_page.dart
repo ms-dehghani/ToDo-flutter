@@ -110,7 +110,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
     return Center(child: InPageProgress());
   }
 
-  Widget _categoryListDetail(BuildContext context, List<CategoryItem> taskList) {
+  Widget _categoryListDetail(BuildContext context, List<CategoryItem> categoryList) {
     return Column(
       children: [
         SizedBox(
@@ -123,7 +123,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
         Expanded(
           child: ListView(
             shrinkWrap: true,
-            children: taskList.map((e) {
+            children: categoryList.map((e) {
               return CategoryListRowItem(
                 categoryItem: e,
                 onTap: () {

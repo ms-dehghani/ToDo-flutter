@@ -2,6 +2,10 @@
   "appName" : "Kardone",
   "version" : "Ver 1.0.0",
 
+
+  "taskListTitle" : "لیست کارها",
+  "noCat" : "بدون دسته بندی",
+
   "addTaskPageTitle" : "ثبت کار جدید",
   "addTaskButtonAdd" : "ثبت کار و بازگشت",
   "editTaskButtonAdd" : "ویرایش کار و بازگشت",
@@ -30,6 +34,11 @@
   "taskDetailButtonDelete" : "حذف",
   "taskDetailButtonChangeDate" : "انتقال",
 
+  "selectDateTitle" : "انتخاب تاریخ",
+  "today" : "امروز",
+  "goToday" : "برو به امروز",
+  "ok" : "تایید",
+
 
   "categoryListPageTitle" : "انتخاب یا تعریف دسته بندی",
   "categoryEditPageTitle" : "ویرایش دسته بندی",
@@ -44,6 +53,27 @@
   "priorityHigh" : "بالا",
   "priorityMed" : "متوسط",
   "priorityLow" : "پایین",
+
+  "month1" : "فروردین",
+  "month2" : "اردیبهشت",
+  "month3" : "خرداد",
+  "month4" : "تیر",
+  "month5" : "مرداد",
+  "month6" : "شهریور",
+  "month7" : "مهر",
+  "month8" : "آبان",
+  "month9" : "آذر",
+  "month10" : "دی",
+  "month11" : "بهمن",
+  "month12" : "اسفند",
+
+  "day1" : "۲ ش",
+  "day2" : "۳ ش",
+  "day3" : "۴ ش",
+  "day4" : "۵ ش",
+  "day5" : "ج",
+  "day6" : "ش",
+  "day7" : "۱ ش",
 
   "menuHome" : "خانه"
 

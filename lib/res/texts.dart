@@ -1,4 +1,16 @@
 class Texts {
+  static const String appName = "Kardone";
+
+  static const String chooseDatePicker = "chooseDatePicker";
+
+  static const String ok = "ok";
+  static const String today = "today";
+  static const String goToday = "goToday";
+  static const String selectDateTitle = "selectDateTitle";
+
+  static const String taskListTitle = "taskListTitle";
+  static const String noCat = "noCat";
+
 
   ///////// tasks create update
   static const String addTaskPageTitle = "addTaskPageTitle";
@@ -45,13 +57,35 @@ class Texts {
   static const String categoryAddPageRowTitle = "categoryAddPageRowTitle";
   static const String categoryAddPageRowTitleHint = "categoryAddPageRowTitleHint";
 
-
   ///////// priority
   static const String priorityHigh = "priorityHigh";
   static const String priorityMed = "priorityMed";
   static const String priorityLow = "priorityLow";
 
+  static const List<String> monthName = [
+    "month1",
+    "month2",
+    "month3",
+    "month4",
+    "month5",
+    "month6",
+    "month7",
+    "month8",
+    "month9",
+    "month10",
+    "month11",
+    "month12",
+  ];
 
+
+  static const List<String> weekName = [
+    "day1",
+    "day2",
+    "day3",
+    "day4",
+    "day5",
+    "day6",
+    "day7",
+  ];
 
 }
-
