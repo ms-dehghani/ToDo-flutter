@@ -20,6 +20,14 @@ class Drawable {
       borderRadius: Corners.xxlBorder,
       border: Border.all(color: color.borderColor, width: Strokes.thin));
 
+  static BoxDecoration topRoundDecoration(Color color) => BoxDecoration(
+        color: color,
+        borderRadius: const BorderRadius.only(
+          topRight: Corners.xxlRadius,
+          topLeft: Corners.xxlRadius,
+        ),
+      );
+
   static BoxDecoration taskActionsDecoration(ThemeColor color) => BoxDecoration(
       color: UiColors.liteBackground,
       borderRadius: Corners.xxxlBorder,
@@ -68,6 +76,8 @@ class AppIcons {
   static const String edit = "assets/images/ic_edit.svg";
   static const String priorityFill = "assets/images/ic_priority.svg";
   static const String priorityOutline = "assets/images/ic_priority_outline.svg";
+  static const String danger = "assets/images/ic_danger.svg";
+  static const String emptyTask = "assets/images/empty_task.svg";
 }
 
 class Shadows {

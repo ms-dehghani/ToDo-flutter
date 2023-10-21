@@ -39,6 +39,10 @@
   "goToday" : "برو به امروز",
   "ok" : "تایید",
 
+  "deleteQuestion" : "این کار با تمام جزئیات حذف خواهد شد. آیا اطمینان دارید؟",
+  "deleteLeftButton" : "بله٬ حذف",
+  "deleteRightButton" : "خیر٬ بازگشت",
+
 
   "categoryListPageTitle" : "انتخاب یا تعریف دسته بندی",
   "categoryEditPageTitle" : "ویرایش دسته بندی",

@@ -57,6 +57,11 @@ class Texts {
   static const String categoryAddPageRowTitle = "categoryAddPageRowTitle";
   static const String categoryAddPageRowTitleHint = "categoryAddPageRowTitleHint";
 
+  static const String deleteQuestion = "deleteQuestion";
+  static const String deleteLeftButton = "deleteLeftButton";
+  static const String deleteRightButton = "deleteRightButton";
+
+
   ///////// priority
   static const String priorityHigh = "priorityHigh";
   static const String priorityMed = "priorityMed";

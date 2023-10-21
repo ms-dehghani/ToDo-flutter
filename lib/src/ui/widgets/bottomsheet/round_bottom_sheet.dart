@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kardone/res/color.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
+import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
+import '../buttons/border_button.dart';
+import '../buttons/custom_flat_button.dart';
+import '../buttons/custom_raised_button.dart';
+import '../buttons/flat_border_button.dart';
 import '../picker/date_picker.dart';
 import 'bottomsheet_title_item.dart';
 
@@ -71,4 +77,97 @@ Future<dynamic> showDatePickerDialog(BuildContext context,
           },
         ),
       ));
+}
+
+Future<dynamic> showAskQuestionDialog(BuildContext context,
+    {String text = "",
+    Color titleBarColor = UiColors.iconRed,
+    String titleBarIcon = AppIcons.danger,
+    String leftButtonText = "",
+    String rightButtonText = "",
+    Color leftButtonColor = UiColors.green,
+    Color rightButtonColor = UiColors.secondaryText,
+    Function()? leftButtonOnClick,
+    Function()? rightButtonOnClick}) {
+  return showModalBottomSheet(
+      shape: const RoundedRectangleBorder(borderRadius: Corners.hgTopBorder),
+      backgroundColor: titleBarColor,
+      clipBehavior: Clip.antiAliasWithSaveLayer,
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              height: Insets.buttonHeight,
+              child: Center(
+                child: ImageView(
+                  size: Insets.iconSizeL,
+                  src: titleBarIcon,
+                  color: getSelectedThemeColors().itemFillColor,
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: Insets.med),
+              decoration: Drawable.topRoundDecoration(getSelectedThemeColors().itemFillColor),
+              child: Column(
+                children: [
+                  ItemSplitter.thickSplitter,
+                  Text(
+                    text,
+                    style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                  ),
+                  ItemSplitter.thickSplitter,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomFlatButton(
+                        elevation: 0,
+                        size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                        fillColor: leftButtonColor,
+                        child: Text(
+                          leftButtonText,
+                          style: TextStyles.h2Bold
+                              .copyWith(color: getSelectedThemeColors().textOnAccentColor),
+                        ),
+                        onTap: () {
+                          leftButtonOnClick?.call();
+                          Navigator.of(context).maybePop();
+                        },
+                      ),
+                      FlatBorderButton(
+                        size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                        borderColor: rightButtonColor,
+                        backColor: getSelectedThemeColors().itemFillColor,
+                        rippleColor: rightButtonColor,
+                        onTap: () {
+                          rightButtonOnClick?.call();
+                          Navigator.of(context).maybePop();
+                        },
+                        child: Text(
+                          rightButtonText,
+                          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().secondaryText),
+                        ),
+                      )
+                    ],
+                  ),
+                  ItemSplitter.medSplitter,
+                ],
+              ),
+            )
+          ],
+        );
+      });
+}
+
+Future<dynamic> showDeleteDialog(BuildContext context, {String text = "", Function()? onDeleted}) {
+  return showAskQuestionDialog(context,
+      titleBarColor: UiColors.iconRed,
+      titleBarIcon: AppIcons.danger,
+      text: Texts.deleteQuestion.translate,
+      leftButtonText: Texts.deleteLeftButton.translate,
+      rightButtonText: Texts.deleteRightButton.translate,
+      leftButtonOnClick: onDeleted);
 }

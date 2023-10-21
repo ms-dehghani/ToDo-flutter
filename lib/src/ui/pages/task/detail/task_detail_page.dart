@@ -90,13 +90,16 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ItemSplitter.thickSplitter,
         _taskTitle(),
         ItemSplitter.thickSplitter,
-        TaskDetailRowItem(
-          title: Texts.addTaskRowDescription.translate,
-          icon: AppIcons.descriptionFill,
-          titleColor: getSelectedThemeColors().iconPink,
-          child: Text(
-            taskItem.description,
-            style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
+        Visibility(
+          visible: taskItem.description.isNotEmpty,
+          child: TaskDetailRowItem(
+            title: Texts.addTaskRowDescription.translate,
+            icon: AppIcons.descriptionFill,
+            titleColor: getSelectedThemeColors().iconPink,
+            child: Text(
+              taskItem.description,
+              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
+            ),
           ),
         ),
       ],
@@ -257,54 +260,71 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            TaskActionButton(
-              title: Texts.taskDetailButtonDone.translate,
-              icon: AppIcons.doneChecked,
-              color: taskItem.isDone
-                  ? getSelectedThemeColors().disableColor
-                  : getSelectedThemeColors().iconGreen,
-              onTap: () {
-                taskItem.isDone = !taskItem.isDone;
-                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-              },
-            ),
-            TaskActionButton(
-              title: Texts.taskDetailButtonChangeDate.translate,
-              icon: AppIcons.changeDate,
-              onTap: () {
-                showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
-                    onDateSelected: (timestamp) {
-                  taskItem.taskTimestamp = timestamp;
-                  _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-                });
-              },
-              color: getSelectedThemeColors().accentColor,
-            ),
-            TaskActionButton(
-              title: Texts.taskDetailButtonEdit.translate,
-              icon: AppIcons.edit,
-              color: getSelectedThemeColors().iconBlue,
-              onTap: () {
-                navigateToPage(
-                        context,
-                        CreateTaskItemPage(
-                          taskItem: taskItem,
-                        ))
-                    .then(
-                        (value) => _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem)));
-              },
-            ),
-            TaskActionButton(
-              title: Texts.taskDetailButtonDelete.translate,
-              icon: AppIcons.delete,
-              color: getSelectedThemeColors().iconRed,
-              onTap: () {
-                _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
-              },
-            ),
+            _taskActionDone(),
+            _taskActionChangeDate(context),
+            _taskActionEdit(context),
+            _taskActionDelete(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _taskActionDone() {
+    return TaskActionButton(
+      title: Texts.taskDetailButtonDone.translate,
+      icon: AppIcons.doneChecked,
+      color: taskItem.isDone
+          ? getSelectedThemeColors().disableColor
+          : getSelectedThemeColors().iconGreen,
+      onTap: () {
+        taskItem.isDone = !taskItem.isDone;
+        _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+      },
+    );
+  }
+
+  Widget _taskActionChangeDate(BuildContext context) {
+    return TaskActionButton(
+      title: Texts.taskDetailButtonChangeDate.translate,
+      icon: AppIcons.changeDate,
+      onTap: () {
+        showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
+            onDateSelected: (timestamp) {
+          taskItem.taskTimestamp = timestamp;
+          _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+        });
+      },
+      color: getSelectedThemeColors().accentColor,
+    );
+  }
+
+  Widget _taskActionEdit(BuildContext context) {
+    return TaskActionButton(
+      title: Texts.taskDetailButtonEdit.translate,
+      icon: AppIcons.edit,
+      color: getSelectedThemeColors().iconBlue,
+      onTap: () {
+        navigateToPage(
+            context,
+            CreateTaskItemPage(
+              taskItem: taskItem,
+            )).then((value) => _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem)));
+      },
+    );
+  }
+
+  Widget _taskActionDelete(BuildContext context) {
+    return TaskActionButton(
+      title: Texts.taskDetailButtonDelete.translate,
+      icon: AppIcons.delete,
+      color: getSelectedThemeColors().iconRed,
+      onTap: () {
+        showDeleteDialog(context , onDeleted: () {
+          // _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
+        },
+        text: Texts.taskDetailPageCategory);
+      },
     );
   }
 }
