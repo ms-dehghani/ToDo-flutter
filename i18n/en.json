@@ -1,3 +1,95 @@
 {
+  "appName" : "Kardone",
+  "version" : "Ver 1.0.0",
+
+
+  "taskListTitle" : "Tasks",
+  "noCat" : "Without category",
+
+  "addTaskPageTitle" : "Add new task",
+  "addTaskButtonAdd" : "Add task and back",
+  "editTaskButtonAdd" : "Edit task and back",
+
+  "addTaskRowTitle" : "Title",
+  "addTaskRowTitleHint" : "Write task title",
+
+  "addTaskRowCategory" : "Category",
+  "addTaskRowCategoryHint" : "Choose or create",
+
+  "addTaskRowPriority" : "Priority",
+  "addTaskRowPrioritySelect" : "Select",
+
+  "addTaskRowDate" : "Date",
+
+  "addTaskRowDescription" : "Description",
+  "addTaskRowDescriptionHint" : "Type task detail hear",
+
+  "taskEmptyMessage" : "No task found for %",
+
+  "taskDetailPageTitle" : "Task detail",
+
+  "taskDetailPagePriority" : "Priority:",
+  "taskDetailPageCategory" : "Category:",
+
+  "taskDetailButtonDone" : "Done",
+  "taskDetailButtonEdit" : "Edit",
+  "taskDetailButtonDelete" : "Delete",
+  "taskDetailButtonChangeDate" : "Shft",
+
+  "selectDateTitle" : "Select date",
+  "today" : "Today",
+  "goToday" : "Go to today",
+  "ok" : "Ok",
+
+  "deleteQuestion" : "This task will be delete with all detail, are you agree?",
+  "deleteLeftButton" : "Yes, delete",
+  "deleteRightButton" : "No, back",
+
+
+  "categoryListPageTitle" : "Choose or select category",
+  "categoryEditPageTitle" : "Edit category",
+  "categoryAddPageTitle" : "Create category",
+  "categoryListPageDescription" : "Choose category or create new one.",
+  "categoryListPageButtonAdd" : "Create new category",
+  "categoryEditPageButtonEdit" : "Edit and back",
+  "categoryAddPageButtonAdd" : "Add and back",
+  "categoryAddPageRowTitle" : "Title",
+  "categoryAddPageRowTitleHint" : "Write category title",
+
+  "priorityHigh" : "High",
+  "priorityMed" : "Med",
+  "priorityLow" : "Low",
+
+  "month1" : "January",
+  "month2" : "February",
+  "month3" : "March",
+  "month4" : "April",
+  "month5" : "May",
+  "month6" : "June",
+  "month7" : "July",
+  "month8" : "August",
+  "month9" : "September",
+  "month10" : "October",
+  "month11" : "November",
+  "month12" : "December",
+
+  "day1" : "Monday",
+  "day2" : "Tuesday",
+  "day3" : "Wednesday",
+  "day4" : "Thursday",
+  "day5" : "Friday",
+  "day6" : "Sunday",
+  "day7" : "Saturday",
+
+  "day1m" : "M",
+  "day2m" : "T",
+  "day3m" : "W",
+  "day4m" : "T",
+  "day5m" : "F",
+  "day6m" : "S",
+  "day7m" : "s",
+
+  "menuHome" : "Home"
+
 
 }

@@ -22,7 +22,7 @@ String fullTimeToText(int timestamp) {
     return "${dayOfWeek(timestamp, fullText: true)} ${jalali.day} ${Texts.monthName[jalali.month - 1].translate}"
         " ${jalali.year}";
   } else {
-    return "${dayOfWeek(timestamp, fullText: true)} ${date.year} ${Texts.monthName[date.month - 1].translate} ${date.day}";
+    return "${dayOfWeek(timestamp, fullText: true)} ${date.day} ${Texts.monthName[date.month - 1].translate} ${date.year}";
   }
 }
 
@@ -35,6 +35,10 @@ String dayOfWeek(int timestamp, {bool fullText = false}) {
 
 String dayOfMonth(int timestamp) {
   var date = DateTime.fromMillisecondsSinceEpoch(timestamp);
-  var jalali = Jalali.fromDateTime(date);
-  return "${jalali.day}";
+  if (isRTL()) {
+    var jalali = Jalali.fromDateTime(date);
+    return "${jalali.day}";
+  } else {
+    return "${date.day}";
+  }
 }

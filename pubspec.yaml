@@ -82,6 +82,11 @@ flutter:
         - asset: assets/fonts/iran.ttf
         - asset: assets/fonts/iran_b.ttf
           weight: 700
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/raleway.ttf
+        - asset: assets/fonts/raleway_b.ttf
+          weight: 700
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

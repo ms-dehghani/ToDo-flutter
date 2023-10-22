@@ -7,7 +7,6 @@ bool isRTL({Locale? locale}) {
   return intl.Bidi.isRtlLanguage(locale.languageCode);
 }
 
-TextDirection getDirection(){
-  // return isRTL() ? TextDirection.rtl : TextDirection.ltr;
-  return isRTL() ? TextDirection.rtl : TextDirection.rtl;
+TextDirection getDirection() {
+  return isRTL() ? TextDirection.rtl : TextDirection.ltr;
 }

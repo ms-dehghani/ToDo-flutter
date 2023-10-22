@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     HtmlFormatter.format();
     super.initState();
-    _localeOverrideDelegate = SpecificLocalizationDelegate(Locale("fa"));
+    _localeOverrideDelegate = SpecificLocalizationDelegate(Locale("en"));
     applic.onLocaleChanged = onLocaleChange;
   }
 
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: applic.supportedLocales(),
-      locale: Locale("fa"),
+      locale: Locale("en"),
       home: Directionality(
         textDirection: getDirection(),
         child: FutureBuilder(

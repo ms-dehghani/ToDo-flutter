@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kardone/src/utils/direction_util.dart';
 
 import 'dimens.dart';
 import 'fonts.dart';
 
 class TextStyles {
-  static const TextStyle raleway =
-      TextStyle(fontFamily: 'Iran', fontWeight: FontWeight.w400 ,decoration: TextDecoration
+  static TextStyle raleway =
+      TextStyle(fontFamily: isRTL() ? 'Iran': 'Raleway', fontWeight: FontWeight.w400 ,decoration:
+      TextDecoration
           .none);
 
   static TextStyle get h1 => raleway.copyWith(
