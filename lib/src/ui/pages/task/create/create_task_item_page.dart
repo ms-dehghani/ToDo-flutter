@@ -69,11 +69,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
             )),
         Expanded(
-          child: Padding(
-            padding: EdgeInsets.all(Insets.med),
-            child: Column(
-              children: [Expanded(child: _taskRows(context)), _createButton()],
-            ),
+          child: Column(
+            children: [Expanded(child: _taskRows(context)), _createButton()],
           ),
         )
       ],
@@ -81,20 +78,27 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
   }
 
   Widget _taskRows(BuildContext context) {
-    return ListView(children: [
-      ItemSplitter.thickSplitter,
-      _titleWidget(),
-      ItemSplitter.thickSplitter,
-      _categoryWidget(context),
-      ItemSplitter.thickSplitter,
-      ItemSplitter.ultraThinSplitter,
-      _priorityWidget(),
-      ItemSplitter.thickSplitter,
-      _dateWidget(),
-      ItemSplitter.thickSplitter,
-      _descriptionWidget(),
-      ItemSplitter.thickSplitter,
-    ]);
+    return ListView(
+        padding: EdgeInsets.only(
+          left: Insets.pagePadding,
+          right: Insets.pagePadding,
+          top: Insets.pagePadding,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        children: [
+          ItemSplitter.thickSplitter,
+          _titleWidget(),
+          ItemSplitter.thickSplitter,
+          _categoryWidget(context),
+          ItemSplitter.thickSplitter,
+          ItemSplitter.ultraThinSplitter,
+          _priorityWidget(),
+          ItemSplitter.thickSplitter,
+          _dateWidget(),
+          ItemSplitter.thickSplitter,
+          _descriptionWidget(),
+          ItemSplitter.thickSplitter,
+        ]);
   }
 
   Widget _titleWidget() {
@@ -140,8 +144,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               color: color,
             )),
         onTap: () {
-          showDatePickerDialog(context,initialTime: widget.taskItem.taskTimestamp, onDateSelected:
-              (timestamp) {
+          showDatePickerDialog(context, initialTime: widget.taskItem.taskTimestamp,
+              onDateSelected: (timestamp) {
             setState(() {
               widget.taskItem.taskTimestamp = timestamp;
             });
@@ -212,8 +216,9 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
         } else {}
       },
       builder: (context, state) {
-        return SizedBox(
+        return Container(
           width: double.infinity,
+          padding: EdgeInsets.all(Insets.pagePadding),
           child: CustomRaisedButton(
             size: Size(double.infinity, Insets.buttonHeight),
             fillColor: getSelectedThemeColors().primaryColor,

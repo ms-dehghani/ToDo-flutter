@@ -28,30 +28,33 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
       builder: (BuildContext context) {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                decoration: Drawable.bottomSheetDecoration(color!),
-                padding: EdgeInsets.all(Insets.lg),
-                child: (showClose
-                    ? Row(
-                        children: [
-                          Expanded(child: titleView ?? Container()),
-                          ItemSplitter.thickSplitter,
-                          GestureDetector(
-                            child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
-                            onTap: () {
-                              Navigator.of(context).maybePop();
-                            },
-                          ),
-                        ],
-                      )
-                    : titleView ?? Container()),
-              ),
-              body,
-            ],
+          child: Padding(
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  decoration: Drawable.bottomSheetDecoration(color!),
+                  padding: EdgeInsets.all(Insets.lg),
+                  child: (showClose
+                      ? Row(
+                          children: [
+                            Expanded(child: titleView ?? Container()),
+                            ItemSplitter.thickSplitter,
+                            GestureDetector(
+                              child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
+                              onTap: () {
+                                Navigator.of(context).maybePop();
+                              },
+                            ),
+                          ],
+                        )
+                      : titleView ?? Container()),
+                ),
+                body,
+              ],
+            ),
           ),
         );
       });

@@ -19,6 +19,8 @@ class Insets {
 
   static double get xl => 32 * scale;
 
+  static double get pagePadding => 16 * scale;
+
   static double get buttonHeight => 48 * scale;
 
   static double get backButtonHeight => 38 * scale;

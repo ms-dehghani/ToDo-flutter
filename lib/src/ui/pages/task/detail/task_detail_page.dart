@@ -11,7 +11,6 @@ import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_blo
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:kardone/src/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:kardone/src/logic/task/delete/bloc/task_delete_bloc.dart';
-import 'package:kardone/src/logic/task/delete/bloc/task_delete_event.dart';
 import 'package:kardone/src/logic/task/delete/bloc/task_delete_page_data.dart';
 import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
 import 'package:kardone/src/ui/pages/task/create/create_task_item_page.dart';
@@ -22,7 +21,6 @@ import 'package:kardone/src/ui/widgets/buttons/back_button.dart';
 import 'package:kardone/src/ui/widgets/buttons/task_action_button.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/ui/widgets/items/detail/task_detail_row_item.dart';
-import 'package:kardone/src/ui/widgets/picker/date_picker.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/navigator.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
@@ -108,7 +106,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _taskTitle() {
     return Container(
-      padding: EdgeInsets.all(Insets.med),
+      padding: EdgeInsets.all(Insets.pagePadding),
       decoration: Drawable.itemDetailDecoration(getSelectedThemeColors()),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -255,7 +253,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
       child: Container(
         width: double.infinity,
         height: Insets.taskActionBarHeight,
-        margin: EdgeInsets.only(left: Insets.med, right: Insets.med, bottom: Insets.med),
+        margin: EdgeInsets.only(
+            left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
         decoration: Drawable.taskActionsDecoration(getSelectedThemeColors()),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -320,10 +319,9 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
       icon: AppIcons.delete,
       color: getSelectedThemeColors().iconRed,
       onTap: () {
-        showDeleteDialog(context , onDeleted: () {
+        showDeleteDialog(context, onDeleted: () {
           // _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
-        },
-        text: Texts.taskDetailPageCategory);
+        }, text: Texts.taskDetailPageCategory);
       },
     );
   }

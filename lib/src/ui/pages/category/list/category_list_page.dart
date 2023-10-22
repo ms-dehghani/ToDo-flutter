@@ -18,7 +18,6 @@ import 'package:kardone/src/ui/widgets/items/list/category_list_row_item.dart';
 import 'package:kardone/src/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:kardone/src/ui/widgets/progress/in_page_progress.dart';
 import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/direction_util.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
@@ -49,7 +48,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
   Widget phoneView(BuildContext context) {
     return Container(
       color: getSelectedThemeColors().onBackground,
-      padding: EdgeInsets.only(left: Insets.med, right: Insets.med, bottom: Insets.med),
+      padding: EdgeInsets.only(left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
       child: Column(
         children: [
           Expanded(child: _categoryList(context)),

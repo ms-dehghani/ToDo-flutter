@@ -20,7 +20,7 @@ class ApplicationAppBar extends StatelessWidget {
       width: double.infinity,
       height: Insets.appBarHeight,
       color: color ?? Colors.transparent,
-      padding: EdgeInsets.symmetric(horizontal: Insets.med),
+      padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       alignment: Alignment.center,
       child: Row(
         children: [

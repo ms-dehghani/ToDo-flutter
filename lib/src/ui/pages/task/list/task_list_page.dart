@@ -96,7 +96,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                       child: Container(
                         width: getWidth(context),
                         height: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: Insets.med),
+                        padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
                         color: getSelectedThemeColors().onBackground,
                         child: Text(Texts.taskListTitle.translate,
                             style: TextStyles.h1Bold
@@ -151,7 +151,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   Widget _taskListDetail(List<TaskItem> taskList) {
     return ListView(
       shrinkWrap: true,
-      padding: EdgeInsets.symmetric(horizontal: Insets.med),
+      padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       children: taskList.map((e) {
         return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {

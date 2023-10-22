@@ -32,7 +32,7 @@ class TaskDetailRowItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap?.call(),
       child: Container(
-        padding: EdgeInsets.all(Insets.med),
+        padding: EdgeInsets.all(Insets.pagePadding),
         decoration: decoration,
         child: Column(
           children: [
