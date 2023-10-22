@@ -28,6 +28,14 @@ class Drawable {
         ),
       );
 
+  static BoxDecoration bottomSheetDecoration(Color color) => BoxDecoration(
+    color: color,
+    borderRadius: const BorderRadius.only(
+      topRight: Corners.xxlRadius,
+      topLeft: Corners.xxlRadius,
+    ),
+  );
+
   static BoxDecoration taskActionsDecoration(ThemeColor color) => BoxDecoration(
       color: UiColors.liteBackground,
       borderRadius: Corners.xxxlBorder,

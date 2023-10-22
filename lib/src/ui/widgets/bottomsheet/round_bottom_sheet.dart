@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/color.dart';
@@ -10,9 +12,7 @@ import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-import '../buttons/border_button.dart';
 import '../buttons/custom_flat_button.dart';
-import '../buttons/custom_raised_button.dart';
 import '../buttons/flat_border_button.dart';
 import '../picker/date_picker.dart';
 import 'bottomsheet_title_item.dart';
@@ -20,36 +20,39 @@ import 'bottomsheet_title_item.dart';
 Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
     {bool showClose = true, Widget? titleView, Color? color = Colors.white}) {
   return showModalBottomSheet(
-      shape: const RoundedRectangleBorder(borderRadius: Corners.hgTopBorder),
-      backgroundColor: color,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(borderRadius: Corners.bottomSheetTopBorder),
+      backgroundColor: Colors.transparent,
+      barrierColor: UiColors.bottomSheetBackDropBackground,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              color: color,
-              height: Insets.buttonHeight,
-              padding: EdgeInsets.all(Insets.med),
-              child: (showClose
-                  ? Row(
-                      children: [
-                        Expanded(child: titleView ?? Container()),
-                        ItemSplitter.thickSplitter,
-                        GestureDetector(
-                          child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
-                          onTap: () {
-                            Navigator.of(context).maybePop();
-                          },
-                        ),
-                      ],
-                    )
-                  : titleView ?? Container()),
-            ),
-            body,
-          ],
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                decoration: Drawable.bottomSheetDecoration(color!),
+                padding: EdgeInsets.all(Insets.lg),
+                child: (showClose
+                    ? Row(
+                        children: [
+                          Expanded(child: titleView ?? Container()),
+                          ItemSplitter.thickSplitter,
+                          GestureDetector(
+                            child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
+                            onTap: () {
+                              Navigator.of(context).maybePop();
+                            },
+                          ),
+                        ],
+                      )
+                    : titleView ?? Container()),
+              ),
+              body,
+            ],
+          ),
         );
       });
 }
@@ -90,74 +93,91 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
     Function()? leftButtonOnClick,
     Function()? rightButtonOnClick}) {
   return showModalBottomSheet(
-      shape: const RoundedRectangleBorder(borderRadius: Corners.hgTopBorder),
-      backgroundColor: titleBarColor,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
+      shape: RoundedRectangleBorder(borderRadius: Corners.bottomSheetTopBorder),
+      backgroundColor: Colors.transparent,
+      barrierColor: UiColors.bottomSheetBackDropBackground,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              height: Insets.buttonHeight,
-              child: Center(
-                child: ImageView(
-                  size: Insets.iconSizeL,
-                  src: titleBarIcon,
-                  color: getSelectedThemeColors().itemFillColor,
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                decoration: Drawable.bottomSheetDecoration(titleBarColor),
+                height: Insets.buttonHeight,
+                child: Center(
+                  child: ImageView(
+                    size: Insets.iconSizeL,
+                    src: titleBarIcon,
+                    color: getSelectedThemeColors().itemFillColor,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: Insets.med),
-              decoration: Drawable.topRoundDecoration(getSelectedThemeColors().itemFillColor),
-              child: Column(
+              Stack(
                 children: [
-                  ItemSplitter.thickSplitter,
-                  Text(
-                    text,
-                    style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                  Container(
+                    height: Insets.buttonHeight,
+                    color: titleBarColor,
                   ),
-                  ItemSplitter.thickSplitter,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomFlatButton(
-                        elevation: 0,
-                        size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
-                        fillColor: leftButtonColor,
-                        child: Text(
-                          leftButtonText,
-                          style: TextStyles.h2Bold
-                              .copyWith(color: getSelectedThemeColors().textOnAccentColor),
+                  Container(
+                    height: Insets.buttonHeight * 3,
+                    padding: EdgeInsets.symmetric(horizontal: Insets.med),
+                    decoration:
+                        Drawable.bottomSheetDecoration(getSelectedThemeColors().itemFillColor),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ItemSplitter.thickSplitter,
+                        Text(
+                          text,
+                          style:
+                              TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
                         ),
-                        onTap: () {
-                          leftButtonOnClick?.call();
-                          Navigator.of(context).maybePop();
-                        },
-                      ),
-                      FlatBorderButton(
-                        size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
-                        borderColor: rightButtonColor,
-                        backColor: getSelectedThemeColors().itemFillColor,
-                        rippleColor: rightButtonColor,
-                        onTap: () {
-                          rightButtonOnClick?.call();
-                          Navigator.of(context).maybePop();
-                        },
-                        child: Text(
-                          rightButtonText,
-                          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().secondaryText),
+                        ItemSplitter.thickSplitter,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomFlatButton(
+                              elevation: 0,
+                              size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                              fillColor: leftButtonColor,
+                              child: Text(
+                                leftButtonText,
+                                style: TextStyles.h2Bold
+                                    .copyWith(color: getSelectedThemeColors().textOnAccentColor),
+                              ),
+                              onTap: () {
+                                leftButtonOnClick?.call();
+                                Navigator.of(context).maybePop();
+                              },
+                            ),
+                            FlatBorderButton(
+                              size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                              borderColor: rightButtonColor,
+                              backColor: getSelectedThemeColors().itemFillColor,
+                              rippleColor: rightButtonColor,
+                              onTap: () {
+                                rightButtonOnClick?.call();
+                                Navigator.of(context).maybePop();
+                              },
+                              child: Text(
+                                rightButtonText,
+                                style: TextStyles.h2Bold
+                                    .copyWith(color: getSelectedThemeColors().secondaryText),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
+                        ItemSplitter.medSplitter,
+                      ],
+                    ),
                   ),
-                  ItemSplitter.medSplitter,
                 ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         );
       });
 }
