@@ -8,5 +8,6 @@ bool isRTL({Locale? locale}) {
 }
 
 TextDirection getDirection(){
-  return isRTL() ? TextDirection.rtl : TextDirection.ltr;
+  // return isRTL() ? TextDirection.rtl : TextDirection.ltr;
+  return isRTL() ? TextDirection.rtl : TextDirection.rtl;
 }

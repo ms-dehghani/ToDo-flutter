@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 
 import 'category_static.dart';
 
@@ -51,7 +52,7 @@ class CategoryItem extends Equatable{
     _id = value;
   }
 
-  String get title => _title;
+  String get title => (_id == "0" ? _title.translate : _title);
 
   set title(String value) {
     _title = value;

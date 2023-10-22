@@ -87,7 +87,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       ItemSplitter.thickSplitter,
       _categoryWidget(context),
       ItemSplitter.thickSplitter,
-      ItemSplitter.thinSplitter,
+      ItemSplitter.ultraThinSplitter,
       _priorityWidget(),
       ItemSplitter.thickSplitter,
       _dateWidget(),

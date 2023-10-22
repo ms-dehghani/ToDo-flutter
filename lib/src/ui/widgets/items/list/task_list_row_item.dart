@@ -63,7 +63,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                   ? getSelectedThemeColors().disableColor
                   : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         getScaledCheckBox(widget.taskItem.isDone, (value) {
           widget.taskItem.isDone = value!;
           widget.onDone?.call(widget.taskItem.isDone);
@@ -104,10 +104,10 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
       padding: EdgeInsets.symmetric(horizontal: Insets.med),
       child: Column(
         children: [
-          ItemSplitter.thinSplitter,
+          ItemSplitter.ultraThinSplitter,
           Row(
             children: [
-              ItemSplitter.thinSplitter,
+              ItemSplitter.ultraThinSplitter,
               RoundColoredContainer(
                 color: !widget.taskItem.isDone
                     ? getSelectedThemeColors().iconBlue.withOpacity(0.1)
@@ -119,7 +119,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                       color: getSelectedThemeColors().iconBlue,
                       size: Insets.iconSizeS,
                     ),
-                    ItemSplitter.thinSplitter,
+                    ItemSplitter.ultraThinSplitter,
                     Text(
                       widget.taskItem.categoryItem?.title ?? "",
                       style: TextStyles.h3.copyWith(
@@ -155,7 +155,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               color: getSelectedThemeColors().secondaryText,
               size: Insets.iconSizeM,
             ),
-            ItemSplitter.thinSplitter,
+            ItemSplitter.ultraThinSplitter,
             Flexible(
               child: Text(
                 timeToText(widget.taskItem.taskTimestamp),

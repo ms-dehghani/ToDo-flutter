@@ -62,9 +62,9 @@ class _ButtonFiledItemState extends State<ButtonFiledItem> {
         child: widget.icon != null
             ? Row(
                 children: [
-                  ItemSplitter.thinSplitter,
+                  ItemSplitter.ultraThinSplitter,
                   widget.icon!,
-                  ItemSplitter.thinSplitter,
+                  ItemSplitter.ultraThinSplitter,
                   Expanded(
                     child: widget.child,
                   )

@@ -5,6 +5,7 @@ import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
 import 'package:kardone/src/ui/widgets/image/image_view.dart';
+import 'package:kardone/src/utils/direction_util.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
@@ -35,11 +36,9 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
               size: Size(double.infinity, Insets.buttonHeight),
               fillColor: getSelectedThemeColors().pageBackground,
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: isRTL() ? Alignment.centerRight : Alignment.centerLeft,
                 child: Text(
-                  widget.categoryItem.ID == "0"
-                      ? widget.categoryItem.title.translate
-                      : widget.categoryItem.title,
+                  widget.categoryItem.title,
                   style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
                 ),
               ),
@@ -48,7 +47,7 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
               },
             ),
           ),
-          ItemSplitter.thinSplitter,
+          ItemSplitter.ultraThinSplitter,
           Visibility(
             visible: widget.categoryItem.ID != "0",
             child: CustomFlatButton(
@@ -69,7 +68,7 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
               },
             ),
           ),
-          ItemSplitter.thinSplitter,
+          ItemSplitter.ultraThinSplitter,
         ],
       ),
     );

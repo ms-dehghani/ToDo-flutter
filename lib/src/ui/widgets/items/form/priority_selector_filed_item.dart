@@ -60,12 +60,12 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
           size: Insets.iconSizeS,
           color: getSelectedThemeColors().secondaryText,
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Text(
           Texts.addTaskRowPrioritySelect.translate,
           style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

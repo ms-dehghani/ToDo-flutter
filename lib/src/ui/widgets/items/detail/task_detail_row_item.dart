@@ -43,8 +43,8 @@ class TaskDetailRowItem extends StatelessWidget {
                   color: titleColor ?? Colors.transparent,
                   size: Insets.iconSizeL,
                 ),
-                ItemSplitter.thinSplitter,
-                ItemSplitter.thinSplitter,
+                ItemSplitter.ultraThinSplitter,
+                ItemSplitter.ultraThinSplitter,
                 Expanded(
                   child: Text(
                     title,

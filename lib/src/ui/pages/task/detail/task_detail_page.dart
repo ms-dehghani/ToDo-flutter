@@ -159,12 +159,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
           size: Insets.iconSizeM,
           color: taskItem.priorityItem?.color,
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Text(
           Texts.taskDetailPagePriority.translate,
           style: TextStyles.h3.copyWith(color: taskItem.priorityItem?.color),
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Text(
           taskItem.priorityItem?.title.translate ?? "",
           style: TextStyles.h3Bold.copyWith(color: taskItem.priorityItem?.color),
@@ -181,12 +181,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
           size: Insets.iconSizeM,
           color: getSelectedThemeColors().iconBlue,
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Text(
           Texts.taskDetailPageCategory.translate,
           style: TextStyles.h3.copyWith(color: getSelectedThemeColors().iconBlue),
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         Text(
           taskItem.categoryItem?.title ?? "",
           style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().iconBlue),
@@ -214,8 +214,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                 src: AppIcons.calendarFill,
                 color: getSelectedThemeColors().iconGreen,
                 size: Insets.iconSizeL),
-            ItemSplitter.thinSplitter,
-            ItemSplitter.thinSplitter,
+            ItemSplitter.ultraThinSplitter,
+            ItemSplitter.ultraThinSplitter,
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

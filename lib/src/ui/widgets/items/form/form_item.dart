@@ -22,7 +22,7 @@ class FormItem extends StatelessWidget {
             style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
           ),
         ),
-        ItemSplitter.thinSplitter,
+        ItemSplitter.ultraThinSplitter,
         child
       ],
     );

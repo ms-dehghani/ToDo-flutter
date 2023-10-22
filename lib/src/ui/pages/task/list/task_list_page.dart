@@ -116,8 +116,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _calender() {
     return CalenderView(
-      start: DateTime.now().subtract(Duration(days: 10)),
-      end: DateTime.now().add(Duration(days: 10)),
+      start: DateTime.now().subtract(Duration(days: 100)),
+      end: DateTime.now().add(Duration(days: 100)),
       onSelect: (dateTime) {
         selectedDay = dateTime;
         _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));

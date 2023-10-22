@@ -86,10 +86,16 @@ class Borders {
 }
 
 class ItemSplitter {
-  static Widget thinSplitter = SizedBox(
+  static Widget ultraThinSplitter = SizedBox(
     width: Insets.xs,
     height: Insets.xs,
   );
+
+  static Widget thinSplitter = SizedBox(
+    width: Insets.sm,
+    height: Insets.sm,
+  );
+
   static Widget thickSplitter = SizedBox(
     width: Insets.lg,
     height: Insets.lg,

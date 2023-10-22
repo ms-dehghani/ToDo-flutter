@@ -47,9 +47,9 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          ItemSplitter.thinSplitter,
+          ItemSplitter.ultraThinSplitter,
           _titleWidget(),
-          ItemSplitter.thinSplitter,
+          ItemSplitter.ultraThinSplitter,
           _createButton()
         ],
       ),

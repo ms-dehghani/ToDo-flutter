@@ -46,7 +46,7 @@ class Texts {
   static const String taskEmptyMessage = "taskEmptyMessage";
 
   ///////// category
-  static const String categoryListPageTitle = "addTaskPageTitle";
+  static const String categoryListPageTitle = "categoryListPageTitle";
   static const String categoryEditPageTitle = "categoryEditPageTitle";
   static const String categoryAddPageTitle = "categoryAddPageTitle";
 

@@ -26,7 +26,7 @@ class BottomSheetTitleItem extends StatelessWidget {
           size: Insets.iconSizeXL,
           color: color,
         ),
-        ItemSplitter.medSplitter,
+        ItemSplitter.thinSplitter,
         Expanded(
             child: Text(
           title,
