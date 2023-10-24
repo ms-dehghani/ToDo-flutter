@@ -191,8 +191,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
                 TextSpan(
                     text:
-                        " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate
-                            : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
+                        " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
                     style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
               ],

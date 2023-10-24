@@ -5,18 +5,33 @@ import 'dimens.dart';
 import 'fonts.dart';
 
 class TextStyles {
-  static TextStyle raleway =
-      TextStyle(fontFamily: isRTL() ? 'Iran': 'Raleway', fontWeight: FontWeight.w400 ,decoration:
-      TextDecoration
-          .none);
+  static final TextStyles _textStyles = TextStyles._internal();
 
-  static TextStyle get h1 => raleway.copyWith(
+  factory TextStyles() {
+    return _textStyles;
+  }
+
+  TextStyles._internal();
+
+  void reloadStyles(Locale locale) {
+    baseFont = TextStyle(
+        fontFamily: isRTL(locale: locale) ? Fonts.iran : Fonts.raleway,
+        fontWeight: FontWeight.w400,
+        decoration: TextDecoration.none);
+  }
+
+  static TextStyle baseFont = TextStyle(
+      fontFamily: isRTL() ? Fonts.iran : Fonts.raleway,
+      fontWeight: FontWeight.w400,
+      decoration: TextDecoration.none);
+
+  static TextStyle get h1 => baseFont.copyWith(
         fontWeight: FontWeight.normal,
         fontSize: FontSizes.s20,
         letterSpacing: -1,
       );
 
-  static TextStyle get h1Bold => raleway.copyWith(
+  static TextStyle get h1Bold => baseFont.copyWith(
         fontWeight: FontWeight.bold,
         fontSize: FontSizes.s20,
         letterSpacing: -1,
@@ -33,5 +48,6 @@ class TextStyles {
   static TextStyle get h4 => h1.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
 
   static TextStyle get h4Bold => h2Bold.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
-
 }
+
+TextStyles textStyles = TextStyles();
