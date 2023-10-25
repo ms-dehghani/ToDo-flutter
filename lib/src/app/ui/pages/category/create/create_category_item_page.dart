@@ -6,7 +6,7 @@ import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/app/logic/base/page_status.dart';
 import 'package:kardone/src/app/logic/category/create_update/bloc/category_create_update_event.dart';
 import 'package:kardone/src/app/ui/widgets/buttons/custom_raised_button.dart';
-import 'package:kardone/src/di/di.dart';
+import 'package:kardone/src/app/di/di.dart';
 import 'package:kardone/src/app/logic/category/create_update/bloc/category_create_update_bloc.dart';
 import 'package:kardone/src/app/logic/category/create_update/bloc/category_create_update_page_data.dart';
 import 'package:kardone/src/domain/models/category/category_item.dart';

@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../datasource/category/db/category_item_db_data_provider.dart';
 import '../datasource/priority/db/priority_item_db_data_provider.dart';
+import '../datasource/setting/pref/setting_item_data_provider.dart';
 import '../datasource/task/db/task_item_db_data_provider.dart';
 import '../repositories/category/category_repository.dart';
 import '../repositories/priority/priority_repository.dart';
@@ -15,31 +15,33 @@ class DataDI {
     _priorityRepository();
     _categoryRepository();
     _taskRepository();
+    _settingRepository();
   }
 
   void _priorityRepository() {
-    var database = getIt<Database>();
-    var priorityDataProvider = PriorityItemDBDataProvider(database);
+    var priorityDataProvider = PriorityItemDBDataProvider(getIt());
 
     getIt.registerSingleton<PriorityItemDBDataProvider>(priorityDataProvider);
     getIt.registerSingleton<PriorityRepository>(PriorityRepository(priorityDataProvider, null));
   }
 
   void _categoryRepository() {
-    var database = getIt<Database>();
-    var categoryDataProvider = CategoryItemDBDataProvider(database);
+    var categoryDataProvider = CategoryItemDBDataProvider(getIt());
 
     getIt.registerSingleton<CategoryItemDBDataProvider>(categoryDataProvider);
     getIt.registerSingleton<CategoryRepository>(CategoryRepository(categoryDataProvider, null));
   }
 
   void _taskRepository() {
-    var database = getIt<Database>();
     var taskDataProvider = TaskItemDBDataProvider(
-        database, getIt<CategoryItemDBDataProvider>(), getIt<PriorityItemDBDataProvider>());
+        getIt(), getIt<CategoryItemDBDataProvider>(), getIt<PriorityItemDBDataProvider>());
 
     getIt.registerSingleton<TaskItemDBDataProvider>(taskDataProvider);
 
     getIt.registerSingleton<TaskRepository>(TaskRepository(taskDataProvider, null));
+  }
+
+  void _settingRepository() {
+    getIt.registerSingleton<SettingItemDataProvider>(SettingItemDataProvider(getIt()));
   }
 }
