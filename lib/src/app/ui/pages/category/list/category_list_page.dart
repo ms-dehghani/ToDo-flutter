@@ -6,7 +6,7 @@ import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/app/logic/base/page_status.dart';
 import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/di/di.dart';
+import 'package:kardone/src/app/di/di.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_bloc.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_event.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_page_data.dart';
