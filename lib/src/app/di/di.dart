@@ -6,6 +6,7 @@ import 'package:kardone/src/domain/models/priority/priority_item.dart';
 import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
 import 'package:kardone/src/domain/usecase/priority/priority_usecase.dart';
 import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DI {
@@ -26,6 +27,9 @@ class DI {
   Future<bool> provideDependencies() async {
     _database = await openDatabase('my_db.db');
     getIt.registerSingleton<Database>(_database);
+
+    var pref = await SharedPreferences.getInstance();
+    getIt.registerSingleton<SharedPreferences>(pref);
 
     DataDI();
     DomainDI();

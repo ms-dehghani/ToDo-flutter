@@ -1,4 +1,4 @@
-import 'package:kardone/arch/base_model.dart';
+import 'package:kardone/src/base/base_model.dart';
 import 'package:kardone/src/domain/models/category/category_item.dart';
 
 import '../category_data_provider.dart';
