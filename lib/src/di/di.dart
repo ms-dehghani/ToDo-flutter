@@ -1,15 +1,17 @@
 import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/model/items/tasks/category/data_provider/category_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/category/data_provider/db/category_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/category/repo/category_repository.dart';
-import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/priority/data_provider/priority_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
-import 'package:kardone/src/model/items/tasks/priority/repo/priority_repository.dart';
-import 'package:kardone/src/model/items/tasks/task/data_provider/db/task_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/task/data_provider/task_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/task/repo/task_repository.dart';
+import 'package:kardone/src/data/datasource/category/category_data_provider.dart';
+import 'package:kardone/src/data/datasource/priority/priority_data_provider.dart';
+import 'package:kardone/src/data/datasource/task/db/task_item_db_data_provider.dart';
+import 'package:kardone/src/data/datasource/task/task_data_provider.dart';
+import 'package:kardone/src/data/datasource/category/db/category_item_db_data_provider.dart';
+import 'package:kardone/src/data/repositories/category/category_repository.dart';
+import 'package:kardone/src/data/datasource/priority/db/priority_item_db_data_provider.dart';
+import 'package:kardone/src/domain/models/priority/priority_item.dart';
+import 'package:kardone/src/data/repositories/priority/priority_repository.dart';
+import 'package:kardone/src/data/repositories/task/task_repository.dart';
+import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
+import 'package:kardone/src/domain/usecase/priority/priority_usecase.dart';
+import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DI {
@@ -23,18 +25,18 @@ class DI {
 
   late final Database _database;
 
-  late final TaskRepository _taskRepository;
-  late final CategoryRepository _categoryRepository;
-  late final PriorityRepository _priorityRepository;
+  late final PriorityUseCase _priorityUseCase;
+  late final CategoryUseCase _categoryUseCase;
+  late final TaskUseCase _taskUseCase;
 
   late List<PriorityItem> prioritiesItem;
 
   Future<bool> provideDependencies() async {
     _database = await openDatabase('my_db.db');
 
-    _categoryRepository = CategoryRepository.init(_getLocalCategoryDB(), null);
-    _priorityRepository = PriorityRepository.init(_getLocalPriorityDB(), null);
-    _taskRepository = TaskRepository.init(_getLocalTaskDB(), null);
+    _priorityUseCase = PriorityUseCase.init(PriorityRepository.init(_getLocalPriorityDB(), null));
+    _categoryUseCase = CategoryUseCase.init(CategoryRepository.init(_getLocalCategoryDB(), null));
+    _taskUseCase = TaskUseCase.init(TaskRepository.init(_getLocalTaskDB(), null));
 
     await providePriorityList();
 
@@ -44,17 +46,17 @@ class DI {
   Future<bool> providePriorityList() async {
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("1", Texts.priorityHigh, "#FF3B3B"));
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("2", Texts.priorityMed, "#FF8800"));
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("3", Texts.priorityLow, "#06C270"));
-    prioritiesItem = await _priorityRepository.getPriorities();
+    prioritiesItem = await _priorityUseCase.getPriorities();
     return Future.value(true);
   }
 
@@ -62,27 +64,27 @@ class DI {
     return _database;
   }
 
-  TaskItemDataProviderImpl _getLocalTaskDB() {
-    return TaskItemDBDataProvider(_database, _categoryRepository, _priorityRepository);
+  TaskDataProvider _getLocalTaskDB() {
+    return TaskItemDBDataProvider(_database, _getLocalCategoryDB(), _getLocalPriorityDB());
   }
 
-  CategoryItemDataProviderImpl _getLocalCategoryDB() {
+  CategoryDataProvider _getLocalCategoryDB() {
     return CategoryItemDBDataProvider(_database);
   }
 
-  PriorityItemDataProviderImpl _getLocalPriorityDB() {
+  PriorityDataProvider _getLocalPriorityDB() {
     return PriorityItemDBDataProvider(_database);
   }
 
-  TaskRepository getTaskRepository() {
-    return _taskRepository;
+  TaskUseCase getTaskUseCase() {
+    return _taskUseCase;
   }
 
-  CategoryRepository getCategoryRepository() {
-    return _categoryRepository;
+  CategoryUseCase getCategoryUseCase() {
+    return _categoryUseCase;
   }
 
-  PriorityRepository getPriorityRepository() {
-    return _priorityRepository;
+  PriorityUseCase getPriorityUseCase() {
+    return _priorityUseCase;
   }
 }
