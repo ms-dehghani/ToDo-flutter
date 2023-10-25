@@ -2,27 +2,11 @@ import 'package:kardone/src/data/datasource/task/task_data_provider.dart';
 import 'package:kardone/src/domain/repositories/task/task_item_repository.dart';
 import 'package:kardone/src/domain/models/task/task_item.dart';
 
-
 class TaskRepository implements TaskItemRepository {
-  static TaskRepository? _taskRepository;
-
-  static TaskRepository init(TaskDataProvider localDB, TaskDataProvider? api) {
-    if (_taskRepository == null) {
-      _taskRepository = TaskRepository._internal();
-      _taskRepository!.api = api;
-      _taskRepository!.localDB = localDB;
-    }
-    return _taskRepository!;
-  }
-
-  static TaskRepository instance() {
-    return _taskRepository!;
-  }
-
-  late TaskDataProvider localDB;
+  TaskDataProvider localDB;
   TaskDataProvider? api;
 
-  TaskRepository._internal();
+  TaskRepository(this.localDB, this.api);
 
   @override
   Future<void> clear() {

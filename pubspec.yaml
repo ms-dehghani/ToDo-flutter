@@ -40,12 +40,12 @@ dependencies:
   equatable: ^2.0.3
   sqflite: ^2.3.0
   animations: ^2.0.8
-  shape_of_view_null_safe: ^2.0.0
   shamsi_date: ^1.0.2
   scroll_to_index: ^3.0.1
   dotted_border: ^2.1.0
   flutter_svg: ^2.0.7
   lottie: ^2.7.0
+  get_it: ^7.6.4
 #  shared_preferences: ^2.2.1
 
 dev_dependencies:

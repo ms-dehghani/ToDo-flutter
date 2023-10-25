@@ -3,19 +3,10 @@ import 'package:kardone/src/domain/repositories/task/task_item_repository.dart';
 import '../../models/task/task_item.dart';
 
 class TaskUseCase {
-  static TaskUseCase? _useCase;
-
-  static TaskUseCase init(TaskItemRepository repository) {
-    return _useCase ??= TaskUseCase._internal(repository: repository);
-  }
-
-  static TaskUseCase instance() {
-    return _useCase!;
-  }
 
   late final TaskItemRepository _repository;
 
-  TaskUseCase._internal({required TaskItemRepository repository}) {
+  TaskUseCase({required TaskItemRepository repository}) {
     _repository = repository;
   }
 

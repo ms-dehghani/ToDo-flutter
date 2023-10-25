@@ -3,19 +3,10 @@ import 'package:kardone/src/domain/repositories/category/category_item_repositor
 import '../../models/category/category_item.dart';
 
 class CategoryUseCase {
-  static CategoryUseCase? _useCase;
-
-  static CategoryUseCase init(CategoryItemRepository repository) {
-    return _useCase ??= CategoryUseCase._internal(repository: repository);
-  }
-
-  static CategoryUseCase instance() {
-    return _useCase!;
-  }
 
   late final CategoryItemRepository _repository;
 
-  CategoryUseCase._internal({required CategoryItemRepository repository}) {
+  CategoryUseCase({required CategoryItemRepository repository}) {
     _repository = repository;
   }
 

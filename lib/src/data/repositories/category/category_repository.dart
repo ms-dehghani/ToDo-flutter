@@ -3,25 +3,12 @@ import 'package:kardone/src/domain/models/category/category_item.dart';
 import 'package:kardone/src/domain/repositories/category/category_item_repository.dart';
 
 class CategoryRepository implements CategoryItemRepository {
-  static CategoryRepository? _categoryRepository;
 
-  static CategoryRepository init(CategoryDataProvider localDB, CategoryDataProvider? api) {
-    if (_categoryRepository == null) {
-      _categoryRepository = CategoryRepository._internal();
-      _categoryRepository!.api = api;
-      _categoryRepository!.localDB = localDB;
-    }
-    return _categoryRepository!;
-  }
-
-  static CategoryRepository instance() {
-    return _categoryRepository!;
-  }
-
-  late CategoryDataProvider localDB;
+  CategoryDataProvider localDB;
   CategoryDataProvider? api;
 
-  CategoryRepository._internal();
+  CategoryRepository(this.localDB, this.api);
+
 
   @override
   Future<void> clear() {

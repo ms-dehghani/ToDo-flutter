@@ -1,14 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/data/datasource/category/category_data_provider.dart';
-import 'package:kardone/src/data/datasource/priority/priority_data_provider.dart';
-import 'package:kardone/src/data/datasource/task/db/task_item_db_data_provider.dart';
-import 'package:kardone/src/data/datasource/task/task_data_provider.dart';
-import 'package:kardone/src/data/datasource/category/db/category_item_db_data_provider.dart';
-import 'package:kardone/src/data/repositories/category/category_repository.dart';
-import 'package:kardone/src/data/datasource/priority/db/priority_item_db_data_provider.dart';
+import 'package:kardone/src/data/di/data_di.dart';
+import 'package:kardone/src/domain/di/domain_di.dart';
 import 'package:kardone/src/domain/models/priority/priority_item.dart';
-import 'package:kardone/src/data/repositories/priority/priority_repository.dart';
-import 'package:kardone/src/data/repositories/task/task_repository.dart';
 import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
 import 'package:kardone/src/domain/usecase/priority/priority_usecase.dart';
 import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
@@ -23,27 +17,25 @@ class DI {
 
   DI._internal();
 
-  late final Database _database;
+  final getIt = GetIt.instance;
 
-  late final PriorityUseCase _priorityUseCase;
-  late final CategoryUseCase _categoryUseCase;
-  late final TaskUseCase _taskUseCase;
+  late final Database _database;
 
   late List<PriorityItem> prioritiesItem;
 
   Future<bool> provideDependencies() async {
     _database = await openDatabase('my_db.db');
+    getIt.registerSingleton<Database>(_database);
 
-    _priorityUseCase = PriorityUseCase.init(PriorityRepository.init(_getLocalPriorityDB(), null));
-    _categoryUseCase = CategoryUseCase.init(CategoryRepository.init(_getLocalCategoryDB(), null));
-    _taskUseCase = TaskUseCase.init(TaskRepository.init(_getLocalTaskDB(), null));
+    DataDI();
+    DomainDI();
 
-    await providePriorityList();
+    await _providePriorityList();
 
     return Future.value(true);
   }
 
-  Future<bool> providePriorityList() async {
+  Future<bool> _providePriorityList() async {
     await DI
         .instance()
         .getPriorityUseCase()
@@ -56,35 +48,19 @@ class DI {
         .instance()
         .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("3", Texts.priorityLow, "#06C270"));
-    prioritiesItem = await _priorityUseCase.getPriorities();
+    prioritiesItem = await getIt<PriorityUseCase>().getPriorities();
     return Future.value(true);
   }
 
-  Database getDB() {
-    return _database;
-  }
-
-  TaskDataProvider _getLocalTaskDB() {
-    return TaskItemDBDataProvider(_database, _getLocalCategoryDB(), _getLocalPriorityDB());
-  }
-
-  CategoryDataProvider _getLocalCategoryDB() {
-    return CategoryItemDBDataProvider(_database);
-  }
-
-  PriorityDataProvider _getLocalPriorityDB() {
-    return PriorityItemDBDataProvider(_database);
-  }
-
   TaskUseCase getTaskUseCase() {
-    return _taskUseCase;
+    return getIt<TaskUseCase>();
   }
 
   CategoryUseCase getCategoryUseCase() {
-    return _categoryUseCase;
+    return getIt<CategoryUseCase>();
   }
 
   PriorityUseCase getPriorityUseCase() {
-    return _priorityUseCase;
+    return getIt<PriorityUseCase>();
   }
 }
