@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/res/theme/themes.dart';
-import 'package:kardone/src/ui/pages/task/list/task_list_page.dart';
+import 'package:kardone/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:kardone/src/utils/ht/html.dart';
 
 import 'applic.dart';
