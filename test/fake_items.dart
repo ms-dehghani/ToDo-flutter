@@ -1,7 +1,7 @@
 import 'package:faker/faker.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/domain/models/category/category_item.dart';
+import 'package:kardone/src/domain/models/priority/priority_item.dart';
+import 'package:kardone/src/domain/models/task/task_item.dart';
 
 TaskItem getFakeTaskItem() {
   var faker = Faker();

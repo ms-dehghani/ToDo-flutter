@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:kardone/res/text_style.dart';
+
 import 'translations.dart';
 
 typedef void LocaleChangeCallback(Locale locale);
@@ -19,7 +21,10 @@ class APPLIC {
   APPLIC._internal();
 
   static void changeLang(String? text) {
-    Translations.instance().load(Locale(text ?? "en"));
+    var selectedLocale = Locale(text ?? applic.supportedLanguages[0]);
+    Translations.instance().load(selectedLocale);
+    textStyles.reloadStyles(selectedLocale);
+    _applic.onLocaleChanged?.call(selectedLocale);
   }
 }
 

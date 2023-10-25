@@ -312,6 +312,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  get_it:
+    dependency: "direct main"
+    description:
+      name: get_it
+      sha256: f79870884de16d689cf9a7d15eedf31ed61d750e813c538a6efb92660fea83c3
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.4"
   glob:
     dependency: transitive
     description:
@@ -552,14 +560,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  shape_of_view_null_safe:
-    dependency: "direct main"
-    description:
-      name: shape_of_view_null_safe
-      sha256: "0179b77beff9c88b7ab334237431c48196e093b706db7f99f29bcac8ad49bbff"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   shelf:
     dependency: transitive
     description:

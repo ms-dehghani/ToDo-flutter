@@ -1,15 +1,11 @@
+import 'package:get_it/get_it.dart';
 import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/model/items/tasks/category/data_provider/category_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/category/data_provider/db/category_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/category/repo/category_repository.dart';
-import 'package:kardone/src/model/items/tasks/priority/data_provider/db/priority_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/priority/data_provider/priority_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/priority/pojo/priority_item.dart';
-import 'package:kardone/src/model/items/tasks/priority/repo/priority_repository.dart';
-import 'package:kardone/src/model/items/tasks/task/data_provider/db/task_item_db_data_provider.dart';
-import 'package:kardone/src/model/items/tasks/task/data_provider/task_item_data_provider_impl.dart';
-import 'package:kardone/src/model/items/tasks/task/repo/task_repository.dart';
+import 'package:kardone/src/data/di/data_di.dart';
+import 'package:kardone/src/domain/di/domain_di.dart';
+import 'package:kardone/src/domain/models/priority/priority_item.dart';
+import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
+import 'package:kardone/src/domain/usecase/priority/priority_usecase.dart';
+import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DI {
@@ -21,68 +17,50 @@ class DI {
 
   DI._internal();
 
-  late final Database _database;
+  final getIt = GetIt.instance;
 
-  late final TaskRepository _taskRepository;
-  late final CategoryRepository _categoryRepository;
-  late final PriorityRepository _priorityRepository;
+  late final Database _database;
 
   late List<PriorityItem> prioritiesItem;
 
   Future<bool> provideDependencies() async {
     _database = await openDatabase('my_db.db');
+    getIt.registerSingleton<Database>(_database);
 
-    _categoryRepository = CategoryRepository.init(_getLocalCategoryDB(), null);
-    _priorityRepository = PriorityRepository.init(_getLocalPriorityDB(), null);
-    _taskRepository = TaskRepository.init(_getLocalTaskDB(), null);
+    DataDI();
+    DomainDI();
 
-    await providePriorityList();
+    await _providePriorityList();
 
     return Future.value(true);
   }
 
-  Future<bool> providePriorityList() async {
+  Future<bool> _providePriorityList() async {
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("1", Texts.priorityHigh, "#FF3B3B"));
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("2", Texts.priorityMed, "#FF8800"));
     await DI
         .instance()
-        .getPriorityRepository()
+        .getPriorityUseCase()
         .createOrUpdatePriority(PriorityItem("3", Texts.priorityLow, "#06C270"));
-    prioritiesItem = await _priorityRepository.getPriorities();
+    prioritiesItem = await getIt<PriorityUseCase>().getPriorities();
     return Future.value(true);
   }
 
-  Database getDB() {
-    return _database;
+  TaskUseCase getTaskUseCase() {
+    return getIt<TaskUseCase>();
   }
 
-  TaskItemDataProviderImpl _getLocalTaskDB() {
-    return TaskItemDBDataProvider(_database, _categoryRepository, _priorityRepository);
+  CategoryUseCase getCategoryUseCase() {
+    return getIt<CategoryUseCase>();
   }
 
-  CategoryItemDataProviderImpl _getLocalCategoryDB() {
-    return CategoryItemDBDataProvider(_database);
-  }
-
-  PriorityItemDataProviderImpl _getLocalPriorityDB() {
-    return PriorityItemDBDataProvider(_database);
-  }
-
-  TaskRepository getTaskRepository() {
-    return _taskRepository;
-  }
-
-  CategoryRepository getCategoryRepository() {
-    return _categoryRepository;
-  }
-
-  PriorityRepository getPriorityRepository() {
-    return _priorityRepository;
+  PriorityUseCase getPriorityUseCase() {
+    return getIt<PriorityUseCase>();
   }
 }

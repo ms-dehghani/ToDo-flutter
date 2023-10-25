@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/res/theme/themes.dart';
-import 'package:kardone/src/ui/pages/task/list/task_list_page.dart';
+import 'package:kardone/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:kardone/src/utils/ht/html.dart';
 
 import 'applic.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     HtmlFormatter.format();
     super.initState();
-    _localeOverrideDelegate = SpecificLocalizationDelegate(Locale("en"));
+    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("en"));
     applic.onLocaleChanged = onLocaleChange;
   }
 
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  Future<void> test() async {
+  Future<void> initDI() async {
     await DI.instance().provideDependencies();
     return Future.value();
   }
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: applic.supportedLocales(),
-      locale: Locale("en"),
+      locale: _localeOverrideDelegate.overriddenLocale,
       home: Directionality(
         textDirection: getDirection(),
         child: FutureBuilder(
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
               );
             }
           },
-          future: test(),
+          future: initDI(),
         ),
       ),
     );
