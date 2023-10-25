@@ -10,7 +10,7 @@ import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_bloc.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_event.dart';
 import 'package:kardone/src/app/logic/category/get/bloc/category_get_page_data.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
+import 'package:kardone/src/domain/models/category/category_item.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
 import 'package:kardone/src/app/ui/widgets/buttons/border_button.dart';
@@ -35,7 +35,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
         BlocProvider<CategoryGetBloc>(
           create: (BuildContext context) {
             return _categoryGetBloc =
-                CategoryGetBloc(categoryRepository: DI.instance().getCategoryRepository())
+                CategoryGetBloc(categoryRepository: DI.instance().getCategoryUseCase())
                   ..add(GetAllCategoryEvent());
           },
         ),

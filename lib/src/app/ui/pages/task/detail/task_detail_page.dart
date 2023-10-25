@@ -14,7 +14,7 @@ import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
 import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/domain/models/task/task_item.dart';
 import 'package:kardone/src/app/ui/pages/task/create/create_task_item_page.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
@@ -41,10 +41,10 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
       providers: [
         BlocProvider<TaskCreateOrUpdateBloc>(
             create: (BuildContext context) => _taskCreateOrUpdateBloc =
-                TaskCreateOrUpdateBloc(taskRepository: DI.instance().getTaskRepository())),
+                TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase())),
         BlocProvider<TaskDeleteBloc>(
           create: (BuildContext context) =>
-              _taskDeleteBloc = TaskDeleteBloc(taskRepository: DI.instance().getTaskRepository()),
+              _taskDeleteBloc = TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase()),
         ),
       ],
       child: BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(

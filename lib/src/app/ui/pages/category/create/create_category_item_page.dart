@@ -9,7 +9,7 @@ import 'package:kardone/src/app/ui/widgets/buttons/custom_raised_button.dart';
 import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/app/logic/category/create_update/bloc/category_create_update_bloc.dart';
 import 'package:kardone/src/app/logic/category/create_update/bloc/category_create_update_page_data.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
+import 'package:kardone/src/domain/models/category/category_item.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/app/ui/widgets/items/form/form_item.dart';
 import 'package:kardone/src/app/ui/widgets/items/form/text_filed_item.dart';
@@ -29,7 +29,7 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
       providers: [
         BlocProvider<CategoryCreateOrUpdateBloc>(
           create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
-              categoryRepository: DI.instance().getCategoryRepository(),
+              categoryRepository: DI.instance().getCategoryUseCase(),
               categoryItem: categoryItem),
         ),
       ],

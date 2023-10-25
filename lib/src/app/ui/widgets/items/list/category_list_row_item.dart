@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
+import 'package:kardone/src/domain/models/category/category_item.dart';
 import 'package:kardone/src/utils/direction_util.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 

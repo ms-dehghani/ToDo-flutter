@@ -13,7 +13,7 @@ import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:kardone/src/app/logic/task/get/bloc/task_get_bloc.dart';
 import 'package:kardone/src/app/logic/task/get/bloc/task_get_page_data.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/domain/models/task/task_item.dart';
 import 'package:kardone/src/app/ui/pages/task/detail/task_detail_page.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/app/ui/widgets/calendar_view/calendar_view.dart';
@@ -43,14 +43,14 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       providers: [
         BlocProvider<TaskGetBloc>(
           create: (BuildContext context) {
-            _taskGetBloc = TaskGetBloc(taskRepository: DI.instance().getTaskRepository());
+            _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
             _taskGetBloc.add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch));
             return _taskGetBloc;
           },
         ),
         BlocProvider<TaskCreateOrUpdateBloc>(
           create: (BuildContext context) => _taskCreateOrUpdateBloc =
-              TaskCreateOrUpdateBloc(taskRepository: DI.instance().getTaskRepository()),
+              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
         ),
       ],
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),

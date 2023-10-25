@@ -12,8 +12,8 @@ import 'package:kardone/src/di/di.dart';
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:kardone/src/model/items/tasks/category/pojo/category_item.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/domain/models/category/category_item.dart';
+import 'package:kardone/src/domain/models/task/task_item.dart';
 import 'package:kardone/src/app/ui/pages/category/list/category_list_page.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
@@ -44,7 +44,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       providers: [
         BlocProvider<TaskCreateOrUpdateBloc>(
           create: (BuildContext context) =>
-              TaskCreateOrUpdateBloc(taskRepository: DI.instance().getTaskRepository()),
+              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
         ),
       ],
       child: Material(

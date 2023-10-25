@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
 import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
-import 'package:kardone/src/model/items/tasks/task/pojo/task_item.dart';
+import 'package:kardone/src/domain/models/task/task_item.dart';
 import 'package:kardone/src/app/ui/widgets/check_box/check_box_item.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:kardone/src/utils/time_util.dart';
