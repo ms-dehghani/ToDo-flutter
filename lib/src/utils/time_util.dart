@@ -11,7 +11,7 @@ String timeToText(int timestamp, {bool withDay = true}) {
     var jalali = Jalali.fromDateTime(date);
     return "${jalali.year} ${Texts.monthName[jalali.month - 1].translate} ${withDay ? jalali.day : ""}";
   } else {
-    return "${date.year} ${Texts.monthName[date.month - 1].translate} ${withDay ? date.day : ""}";
+    return "${Texts.monthName[date.month - 1].translate} ${withDay ? date.day : ""} ${date.year}";
   }
 }
 
