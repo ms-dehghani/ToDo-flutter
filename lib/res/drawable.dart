@@ -86,6 +86,9 @@ class AppIcons {
   static const String priorityOutline = "assets/images/ic_priority_outline.svg";
   static const String danger = "assets/images/ic_danger.svg";
   static const String emptyTask = "assets/images/empty_task.svg";
+
+  static const String topSplash = "assets/images/top_splash.svg";
+  static const String bottomSplash = "assets/images/bottom_splash.svg";
 }
 
 class Shadows {
