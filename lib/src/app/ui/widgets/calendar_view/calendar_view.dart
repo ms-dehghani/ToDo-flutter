@@ -147,7 +147,9 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
   Widget _calenderGoToToday() {
     return GestureDetector(
         onTap: () {
-          _setItemClicked(DateTime.now());
+          if (!selectedDay.isSameDay(date: DateTime.now())) {
+            _setItemClicked(DateTime.now());
+          }
         },
         child: Text(
           Texts.goToday.translate,
