@@ -5,6 +5,9 @@ import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/app/logic/base/page_status.dart';
+import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_event.dart';
+import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
 import 'package:kardone/src/app/logic/task/get/bloc/task_get_event.dart';
 import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/app/di/di.dart';
@@ -30,8 +33,8 @@ import '../create/create_task_item_page.dart';
 
 class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   late TaskGetBloc _taskGetBloc;
-
   late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+  late TaskDeleteBloc _taskDeleteBloc;
 
   DateTime selectedDay = DateTime.now();
 
@@ -51,6 +54,10 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         BlocProvider<TaskCreateOrUpdateBloc>(
           create: (BuildContext context) => _taskCreateOrUpdateBloc =
               TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
+        ),
+        BlocProvider<TaskDeleteBloc>(
+          create: (BuildContext context) =>
+              _taskDeleteBloc = TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase()),
         ),
       ],
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
@@ -134,7 +141,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         return Container(
             margin: EdgeInsets.only(top: Insets.buttonHeight),
             child: state.pageStatus == PageStatus.success
-                ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
+                ? (state.taskList.isNotEmpty
+                    ? Expanded(child: _taskListDetail(state.taskList))
+                    : _emptyView())
                 : _loadingWidget());
       },
     );
@@ -153,24 +162,41 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       children: taskList.map((e) {
-        return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
+        return BlocBuilder<TaskDeleteBloc, TaskDeleteBlocPageData>(
           buildWhen: (previous, current) {
             return true;
           },
           builder: (context, state) {
-            return TaskListRowItem(
-              taskItem: e,
-              onDone: (done) {
-                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+            return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
+              buildWhen: (previous, current) {
+                return true;
               },
-              onTap: () {
-                navigateToPage(
-                    context,
-                    TaskDetailPage(
-                      taskItem: e,
-                    )).then((value) {
-                  _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
-                });
+              builder: (context, state) {
+                return TaskListRowItem(
+                  key: GlobalKey(),
+                  taskItem: e,
+                  onDone: (done) {
+                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+                  },
+                  onTap: () {
+                    navigateToPage(
+                        context,
+                        TaskDetailPage(
+                          taskItem: e,
+                        )).then((value) {
+                      _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
+                    });
+                  },
+                  onEdit: () {
+                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+                  },
+                  onChangeDate: () {
+                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+                  },
+                  onDelete: () {
+                    _taskDeleteBloc.add(TaskDeleteEvent(id: e.ID));
+                  },
+                );
               },
             );
           },

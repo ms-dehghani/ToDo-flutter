@@ -6,6 +6,7 @@ import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/app/logic/base/page_status.dart';
+import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_event.dart';
 import 'package:kardone/src/app/ui/widgets/app_bar.dart';
 import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/app/di/di.dart';
@@ -14,6 +15,7 @@ import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update
 import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
 import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
+import 'package:kardone/src/app/ui/widgets/items/task/task_actions.dart';
 import 'package:kardone/src/domain/models/task/task_item.dart';
 import 'package:kardone/src/app/ui/pages/task/create/create_task_item_page.dart';
 import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
@@ -256,73 +258,21 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         margin: EdgeInsets.only(
             left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
         decoration: Drawable.taskActionsDecoration(getSelectedThemeColors()),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _taskActionDone(),
-            _taskActionChangeDate(context),
-            _taskActionEdit(context),
-            _taskActionDelete(context),
-          ],
-        ),
+        child: TaskActions(
+            taskItem: taskItem,
+            onDone: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            },
+            onChangeDate: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            },
+            onDelete: () {
+              _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
+            },
+            onEdit: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            }),
       ),
-    );
-  }
-
-  Widget _taskActionDone() {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonDone.translate,
-      icon: AppIcons.doneChecked,
-      color: taskItem.isDone
-          ? getSelectedThemeColors().disableColor
-          : getSelectedThemeColors().iconGreen,
-      onTap: () {
-        taskItem.isDone = !taskItem.isDone;
-        _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-      },
-    );
-  }
-
-  Widget _taskActionChangeDate(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonChangeDate.translate,
-      icon: AppIcons.changeDate,
-      onTap: () {
-        showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
-            onDateSelected: (timestamp) {
-          taskItem.taskTimestamp = timestamp;
-          _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-        });
-      },
-      color: getSelectedThemeColors().accentColor,
-    );
-  }
-
-  Widget _taskActionEdit(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonEdit.translate,
-      icon: AppIcons.edit,
-      color: getSelectedThemeColors().iconBlue,
-      onTap: () {
-        navigateToPage(
-            context,
-            CreateTaskItemPage(
-              taskItem: taskItem,
-            )).then((value) => _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem)));
-      },
-    );
-  }
-
-  Widget _taskActionDelete(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonDelete.translate,
-      icon: AppIcons.delete,
-      color: getSelectedThemeColors().iconRed,
-      onTap: () {
-        showDeleteDialog(context, onDeleted: () {
-          // _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
-        }, text: Texts.taskDetailPageCategory);
-      },
     );
   }
 }

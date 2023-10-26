@@ -9,7 +9,7 @@ class UiColors {
   static const Color liteBackground = Color(0xFFFAFAFA);
   static const Color whiteBackground = Color(0xFFFFFFFF);
 
-  static const Color bottomSheetBackDropBackground = Color(0x77555555);
+  static const Color bottomSheetBackDropBackground = Color(0x77000000);
 
   static const Color iconGreen = Color(0xFF33CA7F);
   static const Color iconPurple = Color(0xFF7209B7);
