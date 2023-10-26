@@ -32,9 +32,13 @@ import 'package:kardone/src/utils/time_util.dart';
 import '../create/create_task_item_page.dart';
 
 class TaskListPage extends StatelessWidget with WidgetViewTemplate {
-  late TaskGetBloc _taskGetBloc;
-  late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
-  late TaskDeleteBloc _taskDeleteBloc;
+  final TaskGetBloc _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
+
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+
+  final TaskDeleteBloc _taskDeleteBloc =
+      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
 
   DateTime selectedDay = DateTime.now();
 
@@ -46,18 +50,15 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       providers: [
         BlocProvider<TaskGetBloc>(
           create: (BuildContext context) {
-            _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
             _taskGetBloc.add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch));
             return _taskGetBloc;
           },
         ),
         BlocProvider<TaskCreateOrUpdateBloc>(
-          create: (BuildContext context) => _taskCreateOrUpdateBloc =
-              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
+          create: (BuildContext context) => _taskCreateOrUpdateBloc,
         ),
         BlocProvider<TaskDeleteBloc>(
-          create: (BuildContext context) =>
-              _taskDeleteBloc = TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase()),
+          create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
@@ -133,19 +134,25 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _taskList() {
-    return BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
-      buildWhen: (previous, current) {
-        return true;
+    return BlocListener<TaskDeleteBloc , TaskDeleteBlocPageData>(
+      listener: (context, state) {
+        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
       },
-      builder: (context, state) {
-        return Container(
-            margin: EdgeInsets.only(top: Insets.buttonHeight),
-            child: state.pageStatus == PageStatus.success
-                ? (state.taskList.isNotEmpty
-                    ? Expanded(child: _taskListDetail(state.taskList))
-                    : _emptyView())
-                : _loadingWidget());
-      },
+      child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
+        buildWhen: (previous, current) {
+          return true;
+        },
+        builder: (context, state) {
+          return Container(
+              margin: EdgeInsets.only(top: Insets.buttonHeight),
+              height: double.infinity,
+              child: state.pageStatus == PageStatus.success
+                  ? (state.taskList.isNotEmpty
+                  ? _taskListDetail(state.taskList)
+                  : _emptyView())
+                  : _loadingWidget());
+        },
+      ),
     );
   }
 
@@ -162,45 +169,43 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       children: taskList.map((e) {
-        return BlocBuilder<TaskDeleteBloc, TaskDeleteBlocPageData>(
+        return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {
             return true;
           },
           builder: (context, state) {
-            return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
-              buildWhen: (previous, current) {
-                return true;
+            if (!selectedDay.isSameDay(timestamp: e.taskTimestamp)) {
+              _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+              return Container();
+            }
+            return TaskListRowItem(
+              key: GlobalKey(),
+              taskItem: e,
+              onDone: (done) {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
               },
-              builder: (context, state) {
-                return TaskListRowItem(
-                  key: GlobalKey(),
-                  taskItem: e,
-                  onDone: (done) {
-                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
-                  },
-                  onTap: () {
-                    navigateToPage(
-                        context,
-                        TaskDetailPage(
-                          taskItem: e,
-                        )).then((value) {
-                      _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
-                    });
-                  },
-                  onEdit: () {
-                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
-                  },
-                  onChangeDate: () {
-                    _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
-                  },
-                  onDelete: () {
-                    _taskDeleteBloc.add(TaskDeleteEvent(id: e.ID));
-                  },
-                );
+              onTap: () {
+                navigateToPage(
+                    context,
+                    TaskDetailPage(
+                      taskItem: e,
+                    )).then((value) {
+                  _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
+                });
+              },
+              onEdit: () {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+              },
+              onChangeDate: () {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+              },
+              onDelete: () {
+                _taskDeleteBloc.add(TaskDeleteEvent(id: e.ID));
               },
             );
           },
         );
+        ;
       }).toList(),
     );
   }

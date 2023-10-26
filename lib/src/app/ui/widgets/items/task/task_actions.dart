@@ -71,8 +71,7 @@ class TaskActions extends StatelessWidget {
         showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
             onDateSelected: (timestamp) {
           taskItem.taskTimestamp = timestamp;
-          onChangeDate?.call();
-        });
+        }).then((value) => onChangeDate?.call());
       },
       color: getSelectedThemeColors().accentColor,
     );

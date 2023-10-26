@@ -154,8 +154,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                                     .copyWith(color: getSelectedThemeColors().textOnAccentColor),
                               ),
                               onTap: () {
-                                leftButtonOnClick?.call();
-                                Navigator.of(context).maybePop();
+                                Navigator.of(context).maybePop().then((value) => leftButtonOnClick?.call());
                               },
                             ),
                             FlatBorderButton(
@@ -164,8 +163,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                               backColor: getSelectedThemeColors().itemFillColor,
                               rippleColor: rightButtonColor,
                               onTap: () {
-                                rightButtonOnClick?.call();
-                                Navigator.of(context).maybePop();
+                                Navigator.of(context).maybePop().then((value) => rightButtonOnClick?.call());
                               },
                               child: Text(
                                 rightButtonText,

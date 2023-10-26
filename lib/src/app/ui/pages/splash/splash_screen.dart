@@ -11,7 +11,7 @@ import 'package:kardone/src/utils/theme_utils.dart';
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Timer.periodic(const Duration(seconds: 2), (timer) {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {
