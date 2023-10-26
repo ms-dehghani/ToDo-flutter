@@ -8,6 +8,7 @@ import 'package:kardone/res/drawable.dart';
 import 'package:kardone/res/text_style.dart';
 import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/utils/device.dart';
+import 'package:kardone/src/utils/direction_util.dart';
 import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
@@ -78,6 +79,7 @@ Future<dynamic> showDatePickerDialog(BuildContext context,
           title: title,
           initialTime: initialTime,
           showOnlyYearMonth: showOnlyYearMonth,
+          showJalali: isRTL(),
           onDateSelected: (timestamp) {
             onDateSelected?.call(timestamp);
           },

@@ -26,6 +26,7 @@ class DatePicker extends StatefulWidget {
       {this.title = "",
       this.initialTime = 0,
       this.onDateSelected,
+      this.showJalali = false,
       this.showOnlyYearMonth = false}) {
     if (title == "") title = Texts.chooseDatePicker;
     if (initialTime == 0) {
