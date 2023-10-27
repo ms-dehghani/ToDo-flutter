@@ -134,10 +134,14 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _taskList() {
-    return BlocListener<TaskDeleteBloc , TaskDeleteBlocPageData>(
-      listener: (context, state) {
-        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
+          listener: (context, state) {
+            _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+          },
+        ),
+      ],
       child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
         buildWhen: (previous, current) {
           return true;
@@ -147,9 +151,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
               margin: EdgeInsets.only(top: Insets.buttonHeight),
               height: double.infinity,
               child: state.pageStatus == PageStatus.success
-                  ? (state.taskList.isNotEmpty
-                  ? _taskListDetail(state.taskList)
-                  : _emptyView())
+                  ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
                   : _loadingWidget());
         },
       ),

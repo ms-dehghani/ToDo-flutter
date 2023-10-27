@@ -49,7 +49,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       ],
       child: Material(
         color: getSelectedThemeColors().itemFillColor,
-        child: SafeArea(child: showPage(context)),
+        child: Scaffold(body: SafeArea(child: showPage(context))),
       ),
     );
   }
@@ -212,7 +212,25 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       listener: (context, state) {
         if (state.pageStatus == PageStatus.success) {
           Navigator.of(context).maybePop();
-        } else {}
+        } else if (state.pageStatus == PageStatus.failure){
+          String detail = "";
+
+          if (widget.taskItem.title.isEmpty) {
+            detail += "${Texts.taskSelectTitleError.translate}\n";
+          }
+          if (widget.taskItem.priorityItem == null) {
+            detail += "${Texts.taskSelectPriorityError.translate}\n";
+          }
+          if (widget.taskItem.categoryItem == null) {
+            detail += "${Texts.taskSelectCategoryError.translate}\n";
+          }
+          var snackBar = SnackBar(
+              content: Text(
+            detail,
+            style: TextStyles.h3.copyWith(color: Colors.white),
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       },
       builder: (context, state) {
         return Container(

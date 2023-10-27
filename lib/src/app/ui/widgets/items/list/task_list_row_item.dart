@@ -12,6 +12,7 @@ import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 import 'package:kardone/src/utils/time_util.dart';
 
+import '../../bottomsheet/round_bottom_sheet.dart';
 import '../../image/image_view.dart';
 import '../../round_colored_container.dart';
 import '../task/task_actions.dart';
@@ -87,8 +88,18 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         ),
         ItemSplitter.ultraThinSplitter,
         getScaledCheckBox(widget.taskItem.isDone, (value) {
-          widget.taskItem.isDone = value!;
-          widget.onDone.call(widget.taskItem.isDone);
+          if (widget.taskItem.isDone) {
+            widget.taskItem.isDone = value!;
+            widget.onDone.call(widget.taskItem.isDone);
+          } else {
+            showDoneTaskDialog(
+              context,
+              onDone: () {
+                widget.taskItem.isDone = value!;
+                widget.onDone.call(widget.taskItem.isDone);
+              },
+            );
+          }
         }),
         Expanded(
           child: Padding(

@@ -154,7 +154,9 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                                     .copyWith(color: getSelectedThemeColors().textOnAccentColor),
                               ),
                               onTap: () {
-                                Navigator.of(context).maybePop().then((value) => leftButtonOnClick?.call());
+                                Navigator.of(context)
+                                    .maybePop()
+                                    .then((value) => leftButtonOnClick?.call());
                               },
                             ),
                             FlatBorderButton(
@@ -163,7 +165,9 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                               backColor: getSelectedThemeColors().itemFillColor,
                               rippleColor: rightButtonColor,
                               onTap: () {
-                                Navigator.of(context).maybePop().then((value) => rightButtonOnClick?.call());
+                                Navigator.of(context)
+                                    .maybePop()
+                                    .then((value) => rightButtonOnClick?.call());
                               },
                               child: Text(
                                 rightButtonText,
@@ -193,4 +197,14 @@ Future<dynamic> showDeleteDialog(BuildContext context, {String text = "", Functi
       leftButtonText: Texts.deleteLeftButton.translate,
       rightButtonText: Texts.deleteRightButton.translate,
       leftButtonOnClick: onDeleted);
+}
+
+Future<dynamic> showDoneTaskDialog(BuildContext context, {required Function()? onDone}) {
+  return showAskQuestionDialog(context,
+      titleBarColor: UiColors.iconGreen,
+      titleBarIcon: AppIcons.doneTitle,
+      text: Texts.doneQuestion.translate,
+      leftButtonText: Texts.doneLeftButton.translate,
+      rightButtonText: Texts.doneRightButton.translate,
+      leftButtonOnClick: onDone);
 }

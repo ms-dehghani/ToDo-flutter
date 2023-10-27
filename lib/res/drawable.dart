@@ -78,6 +78,7 @@ class AppIcons {
   static const String delete = "assets/images/ic_delete.svg";
   static const String descriptionFill = "assets/images/ic_description_fill.svg";
   static const String descriptionOutline = "assets/images/ic_description_outline.svg";
+  static const String doneTitle = "assets/images/done.svg";
   static const String done = "assets/images/ic_done.svg";
   static const String doneChecked = "assets/images/ic_done_checked.svg";
   static const String dotsHorizontal = "assets/images/ic_dots_horizontal.svg";

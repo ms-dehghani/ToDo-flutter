@@ -40,7 +40,7 @@ class TaskActions extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _taskActionDone(),
+          _taskActionDone(context),
           _taskActionChangeDate(context),
           _taskActionEdit(context),
           _taskActionDelete(context),
@@ -49,7 +49,7 @@ class TaskActions extends StatelessWidget {
     );
   }
 
-  Widget _taskActionDone() {
+  Widget _taskActionDone(BuildContext context) {
     return TaskActionButton(
       title: Texts.taskDetailButtonDone.translate,
       icon: AppIcons.doneChecked,
@@ -57,8 +57,16 @@ class TaskActions extends StatelessWidget {
           ? getSelectedThemeColors().disableColor
           : getSelectedThemeColors().iconGreen,
       onTap: () {
-        taskItem.isDone = !taskItem.isDone;
-        onDone?.call();
+        if (taskItem.isDone) {
+          return;
+        }
+        showDoneTaskDialog(
+          context,
+          onDone: () {
+            taskItem.isDone = !taskItem.isDone;
+            onDone?.call();
+          },
+        );
       },
     );
   }

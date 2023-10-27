@@ -20,22 +20,23 @@ class DI {
 
   final getIt = GetIt.instance;
 
-  late final Database _database;
+  Database? _database;
 
   late List<PriorityItem> prioritiesItem;
 
   Future<bool> provideDependencies() async {
-    _database = await openDatabase('my_db.db');
-    getIt.registerSingleton<Database>(_database);
+    if (_database == null) {
+      _database ??= await openDatabase('my_db.db');
+      getIt.registerSingleton<Database>(_database!);
 
-    var pref = await SharedPreferences.getInstance();
-    getIt.registerSingleton<SharedPreferences>(pref);
+      var pref = await SharedPreferences.getInstance();
+      getIt.registerSingleton<SharedPreferences>(pref);
 
-    DataDI();
-    DomainDI();
+      DataDI();
+      DomainDI();
 
-    await _providePriorityList();
-
+      await _providePriorityList();
+    }
     return Future.value(true);
   }
 

@@ -26,6 +26,11 @@
 
   "taskEmptyMessage" : "No task found for %",
 
+
+  "taskSelectPriorityError" : "Choose task priority.",
+  "taskSelectCategoryError" : "Choose task category.",
+  "taskSelectTitleError" : "Add task title.",
+
   "taskDetailPageTitle" : "Task detail",
 
   "taskDetailPagePriority" : "Priority:",
@@ -34,7 +39,7 @@
   "taskDetailButtonDone" : "Done",
   "taskDetailButtonEdit" : "Edit",
   "taskDetailButtonDelete" : "Delete",
-  "taskDetailButtonChangeDate" : "Shft",
+  "taskDetailButtonChangeDate" : "Shift",
 
   "selectDateTitle" : "Select date",
   "today" : "Today",
@@ -44,6 +49,10 @@
   "deleteQuestion" : "This task will be delete with all detail, are you agree?",
   "deleteLeftButton" : "Yes, delete",
   "deleteRightButton" : "No, back",
+
+  "doneQuestion" : "Do you complete this task?",
+  "doneLeftButton" : "Yes, done",
+  "doneRightButton" : "No, back",
 
 
   "categoryListPageTitle" : "Choose or select category",
