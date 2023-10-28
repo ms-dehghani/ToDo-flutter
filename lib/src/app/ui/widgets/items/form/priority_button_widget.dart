@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kardone/res/dimens.dart';
@@ -57,8 +56,8 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
 
-    if(widget.isSelected) {
-      _doAnimate(!widget.isSelected);
+    if (widget.isSelected) {
+      _doAnimate(widget.isSelected);
     }
   }
 

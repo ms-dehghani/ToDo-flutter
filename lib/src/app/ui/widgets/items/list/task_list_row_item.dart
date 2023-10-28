@@ -87,20 +87,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                   : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
         ),
         ItemSplitter.ultraThinSplitter,
-        getScaledCheckBox(widget.taskItem.isDone, (value) {
-          if (widget.taskItem.isDone) {
-            widget.taskItem.isDone = value!;
-            widget.onDone.call(widget.taskItem.isDone);
-          } else {
-            showDoneTaskDialog(
-              context,
-              onDone: () {
-                widget.taskItem.isDone = value!;
-                widget.onDone.call(widget.taskItem.isDone);
-              },
-            );
-          }
-        }),
+        _checkBox(clickable),
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(Insets.xs),
@@ -133,6 +120,27 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         ),
       ],
     );
+  }
+
+  Widget _checkBox(bool clickable) {
+    return getScaledCheckBox(
+        widget.taskItem.isDone,
+        clickable
+            ? (value) {
+                if (widget.taskItem.isDone) {
+                  widget.taskItem.isDone = value!;
+                  widget.onDone.call(widget.taskItem.isDone);
+                } else {
+                  showDoneTaskDialog(
+                    context,
+                    onDone: () {
+                      widget.taskItem.isDone = value!;
+                      widget.onDone.call(widget.taskItem.isDone);
+                    },
+                  );
+                }
+              }
+            : null);
   }
 
   Widget _rowDetail() {

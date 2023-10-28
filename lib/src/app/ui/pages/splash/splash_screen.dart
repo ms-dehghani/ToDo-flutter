@@ -8,9 +8,17 @@ import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
 import 'package:kardone/src/utils/device.dart';
 import 'package:kardone/src/utils/theme_utils.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+
+  late BuildContext context;
+
+  @override
+  void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -20,6 +28,11 @@ class SplashScreen extends StatelessWidget {
         ),
       );
     });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    this.context = context;
     return Container(
       color: getSelectedThemeColors().onBackground,
       child: Column(

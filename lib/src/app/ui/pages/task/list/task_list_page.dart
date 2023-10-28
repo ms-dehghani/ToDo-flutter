@@ -46,11 +46,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   @override
   Widget build(BuildContext context) {
+    _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskGetBloc>(
           create: (BuildContext context) {
-            _taskGetBloc.add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch));
             return _taskGetBloc;
           },
         ),
@@ -124,8 +124,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _calender() {
     return CalenderView(
-      start: DateTime.now().subtract(Duration(days: 100)),
-      end: DateTime.now().add(Duration(days: 100)),
+      start: DateTime.now().subtract(Duration(days: 150)),
+      end: DateTime.now().add(Duration(days: 150)),
       onSelect: (dateTime) {
         selectedDay = dateTime;
         _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
@@ -137,6 +137,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return MultiBlocListener(
       listeners: [
         BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
+          bloc: _taskDeleteBloc,
           listener: (context, state) {
             _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
           },
@@ -146,6 +147,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         buildWhen: (previous, current) {
           return true;
         },
+        bloc: _taskGetBloc,
         builder: (context, state) {
           return Container(
               margin: EdgeInsets.only(top: Insets.buttonHeight),
@@ -175,6 +177,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           buildWhen: (previous, current) {
             return true;
           },
+          bloc: _taskCreateOrUpdateBloc,
           builder: (context, state) {
             if (!selectedDay.isSameDay(timestamp: e.taskTimestamp)) {
               _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
@@ -207,7 +210,6 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
             );
           },
         );
-        ;
       }).toList(),
     );
   }

@@ -96,6 +96,9 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _categoryList(BuildContext context) {
     return BlocBuilder<CategoryGetBloc, CategoryGetBlocPageData>(
+      buildWhen: (previous, current) {
+        return true;
+      },
       builder: (context, state) {
         return Container(
             color: getSelectedThemeColors().onBackground,
