@@ -48,7 +48,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
   Widget phoneView(BuildContext context) {
     return Container(
       color: getSelectedThemeColors().onBackground,
-      padding: EdgeInsets.only(left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
+      padding: EdgeInsets.only(
+          left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
       child: Column(
         children: [
           Expanded(child: _categoryList(context)),
@@ -65,7 +66,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                           title: Texts.categoryAddPageTitle.translate,
                           iconSrc: AppIcons.addCategory),
                       SizedBox(
-                          height: getHeight(context) / 2.5,
+                          height: Insets.addCategoryBottomSheetHeight,
                           child: CreateCategoryItemPage(categoryItem: CategoryItem.empty())))
                   .then((value) {
                 if (value != null && value is CategoryItem) {

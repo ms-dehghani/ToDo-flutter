@@ -41,15 +41,7 @@ class TaskListRowItem extends StatefulWidget {
 class _TaskListRowItemState extends State<TaskListRowItem> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        widget.onTap.call();
-      },
-      onLongPress: () {
-        _showMenuDialog();
-      },
-      child: _cardView(true),
-    );
+    return _cardView(true);
   }
 
   Widget _cardView(bool clickable) {
@@ -59,15 +51,26 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
       color: getSelectedThemeColors().itemFillColor,
       shadowColor: getSelectedThemeColors().shadowColor,
       shape: Borders.thinAndHighRadiosBorder,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          ItemSplitter.medSplitter,
-          _rowTitle(clickable),
-          _rowDetail(),
-          _rowReminder(),
-        ],
+      child: InkWell(
+        borderRadius: Corners.hgBorder,
+        splashColor: getSelectedThemeColors().disableColor.withOpacity(0.3),
+        highlightColor: Colors.transparent,
+        onTap: () {
+          widget.onTap.call();
+        },
+        onLongPress:() {
+          _showMenuDialog();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            ItemSplitter.medSplitter,
+            _rowTitle(clickable),
+            _rowDetail(),
+            _rowReminder(),
+          ],
+        ),
       ),
     );
   }

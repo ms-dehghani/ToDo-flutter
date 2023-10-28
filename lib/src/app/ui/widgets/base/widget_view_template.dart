@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kardone/src/utils/device.dart';
 
@@ -6,12 +7,15 @@ abstract mixin class WidgetViewTemplate {
 
   Widget showPage(BuildContext context) {
     screenType = getFormFactor(context);
-    return switch (screenType) {
-      ScreenType.desktop => desktopView(context),
-      ScreenType.tablet => tabletView(context),
-      ScreenType.handset => phoneView(context),
-      ScreenType.watch => phoneView(context),
-    };
+    return Material(
+      color: Colors.transparent,
+      child: switch (screenType) {
+        ScreenType.desktop => desktopView(context),
+        ScreenType.tablet => tabletView(context),
+        ScreenType.handset => phoneView(context),
+        ScreenType.watch => phoneView(context),
+      },
+    );
   }
 
   Widget phoneView(BuildContext context);

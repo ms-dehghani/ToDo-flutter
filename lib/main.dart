@@ -5,7 +5,6 @@ import 'package:kardone/res/texts.dart';
 import 'package:kardone/src/app/di/di.dart';
 import 'package:kardone/res/theme/themes.dart';
 import 'package:kardone/src/app/ui/pages/splash/splash_screen.dart';
-import 'package:kardone/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:kardone/src/utils/ht/html.dart';
 
 import 'applic.dart';
@@ -30,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     HtmlFormatter.format();
     super.initState();
-    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("en"));
+    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("fa"));
     applic.onLocaleChanged = onLocaleChange;
   }
 
