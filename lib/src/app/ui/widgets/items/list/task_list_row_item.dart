@@ -93,7 +93,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         _checkBox(clickable),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.all(Insets.xs),
+            padding: EdgeInsets.only(top:Insets.xs ,bottom: Insets.xs),
             child: Text(
               widget.taskItem.title,
               maxLines: 2,

@@ -145,7 +145,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       ],
       child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
         buildWhen: (previous, current) {
-          return true;
+          return previous.pageStatus != current.pageStatus;
         },
         bloc: _taskGetBloc,
         builder: (context, state) {
@@ -175,7 +175,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       children: taskList.map((e) {
         return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {
-            return true;
+            return current.pageStatus == PageStatus.success;
           },
           bloc: _taskCreateOrUpdateBloc,
           builder: (context, state) {

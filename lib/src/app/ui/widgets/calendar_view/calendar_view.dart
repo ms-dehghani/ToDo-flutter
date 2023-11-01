@@ -149,6 +149,8 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
         onTap: () {
           if (!selectedDay.isSameDay(date: DateTime.now())) {
             _setItemClicked(DateTime.now());
+          } else {
+            animateToItem(_findItem(selectedDay));
           }
         },
         child: Text(
