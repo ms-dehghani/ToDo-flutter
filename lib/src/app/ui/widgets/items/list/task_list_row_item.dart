@@ -111,7 +111,9 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
           child: GestureDetector(
             onTap: () => _showMenuDialog(),
             child: Container(
-              width: 48,
+              width: Insets.buttonHeight,
+              height: Insets.backButtonHeight,
+              padding: EdgeInsets.all(Insets.sm),
               margin: EdgeInsets.symmetric(horizontal: Insets.sm),
               child: ImageView(
                 src: AppIcons.dotsHorizontal,
