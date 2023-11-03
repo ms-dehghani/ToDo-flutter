@@ -1,7 +1,7 @@
 import 'package:faker/faker.dart';
-import 'package:kardone/src/data/datasource/category/db/category_item_db_data_provider.dart';
-import 'package:kardone/src/data/datasource/priority/db/priority_item_db_data_provider.dart';
-import 'package:kardone/src/data/datasource/task/db/task_item_db_data_provider.dart';
+import 'package:ToDo/src/data/datasource/category/db/category_item_db_data_provider.dart';
+import 'package:ToDo/src/data/datasource/priority/db/priority_item_db_data_provider.dart';
+import 'package:ToDo/src/data/datasource/task/db/task_item_db_data_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
