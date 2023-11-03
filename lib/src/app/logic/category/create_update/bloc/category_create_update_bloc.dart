@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/usecase/category/category_usecase.dart';
 import '../../../base/page_status.dart';
 import 'category_create_update_event.dart';
 import 'category_create_update_page_data.dart';

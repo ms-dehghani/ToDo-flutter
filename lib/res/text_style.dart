@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/src/utils/direction_util.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
 
 import 'dimens.dart';
 import 'fonts.dart';

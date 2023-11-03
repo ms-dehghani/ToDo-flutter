@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/repositories/category/category_item_repository.dart';
+import 'package:ToDo/src/domain/repositories/category/category_item_repository.dart';
 
 import '../../models/category/category_item.dart';
 

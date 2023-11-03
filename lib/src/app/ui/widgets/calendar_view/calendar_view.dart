@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/utils/direction_util.dart';
-import 'package:kardone/src/utils/extentions/date_extentions.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
+import 'package:ToDo/src/utils/extentions/date_extentions.dart';
+import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 import 'calender_row_item.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:kardone/res/text_style.dart';
+import 'package:ToDo/res/text_style.dart';
 
 import 'translations.dart';
 

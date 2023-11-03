@@ -2,15 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/direction_util.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
+import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 import '../buttons/custom_flat_button.dart';
 import '../buttons/flat_border_button.dart';

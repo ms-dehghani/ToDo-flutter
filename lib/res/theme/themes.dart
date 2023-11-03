@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
+import 'package:ToDo/res/color.dart';
 
 import 'theme_color.dart';
 

@@ -1,6 +1,6 @@
-import 'package:kardone/src/data/datasource/priority/priority_data_provider.dart';
-import 'package:kardone/src/domain/models/priority/priority_item.dart';
-import 'package:kardone/src/domain/repositories/priority/priority_item_repository.dart';
+import 'package:ToDo/src/data/datasource/priority/priority_data_provider.dart';
+import 'package:ToDo/src/domain/models/priority/priority_item.dart';
+import 'package:ToDo/src/domain/repositories/priority/priority_item_repository.dart';
 
 class PriorityRepository implements PriorityItemRepository {
   PriorityDataProvider localDB;

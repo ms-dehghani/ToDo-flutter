@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:kardone/src/utils/device.dart';
+import 'package:ToDo/src/utils/device.dart';
 
 abstract mixin class WidgetViewTemplate {
   late ScreenType screenType;

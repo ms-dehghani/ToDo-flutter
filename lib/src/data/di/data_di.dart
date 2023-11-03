@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:kardone/src/data/repositories/setting/setting_repository.dart';
+import 'package:ToDo/src/data/repositories/setting/setting_repository.dart';
 
 import '../datasource/category/db/category_item_db_data_provider.dart';
 import '../datasource/priority/db/priority_item_db_data_provider.dart';

@@ -1,5 +1,5 @@
-import 'package:kardone/src/base/base_model.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/base/base_model.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 
 import '../task_data_provider.dart';
 

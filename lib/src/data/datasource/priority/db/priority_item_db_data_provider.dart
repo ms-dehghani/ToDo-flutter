@@ -1,6 +1,6 @@
-import 'package:kardone/src/base/base_model.dart';
-import 'package:kardone/src/domain/models/priority/priority_item.dart';
-import 'package:kardone/src/domain/models/priority/priority_static.dart';
+import 'package:ToDo/src/base/base_model.dart';
+import 'package:ToDo/src/domain/models/priority/priority_item.dart';
+import 'package:ToDo/src/domain/models/priority/priority_static.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../priority_data_provider.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 class Insets {
   static double scale = 1;

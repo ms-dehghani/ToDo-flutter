@@ -1,21 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/ui/pages/task/create/create_task_item_page.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/utils/direction_util.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/navigator.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/ui/pages/task/create/create_task_item_page.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/navigator.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 import '../../bottomsheet/round_bottom_sheet.dart';
-import '../../buttons/custom_flat_button.dart';
 import '../../buttons/task_action_button.dart';
-import '../../image/image_view.dart';
 
 class TaskActions extends StatelessWidget {
   TaskItem taskItem;

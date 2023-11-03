@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/src/utils/extentions/color_extentions.dart';
+import 'package:ToDo/src/utils/extentions/color_extentions.dart';
 
 import 'priority_static.dart';
 

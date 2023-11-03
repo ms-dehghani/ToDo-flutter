@@ -1,5 +1,5 @@
 
-import 'package:kardone/src/domain/models/priority/priority_item.dart';
+import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 
 abstract class PriorityDataProvider {
   Future<PriorityItem?> getPriority(String priorityID);

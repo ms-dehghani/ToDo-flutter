@@ -1,6 +1,6 @@
-import 'package:kardone/src/base/base_model.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/domain/models/task/task_static.dart';
+import 'package:ToDo/src/base/base_model.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/domain/models/task/task_static.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../category/category_data_provider.dart';

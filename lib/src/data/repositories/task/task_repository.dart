@@ -1,6 +1,6 @@
-import 'package:kardone/src/data/datasource/task/task_data_provider.dart';
-import 'package:kardone/src/domain/repositories/task/task_item_repository.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/data/datasource/task/task_data_provider.dart';
+import 'package:ToDo/src/domain/repositories/task/task_item_repository.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 
 class TaskRepository implements TaskItemRepository {
   TaskDataProvider localDB;

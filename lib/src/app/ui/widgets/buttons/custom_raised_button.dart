@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
+import 'package:ToDo/res/dimens.dart';
 
 class CustomRaisedButton extends StatelessWidget {
   Size? size;

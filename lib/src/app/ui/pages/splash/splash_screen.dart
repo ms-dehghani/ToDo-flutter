@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/src/app/ui/pages/task/list/task_list_page.dart';
-import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/src/app/ui/pages/task/list/task_list_page.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

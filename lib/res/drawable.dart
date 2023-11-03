@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/theme/theme_color.dart';
+import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/theme/theme_color.dart';
 
 class Drawable {
   static BoxDecoration simpleRoundCorner(Color color) => BoxDecoration(

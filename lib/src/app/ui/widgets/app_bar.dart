@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
+import 'package:ToDo/res/dimens.dart';
 
 class ApplicationAppBar extends StatelessWidget {
   Widget? leftWidget;

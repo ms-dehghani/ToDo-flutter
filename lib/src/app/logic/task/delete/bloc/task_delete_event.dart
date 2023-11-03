@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 
 class TaskDeleteEvent {
   late String taskID;

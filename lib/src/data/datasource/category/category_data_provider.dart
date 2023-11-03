@@ -1,6 +1,6 @@
 
 
-import 'package:kardone/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
 
 abstract class CategoryDataProvider {
   Future<CategoryItem?> getCategory(String categoryID);

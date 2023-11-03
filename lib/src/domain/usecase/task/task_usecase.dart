@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/repositories/task/task_item_repository.dart';
+import 'package:ToDo/src/domain/repositories/task/task_item_repository.dart';
 
 import '../../models/task/task_item.dart';
 
