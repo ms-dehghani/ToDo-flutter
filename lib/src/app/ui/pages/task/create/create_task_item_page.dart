@@ -38,15 +38,13 @@ class CreateTaskItemPage extends StatefulWidget {
 }
 
 class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetViewTemplate {
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<TaskCreateOrUpdateBloc>(
-          create: (BuildContext context) =>
-              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
-        ),
-      ],
+    return BlocProvider<TaskCreateOrUpdateBloc>(
+      create: (BuildContext context) => _taskCreateOrUpdateBloc,
       child: Material(
         color: getSelectedThemeColors().itemFillColor,
         child: Scaffold(body: SafeArea(child: showPage(context))),
@@ -212,7 +210,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       listener: (context, state) {
         if (state.pageStatus == PageStatus.success) {
           Navigator.of(context).maybePop();
-        } else if (state.pageStatus == PageStatus.failure){
+        } else if (state.pageStatus == PageStatus.failure) {
           String detail = "";
 
           if (widget.taskItem.title.isEmpty) {
@@ -232,6 +230,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
+      bloc: _taskCreateOrUpdateBloc,
       builder: (context, state) {
         return Container(
           width: double.infinity,

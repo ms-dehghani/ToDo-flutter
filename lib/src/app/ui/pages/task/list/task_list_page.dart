@@ -50,9 +50,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskGetBloc>(
-          create: (BuildContext context) {
-            return _taskGetBloc;
-          },
+          create: (BuildContext context) => _taskGetBloc,
         ),
         BlocProvider<TaskCreateOrUpdateBloc>(
           create: (BuildContext context) => _taskCreateOrUpdateBloc,
@@ -134,15 +132,10 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _taskList() {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
-          bloc: _taskDeleteBloc,
-          listener: (context, state) {
-            _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
-          },
-        ),
-      ],
+    return BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
+      listener: (context, state) {
+        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+      },
       child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
         buildWhen: (previous, current) {
           return previous.pageStatus != current.pageStatus;

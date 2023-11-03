@@ -29,25 +29,26 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
 
   TaskDetailPage({super.key, required this.taskItem});
 
-  late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
 
-  late TaskDeleteBloc _taskDeleteBloc;
+  final TaskDeleteBloc _taskDeleteBloc =
+      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskCreateOrUpdateBloc>(
-            create: (BuildContext context) => _taskCreateOrUpdateBloc =
-                TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase())),
+          create: (BuildContext context) => _taskCreateOrUpdateBloc,
+        ),
         BlocProvider<TaskDeleteBloc>(
-          create: (BuildContext context) =>
-              _taskDeleteBloc = TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase()),
+          create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
       child: BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
         buildWhen: (previous, current) {
-          return true;
+          return previous.pageStatus != current.pageStatus;
         },
         builder: (context, state) {
           return Container(
