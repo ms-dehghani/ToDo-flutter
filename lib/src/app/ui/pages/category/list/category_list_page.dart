@@ -24,22 +24,16 @@ import 'package:ToDo/src/utils/theme_utils.dart';
 import '../create/create_category_item_page.dart';
 
 class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
-  late CategoryGetBloc _categoryGetBloc;
+  final CategoryGetBloc _categoryGetBloc =
+      CategoryGetBloc(categoryRepository: DI.instance().getCategoryUseCase());
 
   CategoryListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CategoryGetBloc>(
-          create: (BuildContext context) {
-            return _categoryGetBloc =
-                CategoryGetBloc(categoryRepository: DI.instance().getCategoryUseCase())
-                  ..add(GetAllCategoryEvent());
-          },
-        ),
-      ],
+    _categoryGetBloc.add(GetAllCategoryEvent());
+    return BlocProvider<CategoryGetBloc>(
+      create: (BuildContext context) => _categoryGetBloc,
       child: showPage(context),
     );
   }
@@ -100,6 +94,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
       buildWhen: (previous, current) {
         return true;
       },
+      bloc: _categoryGetBloc,
       builder: (context, state) {
         return Container(
             color: getSelectedThemeColors().onBackground,

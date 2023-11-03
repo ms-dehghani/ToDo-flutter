@@ -25,14 +25,10 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CategoryCreateOrUpdateBloc>(
-          create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
-              categoryRepository: DI.instance().getCategoryUseCase(),
-              categoryItem: categoryItem),
-        ),
-      ],
+    return BlocProvider<CategoryCreateOrUpdateBloc>(
+      create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
+          categoryRepository: DI.instance().getCategoryUseCase(),
+          categoryItem: categoryItem),
       child: Material(
         color: getSelectedThemeColors().onBackground,
         child: SafeArea(child: showPage(context)),
