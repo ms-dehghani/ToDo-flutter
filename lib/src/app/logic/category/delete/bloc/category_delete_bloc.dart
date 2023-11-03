@@ -8,8 +8,8 @@ import 'category_delete_page_data.dart';
 class CategoryDeleteBloc extends Bloc<CategoryDeleteEvent, CategoryDeleteBlocPageData> {
   final CategoryUseCase _categoryUseCase;
 
-  CategoryDeleteBloc({required CategoryUseCase categoryRepository})
-      : _categoryUseCase = categoryRepository,
+  CategoryDeleteBloc({required CategoryUseCase categoryUseCase})
+      : _categoryUseCase = categoryUseCase,
         super(CategoryDeleteBlocPageData(status: PageStatus.initial)) {
     on<CategoryDeleteEvent>(_deleteTask);
   }

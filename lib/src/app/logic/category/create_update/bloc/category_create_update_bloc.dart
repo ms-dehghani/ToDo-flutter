@@ -9,9 +9,8 @@ class CategoryCreateOrUpdateBloc
     extends Bloc<CategoryCreateOrUpdateEvent, CategoryCreateUpdateBlocPageData> {
   final CategoryUseCase _categoryUseCase;
 
-  CategoryCreateOrUpdateBloc(
-      {CategoryItem? categoryItem, required CategoryUseCase categoryRepository})
-      : _categoryUseCase = categoryRepository,
+  CategoryCreateOrUpdateBloc({CategoryItem? categoryItem, required CategoryUseCase categoryUseCase})
+      : _categoryUseCase = categoryUseCase,
         super(CategoryCreateUpdateBlocPageData(item: categoryItem, status: PageStatus.initial)) {
     on<CategoryCreateOrUpdateResultEvent>(_createOrUpdateTask);
     on<UpdateUI>(_updateUI);

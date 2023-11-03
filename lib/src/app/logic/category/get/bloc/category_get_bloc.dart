@@ -8,8 +8,8 @@ import 'category_get_page_data.dart';
 class CategoryGetBloc extends Bloc<GetAllCategoryEvent, CategoryGetBlocPageData> {
   final CategoryUseCase _categoryUseCase;
 
-  CategoryGetBloc({required CategoryUseCase categoryRepository})
-      : _categoryUseCase = categoryRepository,
+  CategoryGetBloc({required CategoryUseCase categoryUseCase})
+      : _categoryUseCase = categoryUseCase,
         super(CategoryGetBlocPageData(status: PageStatus.initial)) {
     on<GetAllCategoryEvent>(_getAllCategory);
   }

@@ -25,7 +25,7 @@ import '../create/create_category_item_page.dart';
 
 class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
   final CategoryGetBloc _categoryGetBloc =
-      CategoryGetBloc(categoryRepository: DI.instance().getCategoryUseCase());
+      CategoryGetBloc(categoryUseCase: DI.instance().getCategoryUseCase());
 
   CategoryListPage({super.key});
 
