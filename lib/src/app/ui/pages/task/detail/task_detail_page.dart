@@ -20,7 +20,7 @@ import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
 import 'package:ToDo/src/app/ui/widgets/items/detail/task_detail_row_item.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
 

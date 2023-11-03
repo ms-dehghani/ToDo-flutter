@@ -4,7 +4,7 @@ import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/utils/device.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 import 'package:flutter/material.dart';

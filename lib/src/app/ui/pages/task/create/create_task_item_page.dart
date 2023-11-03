@@ -24,7 +24,7 @@ import 'package:ToDo/src/app/ui/widgets/items/form/priority_selector_filed_item.
 import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
 import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:ToDo/src/utils/device.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
 

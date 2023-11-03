@@ -18,7 +18,7 @@ import 'package:ToDo/src/app/ui/widgets/items/list/category_list_row_item.dart';
 import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:ToDo/src/app/ui/widgets/progress/in_page_progress.dart';
 import 'package:ToDo/src/utils/device.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 
 import '../create/create_category_item_page.dart';

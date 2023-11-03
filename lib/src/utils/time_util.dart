@@ -1,5 +1,5 @@
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:shamsi_date/shamsi_date.dart';
 
 import 'direction_util.dart';

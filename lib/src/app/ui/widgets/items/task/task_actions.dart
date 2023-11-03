@@ -5,7 +5,7 @@ import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/texts.dart';
 import 'package:ToDo/src/app/ui/pages/task/create/create_task_item_page.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/navigator.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 

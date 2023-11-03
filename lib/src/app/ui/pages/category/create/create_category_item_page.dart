@@ -13,7 +13,7 @@ import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/form_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 
 class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {

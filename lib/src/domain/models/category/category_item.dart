@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:ToDo/src/utils/extentions/translates_string_extentions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 
 import 'category_static.dart';
 
