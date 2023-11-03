@@ -2,7 +2,6 @@ import 'package:faker/faker.dart';
 import 'package:ToDo/src/data/datasource/category/db/category_item_db_data_provider.dart';
 import 'package:ToDo/src/data/datasource/priority/db/priority_item_db_data_provider.dart';
 import 'package:ToDo/src/data/datasource/task/db/task_item_db_data_provider.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:test/test.dart';
 
@@ -45,6 +44,25 @@ void main() {
     expect(retrieveItem.categoryItem!.ID, item.categoryItem!.ID);
     expect(retrieveItem.priorityItem!.ID, item.priorityItem!.ID);
   });
+
+  test('Insert Item without id', () async {
+    var item = getFakeTaskItem();
+    item.ID = "";
+    item = await dataProvider.createOrUpdateTask(item);
+
+    var retrieveItem = await dataProvider.getTaskByID(item.ID);
+
+    expect(retrieveItem, isNotNull);
+
+    expect(retrieveItem!.ID, item.ID);
+    expect(retrieveItem.title, item.title);
+    expect(retrieveItem.isDone, item.isDone);
+    expect(retrieveItem.taskTimestamp, item.taskTimestamp);
+    expect(retrieveItem.description, item.description);
+    expect(retrieveItem.categoryItem!.ID, item.categoryItem!.ID);
+    expect(retrieveItem.priorityItem!.ID, item.priorityItem!.ID);
+  });
+
 
   test('Multiple insert Item', () async {
     var item = getFakeTaskItem();
