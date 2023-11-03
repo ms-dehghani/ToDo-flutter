@@ -13,7 +13,6 @@ class TaskGetBloc extends Bloc<TaskGetEvent, TaskGetBlocPageData> {
       : _taskUseCase = taskUseCase,
         super(TaskGetBlocPageData(status: PageStatus.initial)) {
     on<GetAllTaskInDayEvent>(_getAllDayTask);
-    on<RefreshTaskListEvent>(_refreshTaskList);
     on<GetAllTaskInCalenderEvent>(_getAllCalenderTask);
   }
 
@@ -30,14 +29,9 @@ class TaskGetBloc extends Bloc<TaskGetEvent, TaskGetBlocPageData> {
     emit.call(state.copyWith(status: PageStatus.loading));
 
     var calDetail = await _taskUseCase.isAnyTaskExistInRange(event.startTime, event.endTime);
-    var todayList = await _taskUseCase.getTaskListFromData(DateTime.now().millisecondsSinceEpoch);
+    var todayList = await _taskUseCase.getTaskListFromData(event.selectedDay);
 
     emit.call(
         state.copyWith(calenderDetail: calDetail, taskList: todayList, status: PageStatus.success));
-  }
-
-  Future<void> _refreshTaskList(
-      RefreshTaskListEvent event, Emitter<TaskGetBlocPageData> emit) async {
-    await _getAllDayTask(event, emit);
   }
 }

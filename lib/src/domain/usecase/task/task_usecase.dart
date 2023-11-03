@@ -3,7 +3,6 @@ import 'package:ToDo/src/domain/repositories/task/task_item_repository.dart';
 import '../../models/task/task_item.dart';
 
 class TaskUseCase {
-
   late final TaskItemRepository _repository;
 
   TaskUseCase({required TaskItemRepository repository}) {
