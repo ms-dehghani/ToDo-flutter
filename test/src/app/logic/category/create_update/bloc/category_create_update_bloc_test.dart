@@ -24,7 +24,7 @@ void main() {
   });
 
   blocTest<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
-    "Add empty category must return failure",
+    "Given empty category then must return failure",
     build: () => createOrUpdateBloc,
     act: (bloc) => bloc.add(CategoryCreateOrUpdateResultEvent(CategoryItem.empty())),
     expect: () {
@@ -41,7 +41,7 @@ void main() {
 
 
     blocTest<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
-      "Add category must return success",
+      "Given category then must add and return success",
       build: () {
         when(categoryUseCase.createOrUpdateCategory(any)).thenAnswer((realInvocation) {
           return Future.value(realInvocation.positionalArguments[0]);
@@ -56,7 +56,7 @@ void main() {
     );
 
     blocTest<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
-      "Update category must return success",
+      "Given exist category then must update and return success",
       build: () {
         when(categoryUseCase.createOrUpdateCategory(any)).thenAnswer((realInvocation) {
           return Future.value(realInvocation.positionalArguments[0]);
@@ -80,7 +80,7 @@ void main() {
   group("Update ui", () {
 
     blocTest<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
-      "Call once",
+      "Call once function",
       build: () {
         return createOrUpdateBloc;
       },
@@ -93,7 +93,7 @@ void main() {
     );
 
     blocTest<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
-      "Call twice",
+      "Call twice function",
       build: () {
         return createOrUpdateBloc;
       },

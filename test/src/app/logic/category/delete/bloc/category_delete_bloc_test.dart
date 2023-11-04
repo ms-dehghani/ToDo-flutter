@@ -26,7 +26,7 @@ void main() {
   group("Delete category", () {
 
     blocTest<CategoryDeleteBloc, CategoryDeleteBlocPageData>(
-      "Delete failure",
+      "Given id then must return failure",
       build: () {
         when(categoryUseCase.deleteCategory(any)).thenAnswer((realInvocation) {
           return Future.value(false);
@@ -41,7 +41,7 @@ void main() {
     );
 
     blocTest<CategoryDeleteBloc, CategoryDeleteBlocPageData>(
-      "Delete success",
+      "Given id then must return success",
       build: () {
         when(categoryUseCase.deleteCategory(any)).thenAnswer((realInvocation) {
           return Future.value(true);
