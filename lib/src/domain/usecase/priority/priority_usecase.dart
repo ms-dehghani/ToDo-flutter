@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/repositories/priority/priority_item_repository.dart';
+import 'package:ToDo/src/domain/repositories/priority/priority_item_repository.dart';
 
 import '../../models/priority/priority_item.dart';
 

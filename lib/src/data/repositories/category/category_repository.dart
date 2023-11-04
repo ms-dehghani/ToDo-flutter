@@ -1,6 +1,6 @@
-import 'package:kardone/src/data/datasource/category/category_data_provider.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/repositories/category/category_item_repository.dart';
+import 'package:ToDo/src/data/datasource/category/category_data_provider.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/repositories/category/category_item_repository.dart';
 
 class CategoryRepository implements CategoryItemRepository {
 

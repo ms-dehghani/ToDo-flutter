@@ -1,10 +1,9 @@
-import 'package:kardone/src/base/base_model.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/models/category/category_static.dart';
+import 'package:ToDo/src/base/base_model.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/models/category/category_static.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../category_data_provider.dart';
-
 
 class CategoryItemDBDataProvider extends BaseModel implements CategoryDataProvider {
   final Database _database;
@@ -36,19 +35,21 @@ class CategoryItemDBDataProvider extends BaseModel implements CategoryDataProvid
   @override
   Future<List<CategoryItem>> getCategories() async {
     List<CategoryItem> result = [];
-    List<Map> list = await _database.query(
-      tableName,
-      columns: CategoryItem.empty().toMap().keys.toList(),
-      orderBy: "$filedId DESC",
-    );
+    List<Map> list = await _database.query(tableName,
+        columns: CategoryItem.empty().toMap().keys.toList(),
+        orderBy: "$filedId DESC",
+        distinct: true);
     for (var items in list) {
-      result.add(CategoryItem.fromMap(items));
+      var item = CategoryItem.fromMap(items);
+      if (item.ID.isNotEmpty) {
+        result.add(item);
+      }
     }
 
     var catItem = CategoryItem.empty();
     catItem.ID = "0";
     catItem.title = "noCat";
-    result.add(catItem);
+    if (result.where((element) => element.ID == "0").isEmpty) result.add(catItem);
     return result;
   }
 

@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/logic/base/page_status.dart';
-import 'package:kardone/src/app/ui/widgets/app_bar.dart';
-import 'package:kardone/src/app/ui/widgets/buttons/custom_raised_button.dart';
-import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/app/di/di.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/app/ui/pages/category/list/category_list_page.dart';
-import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
-import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
-import 'package:kardone/src/app/ui/widgets/buttons/back_button.dart';
-import 'package:kardone/src/app/ui/widgets/items/form/button_filed_item.dart';
-import 'package:kardone/src/app/ui/widgets/items/form/form_item.dart';
-import 'package:kardone/src/app/ui/widgets/items/form/priority_selector_filed_item.dart';
-import 'package:kardone/src/app/ui/widgets/items/form/text_filed_item.dart';
-import 'package:kardone/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/app/ui/pages/category/list/category_list_page.dart';
+import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/items/form/button_filed_item.dart';
+import 'package:ToDo/src/app/ui/widgets/items/form/form_item.dart';
+import 'package:ToDo/src/app/ui/widgets/items/form/priority_selector_filed_item.dart';
+import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
@@ -38,18 +38,16 @@ class CreateTaskItemPage extends StatefulWidget {
 }
 
 class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetViewTemplate {
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<TaskCreateOrUpdateBloc>(
-          create: (BuildContext context) =>
-              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
-        ),
-      ],
+    return BlocProvider<TaskCreateOrUpdateBloc>(
+      create: (BuildContext context) => _taskCreateOrUpdateBloc,
       child: Material(
         color: getSelectedThemeColors().itemFillColor,
-        child: SafeArea(child: showPage(context)),
+        child: Scaffold(body: SafeArea(child: showPage(context))),
       ),
     );
   }
@@ -212,8 +210,27 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       listener: (context, state) {
         if (state.pageStatus == PageStatus.success) {
           Navigator.of(context).maybePop();
-        } else {}
+        } else if (state.pageStatus == PageStatus.failure) {
+          String detail = "";
+
+          if (widget.taskItem.title.isEmpty) {
+            detail += "${Texts.taskSelectTitleError.translate}\n";
+          }
+          if (widget.taskItem.priorityItem == null) {
+            detail += "${Texts.taskSelectPriorityError.translate}\n";
+          }
+          if (widget.taskItem.categoryItem == null) {
+            detail += "${Texts.taskSelectCategoryError.translate}\n";
+          }
+          var snackBar = SnackBar(
+              content: Text(
+            detail,
+            style: TextStyles.h3.copyWith(color: Colors.white),
+          ));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
       },
+      bloc: _taskCreateOrUpdateBloc,
       builder: (context, state) {
         return Container(
           width: double.infinity,

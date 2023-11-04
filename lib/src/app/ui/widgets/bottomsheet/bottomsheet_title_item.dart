@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/text_style.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/text_style.dart';
 
 import '../image/image_view.dart';
 

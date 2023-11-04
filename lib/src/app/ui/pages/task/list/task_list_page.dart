@@ -1,37 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/logic/base/page_status.dart';
-import 'package:kardone/src/app/logic/task/get/bloc/task_get_event.dart';
-import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/app/di/di.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:kardone/src/app/logic/task/get/bloc/task_get_bloc.dart';
-import 'package:kardone/src/app/logic/task/get/bloc/task_get_page_data.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/app/ui/pages/task/detail/task_detail_page.dart';
-import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
-import 'package:kardone/src/app/ui/widgets/calendar_view/calendar_view.dart';
-import 'package:kardone/src/app/ui/widgets/progress/in_page_progress.dart';
-import 'package:kardone/src/app/ui/widgets/items/list/task_list_row_item.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/extentions/date_extentions.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/navigator.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
+import 'package:ToDo/src/app/logic/task/get/bloc/task_get_event.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:ToDo/src/app/logic/task/get/bloc/task_get_bloc.dart';
+import 'package:ToDo/src/app/logic/task/get/bloc/task_get_page_data.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/app/ui/pages/task/detail/task_detail_page.dart';
+import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/calendar_view/calendar_view.dart';
+import 'package:ToDo/src/app/ui/widgets/progress/in_page_progress.dart';
+import 'package:ToDo/src/app/ui/widgets/items/list/task_list_row_item.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/extensions/date_extensions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/navigator.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 import '../create/create_task_item_page.dart';
 
 class TaskListPage extends StatelessWidget with WidgetViewTemplate {
-  late TaskGetBloc _taskGetBloc;
+  final TaskGetBloc _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
 
-  late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+
+  final TaskDeleteBloc _taskDeleteBloc =
+      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
 
   DateTime selectedDay = DateTime.now();
 
@@ -39,18 +46,17 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   @override
   Widget build(BuildContext context) {
+    _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskGetBloc>(
-          create: (BuildContext context) {
-            _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
-            _taskGetBloc.add(GetAllTaskInDayEvent(DateTime.now().millisecondsSinceEpoch));
-            return _taskGetBloc;
-          },
+          create: (BuildContext context) => _taskGetBloc,
         ),
         BlocProvider<TaskCreateOrUpdateBloc>(
-          create: (BuildContext context) => _taskCreateOrUpdateBloc =
-              TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase()),
+          create: (BuildContext context) => _taskCreateOrUpdateBloc,
+        ),
+        BlocProvider<TaskDeleteBloc>(
+          create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
       child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
@@ -116,8 +122,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _calender() {
     return CalenderView(
-      start: DateTime.now().subtract(Duration(days: 100)),
-      end: DateTime.now().add(Duration(days: 100)),
+      start: DateTime.now().subtract(Duration(days: 150)),
+      end: DateTime.now().add(Duration(days: 150)),
       onSelect: (dateTime) {
         selectedDay = dateTime;
         _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
@@ -126,17 +132,24 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _taskList() {
-    return BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
-      buildWhen: (previous, current) {
-        return true;
+    return BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
+      listener: (context, state) {
+        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
       },
-      builder: (context, state) {
-        return Container(
-            margin: EdgeInsets.only(top: Insets.buttonHeight),
-            child: state.pageStatus == PageStatus.success
-                ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
-                : _loadingWidget());
-      },
+      child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
+        buildWhen: (previous, current) {
+          return previous.pageStatus != current.pageStatus;
+        },
+        bloc: _taskGetBloc,
+        builder: (context, state) {
+          return Container(
+              margin: EdgeInsets.only(top: Insets.buttonHeight),
+              height: double.infinity,
+              child: state.pageStatus == PageStatus.success
+                  ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
+                  : _loadingWidget());
+        },
+      ),
     );
   }
 
@@ -155,10 +168,16 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       children: taskList.map((e) {
         return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {
-            return true;
+            return current.pageStatus == PageStatus.success;
           },
+          bloc: _taskCreateOrUpdateBloc,
           builder: (context, state) {
+            if (!selectedDay.isSameDay(timestamp: e.taskTimestamp)) {
+              _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+              return Container();
+            }
             return TaskListRowItem(
+              key: GlobalKey(),
               taskItem: e,
               onDone: (done) {
                 _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
@@ -171,6 +190,15 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                     )).then((value) {
                   _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
                 });
+              },
+              onEdit: () {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+              },
+              onChangeDate: () {
+                _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(e));
+              },
+              onDelete: () {
+                _taskDeleteBloc.add(TaskDeleteEvent(id: e.ID));
               },
             );
           },

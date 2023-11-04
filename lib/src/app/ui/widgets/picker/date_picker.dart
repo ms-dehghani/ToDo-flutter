@@ -1,15 +1,14 @@
 import 'dart:async';
 
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:shamsi_date/shamsi_date.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/texts.dart';
+import 'package:ToDo/res/texts.dart';
 
 import '../base/base_stateful_widget.dart';
 import '../buttons/custom_flat_button.dart';
@@ -23,7 +22,7 @@ class DatePicker extends StatefulWidget {
   Function(int timestamp)? onDateSelected;
 
   DatePicker(
-      {this.title = "",
+      {super.key, this.title = "",
       this.initialTime = 0,
       this.onDateSelected,
       this.showJalali = false,
@@ -333,18 +332,6 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
     });
   }
 
-  @override
-  void hideProgressDialog() {
-    // TODO: implement hideProgressDialog
-  }
-
-  @override
-  void showProgressDialog() {
-    // TODO: implement showProgressDialog
-  }
-
-  @override
-  void setPresenter() {}
 }
 
 // class SnappingListScrollPhysics extends ScrollPhysics {

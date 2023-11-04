@@ -2,15 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/direction_util.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 import '../buttons/custom_flat_button.dart';
 import '../buttons/flat_border_button.dart';
@@ -37,7 +37,7 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
               children: [
                 Container(
                   decoration: Drawable.bottomSheetDecoration(color!),
-                  padding: EdgeInsets.all(Insets.lg),
+                  padding: EdgeInsets.all(Insets.pagePadding),
                   child: (showClose
                       ? Row(
                           children: [
@@ -128,7 +128,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                   ),
                   Container(
                     height: Insets.buttonHeight * 3,
-                    padding: EdgeInsets.symmetric(horizontal: Insets.med),
+                    padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
                     decoration:
                         Drawable.bottomSheetDecoration(getSelectedThemeColors().itemFillColor),
                     child: Column(
@@ -146,7 +146,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                           children: [
                             CustomFlatButton(
                               elevation: 0,
-                              size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                              size: Size(getWidth(context) / 2 - Insets.d24, Insets.buttonHeight),
                               fillColor: leftButtonColor,
                               child: Text(
                                 leftButtonText,
@@ -154,18 +154,20 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                                     .copyWith(color: getSelectedThemeColors().textOnAccentColor),
                               ),
                               onTap: () {
-                                leftButtonOnClick?.call();
-                                Navigator.of(context).maybePop();
+                                Navigator.of(context)
+                                    .maybePop()
+                                    .then((value) => leftButtonOnClick?.call());
                               },
                             ),
                             FlatBorderButton(
-                              size: Size(getWidth(context) / 2 - Insets.lg, Insets.buttonHeight),
+                              size: Size(getWidth(context) / 2 - Insets.d24, Insets.buttonHeight),
                               borderColor: rightButtonColor,
                               backColor: getSelectedThemeColors().itemFillColor,
                               rippleColor: rightButtonColor,
                               onTap: () {
-                                rightButtonOnClick?.call();
-                                Navigator.of(context).maybePop();
+                                Navigator.of(context)
+                                    .maybePop()
+                                    .then((value) => rightButtonOnClick?.call());
                               },
                               child: Text(
                                 rightButtonText,
@@ -175,7 +177,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                             )
                           ],
                         ),
-                        ItemSplitter.medSplitter,
+                        ItemSplitter.thickSplitter,
                       ],
                     ),
                   ),
@@ -192,7 +194,18 @@ Future<dynamic> showDeleteDialog(BuildContext context, {String text = "", Functi
       titleBarColor: UiColors.iconRed,
       titleBarIcon: AppIcons.danger,
       text: Texts.deleteQuestion.translate,
+      leftButtonColor: UiColors.iconRed,
       leftButtonText: Texts.deleteLeftButton.translate,
       rightButtonText: Texts.deleteRightButton.translate,
       leftButtonOnClick: onDeleted);
+}
+
+Future<dynamic> showDoneTaskDialog(BuildContext context, {required Function()? onDone}) {
+  return showAskQuestionDialog(context,
+      titleBarColor: UiColors.iconGreen,
+      titleBarIcon: AppIcons.doneTitle,
+      text: Texts.doneQuestion.translate,
+      leftButtonText: Texts.doneLeftButton.translate,
+      rightButtonText: Texts.doneRightButton.translate,
+      leftButtonOnClick: onDone);
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/di/di.dart';
-import 'package:kardone/res/theme/themes.dart';
-import 'package:kardone/src/app/ui/pages/task/list/task_list_page.dart';
-import 'package:kardone/src/utils/ht/html.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/res/theme/themes.dart';
+import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
+import 'package:ToDo/src/utils/ht/html.dart';
 
 import 'applic.dart';
 import 'src/utils/direction_util.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     HtmlFormatter.format();
     super.initState();
-    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("en"));
+    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("fa"));
     applic.onLocaleChanged = onLocaleChange;
   }
 
@@ -67,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         child: FutureBuilder(
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return TaskListPage();
+              return SplashScreen();
             } else {
               return Container(
                 width: double.infinity,

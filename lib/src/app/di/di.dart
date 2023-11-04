@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/data/di/data_di.dart';
-import 'package:kardone/src/domain/di/domain_di.dart';
-import 'package:kardone/src/domain/models/priority/priority_item.dart';
-import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
-import 'package:kardone/src/domain/usecase/priority/priority_usecase.dart';
-import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/data/di/data_di.dart';
+import 'package:ToDo/src/domain/di/domain_di.dart';
+import 'package:ToDo/src/domain/models/priority/priority_item.dart';
+import 'package:ToDo/src/domain/usecase/category/category_usecase.dart';
+import 'package:ToDo/src/domain/usecase/priority/priority_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -20,22 +20,23 @@ class DI {
 
   final getIt = GetIt.instance;
 
-  late final Database _database;
+  Database? _database;
 
   late List<PriorityItem> prioritiesItem;
 
   Future<bool> provideDependencies() async {
-    _database = await openDatabase('my_db.db');
-    getIt.registerSingleton<Database>(_database);
+    if (_database == null) {
+      _database ??= await openDatabase('my_db.db');
+      getIt.registerSingleton<Database>(_database!);
 
-    var pref = await SharedPreferences.getInstance();
-    getIt.registerSingleton<SharedPreferences>(pref);
+      var pref = await SharedPreferences.getInstance();
+      getIt.registerSingleton<SharedPreferences>(pref);
 
-    DataDI();
-    DomainDI();
+      DataDI();
+      DomainDI();
 
-    await _providePriorityList();
-
+      await _providePriorityList();
+    }
     return Future.value(true);
   }
 

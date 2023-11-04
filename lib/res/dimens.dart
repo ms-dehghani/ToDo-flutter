@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 class Insets {
   static double scale = 1;
@@ -38,6 +37,8 @@ class Insets {
   static double get appBarHeight => 64 * scale;
 
   static double get taskActionBarHeight => 64 * scale;
+
+  static double get addCategoryBottomSheetHeight => 160 * scale;
 
   // Offset, used for the edge of the window, or to separate large sections in the app
   static double get offset => 40 * offsetScale;

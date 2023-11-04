@@ -26,7 +26,11 @@
 
   "taskEmptyMessage" : "کاری برای % وجود ندارد.",
 
-  "taskDetailPageTitle" : "جزپیات کار",
+  "taskSelectPriorityError" : "اولویت کار را انتخاب کنید.",
+  "taskSelectCategoryError" : "دسته بندی کار را انتخاب کنید.",
+  "taskSelectTitleError" : "نام کار را وارد کنید.",
+
+  "taskDetailPageTitle" : "جزئیات کار",
 
   "taskDetailPagePriority" : "اولویت:",
   "taskDetailPageCategory" : "دسته:",
@@ -44,6 +48,10 @@
   "deleteQuestion" : "این کار با تمام جزئیات حذف خواهد شد. آیا اطمینان دارید؟",
   "deleteLeftButton" : "بله٬ حذف",
   "deleteRightButton" : "خیر٬ بازگشت",
+
+  "doneQuestion" : "این کار را انجام داده اید؟ وضعیت آن را به حالت تکمیل\u200Cشده تغییر دهیم؟",
+  "doneLeftButton" : "بله٬ تکمیل",
+  "doneRightButton" : "خیر٬ بازگشت",
 
 
   "categoryListPageTitle" : "انتخاب یا تعریف دسته بندی",

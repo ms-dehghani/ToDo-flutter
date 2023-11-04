@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 
 abstract class TaskDataProvider {
   Future<TaskItem?> getTaskByID(String taskID);

@@ -1,4 +1,4 @@
-import 'package:kardone/src/domain/models/setting/setting_item.dart';
+import 'package:ToDo/src/domain/models/setting/setting_item.dart';
 
 class SettingChangeEvent {
   SettingItem settingItem;

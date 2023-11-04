@@ -9,8 +9,9 @@ class GetAllTaskInDayEvent extends TaskGetEvent {
 
 class GetAllTaskInCalenderEvent extends TaskGetEvent {
   int startTime, endTime;
+  int selectedDay;
 
-  GetAllTaskInCalenderEvent({required this.startTime, required this.endTime});
+  GetAllTaskInCalenderEvent({required this.startTime, required this.endTime , required this.selectedDay});
 }
 
 class RefreshTaskListEvent extends GetAllTaskInDayEvent {

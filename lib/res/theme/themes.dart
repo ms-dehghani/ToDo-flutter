@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ToDo/res/color.dart';
 
 import 'theme_color.dart';
 
@@ -11,6 +12,10 @@ class Themes {
         TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
       },
     ),
+    colorScheme: ThemeData.light().colorScheme.copyWith(
+          primary: UiColors.green,
+          secondary: UiColors.orange,
+        ),
     extensions: <ThemeExtension<dynamic>>[
       lightThemeColors,
     ],
@@ -24,9 +29,6 @@ class Themes {
         TargetPlatform.macOS: ZoomPageTransitionsBuilder(),
       },
     ),
-    extensions: <ThemeExtension<dynamic>>[
-      darkThemeColors
-    ],
+    extensions: <ThemeExtension<dynamic>>[darkThemeColors],
   );
-
 }

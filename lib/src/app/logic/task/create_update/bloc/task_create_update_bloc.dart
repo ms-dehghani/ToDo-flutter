@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/domain/usecase/task/task_usecase.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
 
 import '../../../base/page_status.dart';
 import 'task_create_update_event.dart';
@@ -18,7 +18,9 @@ class TaskCreateOrUpdateBloc extends Bloc<TaskCreateOrUpdateEvent, TaskCreateUpd
   Future<void> _createOrUpdateTask(
       TaskCreateOrUpdateEvent event, Emitter<TaskCreateUpdateBlocPageData> emit) async {
     emit.call(state.copyWith(status: PageStatus.loading));
-    if (event.taskItem.title.isEmpty || event.taskItem.priorityItem == null) {
+    if (event.taskItem.title.isEmpty ||
+        event.taskItem.priorityItem == null ||
+        event.taskItem.categoryItem == null) {
       emit.call(state.copyWith(status: PageStatus.failure));
     } else {
       TaskItem taskItem = await _taskUseCase.createOrUpdateTask(event.taskItem);

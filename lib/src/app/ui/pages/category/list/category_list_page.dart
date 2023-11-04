@@ -1,45 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/logic/base/page_status.dart';
-import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/app/di/di.dart';
-import 'package:kardone/src/app/logic/category/get/bloc/category_get_bloc.dart';
-import 'package:kardone/src/app/logic/category/get/bloc/category_get_event.dart';
-import 'package:kardone/src/app/logic/category/get/bloc/category_get_page_data.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
-import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
-import 'package:kardone/src/app/ui/widgets/buttons/border_button.dart';
-import 'package:kardone/src/app/ui/widgets/items/list/category_list_row_item.dart';
-import 'package:kardone/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
-import 'package:kardone/src/app/ui/widgets/progress/in_page_progress.dart';
-import 'package:kardone/src/utils/device.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/category/get/bloc/category_get_bloc.dart';
+import 'package:ToDo/src/app/logic/category/get/bloc/category_get_event.dart';
+import 'package:ToDo/src/app/logic/category/get/bloc/category_get_page_data.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/border_button.dart';
+import 'package:ToDo/src/app/ui/widgets/items/list/category_list_row_item.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
+import 'package:ToDo/src/app/ui/widgets/progress/in_page_progress.dart';
+import 'package:ToDo/src/utils/device.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 import '../create/create_category_item_page.dart';
 
 class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
-  late CategoryGetBloc _categoryGetBloc;
+  final CategoryGetBloc _categoryGetBloc =
+      CategoryGetBloc(categoryUseCase: DI.instance().getCategoryUseCase());
 
   CategoryListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<CategoryGetBloc>(
-          create: (BuildContext context) {
-            return _categoryGetBloc =
-                CategoryGetBloc(categoryRepository: DI.instance().getCategoryUseCase())
-                  ..add(GetAllCategoryEvent());
-          },
-        ),
-      ],
+    _categoryGetBloc.add(GetAllCategoryEvent());
+    return BlocProvider<CategoryGetBloc>(
+      create: (BuildContext context) => _categoryGetBloc,
       child: showPage(context),
     );
   }
@@ -48,7 +42,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
   Widget phoneView(BuildContext context) {
     return Container(
       color: getSelectedThemeColors().onBackground,
-      padding: EdgeInsets.only(left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
+      padding: EdgeInsets.only(
+          left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
       child: Column(
         children: [
           Expanded(child: _categoryList(context)),
@@ -65,7 +60,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                           title: Texts.categoryAddPageTitle.translate,
                           iconSrc: AppIcons.addCategory),
                       SizedBox(
-                          height: getHeight(context) / 2.5,
+                          height: Insets.addCategoryBottomSheetHeight,
                           child: CreateCategoryItemPage(categoryItem: CategoryItem.empty())))
                   .then((value) {
                 if (value != null && value is CategoryItem) {
@@ -96,6 +91,10 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _categoryList(BuildContext context) {
     return BlocBuilder<CategoryGetBloc, CategoryGetBlocPageData>(
+      buildWhen: (previous, current) {
+        return true;
+      },
+      bloc: _categoryGetBloc,
       builder: (context, state) {
         return Container(
             color: getSelectedThemeColors().onBackground,

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 class CalenderRowItem extends StatefulWidget {
   int timestamp;

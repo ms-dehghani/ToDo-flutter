@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/res/theme/themes.dart';
+import 'package:ToDo/res/color.dart';
 
 class ThemeColor extends ThemeExtension<ThemeColor> {
   Color iconGreen;

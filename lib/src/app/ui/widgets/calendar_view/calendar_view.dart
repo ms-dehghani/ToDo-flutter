@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/utils/direction_util.dart';
-import 'package:kardone/src/utils/extentions/date_extentions.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
+import 'package:ToDo/src/utils/extensions/date_extensions.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 import 'calender_row_item.dart';
 
@@ -147,7 +147,11 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
   Widget _calenderGoToToday() {
     return GestureDetector(
         onTap: () {
-          _setItemClicked(DateTime.now());
+          if (!selectedDay.isSameDay(date: DateTime.now())) {
+            _setItemClicked(DateTime.now());
+          } else {
+            animateToItem(_findItem(selectedDay));
+          }
         },
         child: Text(
           Texts.goToday.translate,

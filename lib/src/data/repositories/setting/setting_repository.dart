@@ -1,5 +1,5 @@
-import 'package:kardone/src/domain/models/setting/setting_item.dart';
-import 'package:kardone/src/domain/repositories/setting/setting_item_repository.dart';
+import 'package:ToDo/src/domain/models/setting/setting_item.dart';
+import 'package:ToDo/src/domain/repositories/setting/setting_item_repository.dart';
 
 import '../../datasource/setting/setting_data_provider.dart';
 

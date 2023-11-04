@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/color.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/theme/theme_color.dart';
+import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/theme/theme_color.dart';
 
 class Drawable {
   static BoxDecoration simpleRoundCorner(Color color) => BoxDecoration(
@@ -78,6 +78,7 @@ class AppIcons {
   static const String delete = "assets/images/ic_delete.svg";
   static const String descriptionFill = "assets/images/ic_description_fill.svg";
   static const String descriptionOutline = "assets/images/ic_description_outline.svg";
+  static const String doneTitle = "assets/images/done.svg";
   static const String done = "assets/images/ic_done.svg";
   static const String doneChecked = "assets/images/ic_done_checked.svg";
   static const String dotsHorizontal = "assets/images/ic_dots_horizontal.svg";
@@ -86,6 +87,9 @@ class AppIcons {
   static const String priorityOutline = "assets/images/ic_priority_outline.svg";
   static const String danger = "assets/images/ic_danger.svg";
   static const String emptyTask = "assets/images/empty_task.svg";
+
+  static const String topSplash = "assets/images/top_splash.svg";
+  static const String bottomSplash = "assets/images/bottom_splash.svg";
 }
 
 class Shadows {

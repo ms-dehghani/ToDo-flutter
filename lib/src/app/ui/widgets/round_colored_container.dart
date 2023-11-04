@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
 
 class RoundColoredContainer extends StatelessWidget {
   Widget child;

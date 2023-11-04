@@ -1,55 +1,54 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/res/texts.dart';
-import 'package:kardone/src/app/logic/base/page_status.dart';
-import 'package:kardone/src/app/ui/widgets/app_bar.dart';
-import 'package:kardone/src/app/ui/widgets/image/image_view.dart';
-import 'package:kardone/src/app/di/di.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
-import 'package:kardone/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
-import 'package:kardone/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
-import 'package:kardone/src/domain/models/task/task_item.dart';
-import 'package:kardone/src/app/ui/pages/task/create/create_task_item_page.dart';
-import 'package:kardone/src/app/ui/widgets/base/widget_view_template.dart';
-import 'package:kardone/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
-import 'package:kardone/src/app/ui/widgets/buttons/back_button.dart';
-import 'package:kardone/src/app/ui/widgets/buttons/task_action_button.dart';
-import 'package:kardone/src/app/ui/widgets/items/detail/task_detail_row_item.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/navigator.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
-import 'package:kardone/src/utils/time_util.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
+import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
+import 'package:ToDo/src/app/ui/widgets/items/task/task_actions.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:ToDo/src/utils/time_util.dart';
 
 class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
 
   TaskDetailPage({super.key, required this.taskItem});
 
-  late TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc;
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
+      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
 
-  late TaskDeleteBloc _taskDeleteBloc;
+  final TaskDeleteBloc _taskDeleteBloc =
+      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskCreateOrUpdateBloc>(
-            create: (BuildContext context) => _taskCreateOrUpdateBloc =
-                TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase())),
+          create: (BuildContext context) => _taskCreateOrUpdateBloc,
+        ),
         BlocProvider<TaskDeleteBloc>(
-          create: (BuildContext context) =>
-              _taskDeleteBloc = TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase()),
+          create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
       child: BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
         buildWhen: (previous, current) {
-          return true;
+          return previous.pageStatus != current.pageStatus;
         },
         builder: (context, state) {
           return Container(
@@ -256,73 +255,21 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         margin: EdgeInsets.only(
             left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
         decoration: Drawable.taskActionsDecoration(getSelectedThemeColors()),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _taskActionDone(),
-            _taskActionChangeDate(context),
-            _taskActionEdit(context),
-            _taskActionDelete(context),
-          ],
-        ),
+        child: TaskActions(
+            taskItem: taskItem,
+            onDone: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            },
+            onChangeDate: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            },
+            onDelete: () {
+              _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
+            },
+            onEdit: () {
+              _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
+            }),
       ),
-    );
-  }
-
-  Widget _taskActionDone() {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonDone.translate,
-      icon: AppIcons.doneChecked,
-      color: taskItem.isDone
-          ? getSelectedThemeColors().disableColor
-          : getSelectedThemeColors().iconGreen,
-      onTap: () {
-        taskItem.isDone = !taskItem.isDone;
-        _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-      },
-    );
-  }
-
-  Widget _taskActionChangeDate(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonChangeDate.translate,
-      icon: AppIcons.changeDate,
-      onTap: () {
-        showDatePickerDialog(context, initialTime: taskItem.taskTimestamp,
-            onDateSelected: (timestamp) {
-          taskItem.taskTimestamp = timestamp;
-          _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem));
-        });
-      },
-      color: getSelectedThemeColors().accentColor,
-    );
-  }
-
-  Widget _taskActionEdit(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonEdit.translate,
-      icon: AppIcons.edit,
-      color: getSelectedThemeColors().iconBlue,
-      onTap: () {
-        navigateToPage(
-            context,
-            CreateTaskItemPage(
-              taskItem: taskItem,
-            )).then((value) => _taskCreateOrUpdateBloc.add(TaskCreateOrUpdateEvent(taskItem)));
-      },
-    );
-  }
-
-  Widget _taskActionDelete(BuildContext context) {
-    return TaskActionButton(
-      title: Texts.taskDetailButtonDelete.translate,
-      icon: AppIcons.delete,
-      color: getSelectedThemeColors().iconRed,
-      onTap: () {
-        showDeleteDialog(context, onDeleted: () {
-          // _taskDeleteBloc.add(TaskDeleteEvent(id: taskItem.ID));
-        }, text: Texts.taskDetailPageCategory);
-      },
     );
   }
 }

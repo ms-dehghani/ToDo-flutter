@@ -1,5 +1,5 @@
-import 'package:kardone/src/app/logic/base/parent_page_data.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/app/logic/base/parent_page_data.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
 
 import '../../../base/page_status.dart';
 

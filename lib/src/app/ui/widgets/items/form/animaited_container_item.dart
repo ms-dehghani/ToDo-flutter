@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/theme/theme_color.dart';
 
 class AnimatedContainerItem extends StatefulWidget {
   Widget child;

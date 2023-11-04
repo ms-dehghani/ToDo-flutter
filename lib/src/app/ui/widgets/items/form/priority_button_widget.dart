@@ -1,12 +1,11 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kardone/res/dimens.dart';
-import 'package:kardone/res/drawable.dart';
-import 'package:kardone/res/text_style.dart';
-import 'package:kardone/src/domain/models/priority/priority_item.dart';
-import 'package:kardone/src/utils/extentions/translates_string_extentions.dart';
-import 'package:kardone/src/utils/theme_utils.dart';
+import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/src/domain/models/priority/priority_item.dart';
+import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 
 class PriorityButtonWidget extends StatefulWidget {
   PriorityItem priorityItem;
@@ -57,8 +56,8 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
 
-    if(widget.isSelected) {
-      _doAnimate(!widget.isSelected);
+    if (widget.isSelected) {
+      _doAnimate(widget.isSelected);
     }
   }
 

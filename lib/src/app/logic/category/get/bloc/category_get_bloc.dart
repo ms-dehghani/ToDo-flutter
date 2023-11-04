@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kardone/src/domain/models/category/category_item.dart';
-import 'package:kardone/src/domain/usecase/category/category_usecase.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/usecase/category/category_usecase.dart';
 import '../../../base/page_status.dart';
 import 'category_get_event.dart';
 import 'category_get_page_data.dart';
@@ -8,8 +8,8 @@ import 'category_get_page_data.dart';
 class CategoryGetBloc extends Bloc<GetAllCategoryEvent, CategoryGetBlocPageData> {
   final CategoryUseCase _categoryUseCase;
 
-  CategoryGetBloc({required CategoryUseCase categoryRepository})
-      : _categoryUseCase = categoryRepository,
+  CategoryGetBloc({required CategoryUseCase categoryUseCase})
+      : _categoryUseCase = categoryUseCase,
         super(CategoryGetBlocPageData(status: PageStatus.initial)) {
     on<GetAllCategoryEvent>(_getAllCategory);
   }

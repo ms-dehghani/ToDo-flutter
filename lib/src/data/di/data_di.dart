@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:ToDo/src/data/repositories/setting/setting_repository.dart';
 
 import '../datasource/category/db/category_item_db_data_provider.dart';
 import '../datasource/priority/db/priority_item_db_data_provider.dart';
@@ -43,5 +44,6 @@ class DataDI {
 
   void _settingRepository() {
     getIt.registerSingleton<SettingItemDataProvider>(SettingItemDataProvider(getIt()));
+    getIt.registerSingleton<SettingRepository>(SettingRepository(getIt<SettingItemDataProvider>()));
   }
 }

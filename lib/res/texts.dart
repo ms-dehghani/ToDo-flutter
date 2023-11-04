@@ -45,6 +45,10 @@ class Texts {
 
   static const String taskEmptyMessage = "taskEmptyMessage";
 
+  static const String taskSelectPriorityError = "taskSelectPriorityError";
+  static const String taskSelectCategoryError = "taskSelectCategoryError";
+  static const String taskSelectTitleError = "taskSelectTitleError";
+
   ///////// category
   static const String categoryListPageTitle = "categoryListPageTitle";
   static const String categoryEditPageTitle = "categoryEditPageTitle";
@@ -62,6 +66,10 @@ class Texts {
   static const String deleteQuestion = "deleteQuestion";
   static const String deleteLeftButton = "deleteLeftButton";
   static const String deleteRightButton = "deleteRightButton";
+
+  static const String doneQuestion = "doneQuestion";
+  static const String doneLeftButton = "doneLeftButton";
+  static const String doneRightButton = "doneRightButton";
 
   ///////// priority
   static const String priorityHigh = "priorityHigh";
