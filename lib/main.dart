@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     HtmlFormatter.format();
     super.initState();
-    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("fa"));
+    _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("en"));
     applic.onLocaleChanged = onLocaleChange;
   }
 
