@@ -48,7 +48,7 @@ class DI {
     await DI
         .instance()
         .getPriorityUseCase()
-        .createOrUpdatePriority(PriorityItem("2", Texts.priorityMed, "#FF8800"));
+        .createOrUpdatePriority(PriorityItem("2", Texts.priorityMid, "#FF8800"));
     await DI
         .instance()
         .getPriorityUseCase()

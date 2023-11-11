@@ -76,7 +76,7 @@ class Texts {
 
   ///////// priority
   static const String priorityHigh = "priorityHigh";
-  static const String priorityMed = "priorityMed";
+  static const String priorityMid = "priorityMid";
   static const String priorityLow = "priorityLow";
 
   static const List<String> monthName = [
