@@ -37,7 +37,7 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
               children: [
                 Container(
                   decoration: Drawable.bottomSheetDecoration(color!),
-                  padding: EdgeInsets.all(Insets.pagePadding),
+                  padding: EdgeInsets.all(Insets.d24),
                   child: (showClose
                       ? Row(
                           children: [
@@ -207,5 +207,16 @@ Future<dynamic> showDoneTaskDialog(BuildContext context, {required Function()? o
       text: Texts.doneQuestion.translate,
       leftButtonText: Texts.doneLeftButton.translate,
       rightButtonText: Texts.doneRightButton.translate,
+      leftButtonColor: UiColors.iconGreen,
+      leftButtonOnClick: onDone);
+}
+Future<dynamic> showUnDoneTaskDialog(BuildContext context, {required Function()? onDone}) {
+  return showAskQuestionDialog(context,
+      titleBarColor: UiColors.iconGreen,
+      titleBarIcon: AppIcons.doneTitle,
+      text: Texts.unDoneQuestion.translate,
+      leftButtonText: Texts.unDoneLeftButton.translate,
+      rightButtonText: Texts.doneRightButton.translate,
+      leftButtonColor: UiColors.iconGreen,
       leftButtonOnClick: onDone);
 }

@@ -38,7 +38,7 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
   @override
   Widget phoneView(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: Insets.med, right: Insets.med, bottom: Insets.med),
+      padding: EdgeInsets.only(left: Insets.d24, right: Insets.d24, bottom: Insets.med),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

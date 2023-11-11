@@ -30,6 +30,6 @@ class UiColors {
   static const Color priorityMidColor = Color(0xFFFF8800);
   static const Color priorityLowColor = Color(0xFF06C270);
 
-  static const Color shadowColor = Color(0x55626262);
+  static const Color shadowColor = Color(0x55C1C1C1);
   static const Color pageBackground = Color(0xFFF8F8F8);
 }

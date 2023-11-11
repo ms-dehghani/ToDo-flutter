@@ -46,22 +46,31 @@ class TaskActions extends StatelessWidget {
 
   Widget _taskActionDone(BuildContext context) {
     return TaskActionButton(
-      title: Texts.taskDetailButtonDone.translate,
-      icon: AppIcons.doneChecked,
+      title: taskItem.isDone
+          ? Texts.taskDetailButtonUnDone.translate
+          : Texts.taskDetailButtonDone.translate,
+      icon: taskItem.isDone ? AppIcons.done : AppIcons.doneChecked,
       color: taskItem.isDone
           ? getSelectedThemeColors().disableColor
           : getSelectedThemeColors().iconGreen,
       onTap: () {
         if (taskItem.isDone) {
-          return;
+          showUnDoneTaskDialog(
+            context,
+            onDone: () {
+              taskItem.isDone = !taskItem.isDone;
+              onDone?.call();
+            },
+          );
+        } else {
+          showDoneTaskDialog(
+            context,
+            onDone: () {
+              taskItem.isDone = !taskItem.isDone;
+              onDone?.call();
+            },
+          );
         }
-        showDoneTaskDialog(
-          context,
-          onDone: () {
-            taskItem.isDone = !taskItem.isDone;
-            onDone?.call();
-          },
-        );
       },
     );
   }

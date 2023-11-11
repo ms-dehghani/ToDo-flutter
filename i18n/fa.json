@@ -36,6 +36,7 @@
   "taskDetailPageCategory" : "دسته:",
 
   "taskDetailButtonDone" : "تکمیل",
+  "taskDetailButtonUnDone" : "عدم تکمیل",
   "taskDetailButtonEdit" : "ویرایش",
   "taskDetailButtonDelete" : "حذف",
   "taskDetailButtonChangeDate" : "انتقال",

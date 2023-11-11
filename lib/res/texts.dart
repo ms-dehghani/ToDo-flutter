@@ -39,6 +39,7 @@ class Texts {
   static const String taskDetailPageCategory = "taskDetailPageCategory";
 
   static const String taskDetailButtonDone = "taskDetailButtonDone";
+  static const String taskDetailButtonUnDone = "taskDetailButtonUnDone";
   static const String taskDetailButtonEdit = "taskDetailButtonEdit";
   static const String taskDetailButtonDelete = "taskDetailButtonDelete";
   static const String taskDetailButtonChangeDate = "taskDetailButtonChangeDate";
@@ -68,7 +69,9 @@ class Texts {
   static const String deleteRightButton = "deleteRightButton";
 
   static const String doneQuestion = "doneQuestion";
+  static const String unDoneQuestion = "unDoneQuestion";
   static const String doneLeftButton = "doneLeftButton";
+  static const String unDoneLeftButton = "unDoneLeftButton";
   static const String doneRightButton = "doneRightButton";
 
   ///////// priority

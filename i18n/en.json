@@ -37,6 +37,7 @@
   "taskDetailPageCategory" : "Category:",
 
   "taskDetailButtonDone" : "Done",
+  "taskDetailButtonUnDone" : "Undo",
   "taskDetailButtonEdit" : "Edit",
   "taskDetailButtonDelete" : "Delete",
   "taskDetailButtonChangeDate" : "Shift",
@@ -51,7 +52,9 @@
   "deleteRightButton" : "No, back",
 
   "doneQuestion" : "Do you complete this task?",
+  "unDoneQuestion" : "Are you sure to revert this task to uncomplete?",
   "doneLeftButton" : "Yes, done",
+  "unDoneLeftButton" : "Yes, revert",
   "doneRightButton" : "No, back",
 
 

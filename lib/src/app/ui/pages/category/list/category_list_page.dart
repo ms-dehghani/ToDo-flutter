@@ -43,7 +43,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
     return Container(
       color: getSelectedThemeColors().onBackground,
       padding: EdgeInsets.only(
-          left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
+          left: Insets.d24, right: Insets.d24, bottom: Insets.pagePadding),
       child: Column(
         children: [
           Expanded(child: _categoryList(context)),
