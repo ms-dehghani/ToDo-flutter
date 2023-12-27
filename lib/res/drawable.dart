@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/theme/theme_color.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Drawable {
   static BoxDecoration simpleRoundCorner(Color color) => BoxDecoration(
@@ -29,12 +29,12 @@ class Drawable {
       );
 
   static BoxDecoration bottomSheetDecoration(Color color) => BoxDecoration(
-    color: color,
-    borderRadius: const BorderRadius.only(
-      topRight: Corners.xxlRadius,
-      topLeft: Corners.xxlRadius,
-    ),
-  );
+        color: color,
+        borderRadius: const BorderRadius.only(
+          topRight: Corners.xxlRadius,
+          topLeft: Corners.xxlRadius,
+        ),
+      );
 
   static BoxDecoration taskActionsDecoration(ThemeColor color) => BoxDecoration(
       color: UiColors.liteBackground,
@@ -88,6 +88,17 @@ class AppIcons {
   static const String danger = "assets/images/ic_danger.svg";
   static const String emptyTask = "assets/images/empty_task.svg";
 
+  static const String taskSelect = "assets/images/task_select.svg";
+  static const String taskDeselect = "assets/images/task_deselect.svg";
+  static const String settingSelect = "assets/images/setting_select.svg";
+  static const String settingDeselect = "assets/images/setting_deselect.svg";
+
+  static const String language = "assets/images/language.svg";
+  static const String themeMode = "assets/images/theme_mode.svg";
+
+  static const String langFa = "assets/images/lang_fa.svg";
+  static const String langEn = "assets/images/lang_en.svg";
+
   static const String topSplash = "assets/images/top_splash.svg";
   static const String bottomSplash = "assets/images/bottom_splash.svg";
 }
@@ -103,5 +114,13 @@ class Shadows {
             spreadRadius: 0,
             blurRadius: 3,
             offset: const Offset(0, 1)),
+      ];
+
+  static List<BoxShadow> get topAndBottom => [
+        BoxShadow(
+            color: const Color(0xff333333).withOpacity(.10),
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: const Offset(0, 0)),
       ];
 }

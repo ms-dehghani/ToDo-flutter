@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/src/app/ui/pages/task/list/task_list_page.dart';
+import 'package:ToDo/src/app/ui/pages/home/home_screen.dart';
 import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,22 +14,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   late BuildContext context;
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(microseconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return TaskListPage();
+            return HomeScreen();
           },
         ),
       );
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     this.context = context;

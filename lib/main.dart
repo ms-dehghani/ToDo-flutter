@@ -1,11 +1,11 @@
+import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/theme/themes.dart';
+import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
+import 'package:ToDo/src/utils/ht/html.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/di/di.dart';
-import 'package:ToDo/res/theme/themes.dart';
-import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
-import 'package:ToDo/src/utils/ht/html.dart';
 
 import 'applic.dart';
 import 'src/utils/direction_util.dart';

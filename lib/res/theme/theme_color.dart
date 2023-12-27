@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
+import 'package:flutter/material.dart';
 
 class ThemeColor extends ThemeExtension<ThemeColor> {
   Color iconGreen;
@@ -21,6 +21,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   Color accentColor;
   Color accentLiteColor;
   Color textOnAccentColor;
+  Color navigationColor;
 
   ThemeColor({
     required this.iconBlue,
@@ -42,6 +43,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.iconRed,
     required this.accentLiteColor,
     required this.textOnAccentColor,
+    required this.navigationColor,
   });
 
   @override
@@ -65,6 +67,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? accentColor,
     Color? accentLiteColor,
     Color? textOnAccentColor,
+    Color? navigationColor,
   }) {
     return ThemeColor(
         iconBlue: iconBlue ?? this.iconBlue,
@@ -85,6 +88,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
         accentLiteColor: accentLiteColor ?? this.accentLiteColor,
         iconRed: iconRed ?? this.iconRed,
         textOnAccentColor: textOnAccentColor ?? this.textOnAccentColor,
+        navigationColor: navigationColor ?? this.navigationColor,
         iconGray: iconGray ?? this.iconGray);
   }
 
@@ -111,6 +115,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
       accentColor: Color.lerp(accentColor, other.accentColor, t)!,
       accentLiteColor: Color.lerp(accentLiteColor, other.accentLiteColor, t)!,
+      navigationColor: Color.lerp(navigationColor, other.navigationColor, t)!,
       iconRed: Color.lerp(iconRed, other.iconRed, t)!,
       textOnAccentColor: Color.lerp(textOnAccentColor, other.textOnAccentColor, t)!,
     );
@@ -136,6 +141,7 @@ ThemeColor lightThemeColors = ThemeColor(
     accentLiteColor: UiColors.orangeLite,
     iconRed: UiColors.iconRed,
     textOnAccentColor: UiColors.whiteBackground,
+    navigationColor: UiColors.liteBackground,
     iconGray: UiColors.iconGray);
 
 ThemeColor darkThemeColors = ThemeColor(
@@ -157,4 +163,5 @@ ThemeColor darkThemeColors = ThemeColor(
     accentColor: UiColors.orange,
     accentLiteColor: UiColors.orangeLite,
     textOnAccentColor: UiColors.whiteBackground,
+    navigationColor: UiColors.liteBackground,
     iconGray: UiColors.iconGray);

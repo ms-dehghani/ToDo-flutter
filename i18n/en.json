@@ -2,6 +2,10 @@
   "appName" : "Kardone",
   "version" : "Ver 1.0.0",
 
+  "settingPageTitle" : "Settings",
+  "themeTitle" : "Dark mode",
+  "languageTitle" : "Language",
+
 
   "taskListTitle" : "Tasks",
   "noCat" : "Without category",
