@@ -17,6 +17,7 @@ class SettingBloc extends Bloc<SettingEvent, SettingItem> {
       await _settingUseCase.setSetting(event.settingItem);
       emit(event.settingItem.copyWith(status: PageStatus.success));
       APPLIC.changeLang(event.settingItem.langCode);
+      APPLIC.changeTheme(event.settingItem.isDark);
     });
 
     on<SettingGetEvent>((event, emit) async {

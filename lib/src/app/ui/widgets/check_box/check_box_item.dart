@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 Widget getCheckBox(bool value, ValueChanged<bool?>? onChanged) {
   return Checkbox(
@@ -14,7 +14,10 @@ Widget getCheckBox(bool value, ValueChanged<bool?>? onChanged) {
         return getSelectedThemeColors().itemFillColor;
       }
     }),
-    side: Borders.thinBorder,
+    side: Borders.thinBorder.copyWith(
+        color: isDark()
+            ? getSelectedThemeColors().primaryText
+            : getSelectedThemeColors().disableColor),
   );
 }
 

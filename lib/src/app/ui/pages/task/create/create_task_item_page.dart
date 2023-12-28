@@ -1,32 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
-import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
-import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:ToDo/src/domain/models/category/category_item.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/pages/category/list/category_list_page.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:ToDo/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
 import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/button_filed_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/form_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/priority_selector_filed_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
-import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
@@ -47,7 +47,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
       create: (BuildContext context) => _taskCreateOrUpdateBloc,
       child: Material(
         color: getSelectedThemeColors().itemFillColor,
-        child: Scaffold(body: SafeArea(child: showPage(context))),
+        child: Scaffold(
+            backgroundColor: isDark()
+                ? getSelectedThemeColors().pageBackground
+                : getSelectedThemeColors().onBackground,
+            body: SafeArea(child: showPage(context))),
       ),
     );
   }
@@ -66,8 +70,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
             )),
         Expanded(
-          child: Column(
-            children: [Expanded(child: _taskRows(context)), _createButton()],
+          child: Container(
+            color: getSelectedThemeColors().pageBackground,
+            child: Column(
+              children: [Expanded(child: _taskRows(context)), _createButton()],
+            ),
           ),
         )
       ],
@@ -223,10 +230,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             detail += "${Texts.taskSelectCategoryError.translate}\n";
           }
           var snackBar = SnackBar(
+              backgroundColor: getSelectedThemeColors().onBackground,
               content: Text(
-            detail,
-            style: TextStyles.h3.copyWith(color: Colors.white),
-          ));
+                detail,
+                style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+              ));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },

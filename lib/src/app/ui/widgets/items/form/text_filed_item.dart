@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../../image/image_view.dart';
 
@@ -33,6 +32,7 @@ class TextFiledItem extends StatefulWidget {
       this.hintTextStyle,
       this.onValueChange}) {
     textStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText);
+    hintTextStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText);
   }
 
   @override

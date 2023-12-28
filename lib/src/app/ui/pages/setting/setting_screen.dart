@@ -29,16 +29,10 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
     ..add(SettingGetEvent(
         SettingItem(isDark: false, pageStatus: PageStatus.initial, langCode: "en")));
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: getSelectedThemeColors().pageBackground,
-        width: double.infinity,
-        child: showPage(context));
-  }
+  late SettingItem state;
 
   @override
-  Widget phoneView(BuildContext context) {
+  Widget build(BuildContext context) {
     return BlocProvider<SettingBloc>(
       create: (BuildContext context) => _settingBloc,
       child: BlocBuilder<SettingBloc, SettingItem>(
@@ -47,27 +41,35 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
         },
         bloc: _settingBloc,
         builder: (context, state) {
-          return SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                    padding: EdgeInsets.all(Insets.lg),
-                    child: Text(
-                      Texts.settingPageTitle.translate,
-                      style:
-                          TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
-                    )),
-                _rowTheme(state),
-                SizedBox(
-                  height: Insets.lg,
-                ),
-                _rowLag(state),
-              ],
-            ),
-          );
+          this.state = state;
+          return Container(
+              color: getSelectedThemeColors().pageBackground,
+              width: double.infinity,
+              child: showPage(context));
         },
+      ),
+    );
+  }
+
+  @override
+  Widget phoneView(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: EdgeInsets.all(Insets.lg),
+              child: Text(
+                Texts.settingPageTitle.translate,
+                style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
+              )),
+          _rowTheme(state),
+          SizedBox(
+            height: Insets.lg,
+          ),
+          _rowLag(state),
+        ],
       ),
     );
   }

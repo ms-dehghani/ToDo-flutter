@@ -3,13 +3,13 @@ import 'package:ToDo/res/theme/themes.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
 import 'package:ToDo/src/domain/models/setting/setting_item.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/ht/html.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'applic.dart';
-import 'src/utils/direction_util.dart';
 import 'translations.dart';
 
 void main() {
@@ -44,15 +44,23 @@ class _MyAppState extends State<MyApp> {
   }
 
   onThemeChange(bool isDark) {
-    if (setting == null || setting!.isDark != isDark) setState(() {});
+    if (isDark && _themeMode == ThemeMode.dark) return;
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
   }
 
   Future<void> initDI() async {
-    await DI.instance().provideDependencies();
-    setting = await DI.instance().getSettingUseCase().getSetting();
-    APPLIC.changeLang(setting!.langCode);
+    if (setting == null) {
+      await DI.instance().provideDependencies();
+      setting = await DI.instance().getSettingUseCase().getSetting();
+      APPLIC.changeLang(setting!.langCode);
+      APPLIC.changeTheme(setting!.isDark);
+    }
     return Future.value();
   }
+
+  ThemeMode _themeMode = ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {
@@ -60,11 +68,8 @@ class _MyAppState extends State<MyApp> {
       title: Texts.appName,
       theme: Themes.light,
       darkTheme: Themes.dark,
-      themeMode: setting == null
-          ? ThemeMode.light
-          : setting!.isDark
-              ? ThemeMode.dark
-              : ThemeMode.light,
+      themeMode: _themeMode,
+      themeAnimationDuration: Duration(seconds: 2),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         _localeOverrideDelegate,

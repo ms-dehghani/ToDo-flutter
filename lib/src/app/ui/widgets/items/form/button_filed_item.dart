@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 class ButtonFiledItem extends StatefulWidget {
   Widget child;
@@ -31,7 +31,8 @@ class ButtonFiledItem extends StatefulWidget {
       this.rippleColor}) {
     borderColor = borderColor ?? getSelectedThemeColors().borderColor;
     rippleColor = rippleColor ?? borderColor!.withAlpha(80);
-    fillColor = fillColor ?? getSelectedThemeColors().itemFillColor;
+    fillColor = fillColor ??
+        (isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor);
     iconColor = iconColor ?? borderColor;
   }
 

@@ -43,6 +43,10 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   TaskListPage({super.key});
 
+  void reload() {
+    _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+  }
+
   @override
   Widget build(BuildContext context) {
     _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
@@ -66,7 +70,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   Widget phoneView(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: getSelectedThemeColors().pageBackground,
+        color: isDark()
+            ? getSelectedThemeColors().onBackground
+            : getSelectedThemeColors().pageBackground,
         child: SafeArea(
           child: Stack(
             children: [
@@ -86,7 +92,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                         width: getWidth(context),
                         height: double.infinity,
                         padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
-                        color: getSelectedThemeColors().onBackground,
+                        color: isDark()
+                            ? getSelectedThemeColors().pageBackground
+                            : getSelectedThemeColors().onBackground,
                         child: Text(Texts.taskListTitle.translate,
                             style: TextStyles.h1Bold
                                 .copyWith(color: getSelectedThemeColors().primaryColor)),
@@ -140,7 +148,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return Container(
         width: double.infinity,
         height: double.infinity,
-        color: getSelectedThemeColors().onBackground,
+        color: isDark()
+            ? getSelectedThemeColors().pageBackground
+            : getSelectedThemeColors().onBackground,
         child: Center(child: InPageProgress()));
   }
 

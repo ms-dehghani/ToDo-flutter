@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
@@ -11,6 +9,7 @@ import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../buttons/custom_flat_button.dart';
 import '../buttons/flat_border_button.dart';
@@ -19,7 +18,8 @@ import '../picker/date_picker.dart';
 import 'bottomsheet_title_item.dart';
 
 Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
-    {bool showClose = true, Widget? titleView, Color? color = Colors.white}) {
+    {bool showClose = true, Widget? titleView, Color? color}) {
+  color ??= getSelectedThemeColors().onBackground;
   return showModalBottomSheet(
       shape: RoundedRectangleBorder(borderRadius: Corners.bottomSheetTopBorder),
       backgroundColor: Colors.transparent,
@@ -44,7 +44,10 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
                             Expanded(child: titleView ?? Container()),
                             ItemSplitter.thickSplitter,
                             GestureDetector(
-                              child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
+                              child: ImageView(
+                                  src: AppIcons.closeOutline,
+                                  size: Insets.iconSizeXL,
+                                  color: getSelectedThemeColors().secondaryText),
                               onTap: () {
                                 Navigator.of(context).maybePop();
                               },

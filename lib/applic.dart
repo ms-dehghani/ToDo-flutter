@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:ToDo/res/text_style.dart';
+import 'package:flutter/material.dart';
 
 import 'translations.dart';
 
@@ -15,6 +14,7 @@ class APPLIC {
   ThemeChangeCallback? onThemeChanged;
 
   static String currentLang = "";
+  static bool currentThemeIsDark = false;
 
   static final APPLIC _applic = APPLIC._internal();
 
@@ -37,6 +37,10 @@ class APPLIC {
   }
 
   static void changeTheme(bool isDark) {
+    if (currentThemeIsDark == isDark) {
+      return;
+    }
+    currentThemeIsDark = isDark;
     _applic.onThemeChanged?.call(isDark);
   }
 }

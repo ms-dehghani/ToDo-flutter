@@ -1,16 +1,15 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/widgets/check_box/check_box_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/material.dart';
 
 import '../../bottomsheet/round_bottom_sheet.dart';
 import '../../image/image_view.dart';
@@ -48,9 +47,12 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     return Card(
       margin: EdgeInsets.symmetric(vertical: Insets.sm),
       elevation: widget.taskItem.isDone || !clickable ? 0 : Insets.xs,
-      color: getSelectedThemeColors().itemFillColor,
+      color:
+          isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor,
       shadowColor: getSelectedThemeColors().shadowColor,
-      shape: Borders.thinAndHighRadiosBorder,
+      shape: Borders.thinAndHighRadiosBorder.copyWith(
+          side: Borders.thinBorder.copyWith(
+              color: isDark() ? Colors.transparent : getSelectedThemeColors().borderColor)),
       child: InkWell(
         borderRadius: Corners.hgBorder,
         splashColor: getSelectedThemeColors().disableColor.withOpacity(0.3),
@@ -58,7 +60,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         onTap: () {
           widget.onTap.call();
         },
-        onLongPress:() {
+        onLongPress: () {
           _showMenuDialog();
         },
         child: Column(
@@ -93,7 +95,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         _checkBox(clickable),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top:Insets.xs ,bottom: Insets.xs),
+            padding: EdgeInsets.only(top: Insets.xs, bottom: Insets.xs),
             child: Text(
               widget.taskItem.title,
               maxLines: 2,

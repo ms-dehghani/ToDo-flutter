@@ -20,15 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 0;
 
   final pages = [
-    SettingScreen(),
     TaskListPage(),
+    SettingScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: getSelectedThemeColors().onBackground,
-      backgroundColor: getSelectedThemeColors().onBackground,
+      backgroundColor: isDark()
+          ? getSelectedThemeColors().pageBackground
+          : getSelectedThemeColors().onBackground,
       body: pages[pageIndex],
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
@@ -48,7 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(
                     timestamp: (pages[0] as TaskListPage).selectedDay.millisecondsSinceEpoch),
-              )).then((value) {});
+              )).then((value) {
+            (pages[0] as TaskListPage).reload();
+          });
         },
         backgroundColor: getSelectedThemeColors().primaryColor,
         child: ImageView(

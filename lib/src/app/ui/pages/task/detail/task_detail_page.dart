@@ -1,28 +1,28 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
-import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
-import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
 import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
-import 'package:ToDo/src/app/ui/widgets/items/task/task_actions.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:ToDo/src/app/ui/widgets/items/task/task_actions.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
@@ -52,7 +52,10 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         },
         builder: (context, state) {
           return Container(
-              color: getSelectedThemeColors().pageBackground, child: showPage(context));
+              color: isDark()
+                  ? getSelectedThemeColors().pageBackground
+                  : getSelectedThemeColors().onBackground,
+              child: showPage(context));
         },
       ),
     );
