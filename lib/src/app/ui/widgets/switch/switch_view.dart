@@ -9,7 +9,7 @@ class SwitchView extends StatefulWidget {
   final Color uncheckColor;
   final Color checkColor;
 
-  SwitchView(
+  const SwitchView(
       {Key? key,
       required this.value,
       required this.onChanged,

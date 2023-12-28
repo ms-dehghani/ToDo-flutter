@@ -1,7 +1,15 @@
 import 'package:ToDo/src/domain/models/setting/setting_item.dart';
 
-class SettingChangeEvent {
+sealed class SettingEvent {
   SettingItem settingItem;
 
-  SettingChangeEvent(this.settingItem);
+  SettingEvent(this.settingItem);
+}
+
+class SettingChangeEvent extends SettingEvent {
+  SettingChangeEvent(super.settingItem);
+}
+
+class SettingGetEvent extends SettingEvent {
+  SettingGetEvent(super.settingItem);
 }

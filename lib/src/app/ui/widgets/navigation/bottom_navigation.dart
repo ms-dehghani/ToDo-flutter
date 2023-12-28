@@ -51,8 +51,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
             children: [
               AnimatedSwitcher(
                 layoutBuilder: (currentChild, previousChildren) {
-                  print(currentChild);
-                  print(previousChildren);
                   return currentChild!;
                 },
                 duration: animationDuration,

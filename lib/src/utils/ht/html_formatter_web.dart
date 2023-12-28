@@ -75,7 +75,6 @@ class HtmlFormatter {
       html.Element el = node as html.Element;
       if (el.style.transform.isEmpty) continue;
       if (!el.style.transform.contains("\.")) continue;
-      //print(el.style.transform + " --> " + _normalizeTranslate(el.style.transform));
       el.style.transform = _normalizeTranslate(el.style.transform);
     }
   }
