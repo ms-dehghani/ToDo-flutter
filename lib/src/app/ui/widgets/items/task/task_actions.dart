@@ -49,8 +49,8 @@ class TaskActions extends StatelessWidget {
       title: Texts.taskDetailButtonDone.translate,
       icon: AppIcons.doneChecked,
       color: taskItem.isDone
-          ? getSelectedThemeColors(context).disableColor
-          : getSelectedThemeColors(context).iconGreen,
+          ? getSelectedThemeColors().disableColor
+          : getSelectedThemeColors().iconGreen,
       onTap: () {
         if (taskItem.isDone) {
           return;
@@ -76,7 +76,7 @@ class TaskActions extends StatelessWidget {
           taskItem.taskTimestamp = timestamp;
         }).then((value) => onChangeDate?.call());
       },
-      color: getSelectedThemeColors(context).accentColor,
+      color: getSelectedThemeColors().accentColor,
     );
   }
 
@@ -84,7 +84,7 @@ class TaskActions extends StatelessWidget {
     return TaskActionButton(
       title: Texts.taskDetailButtonEdit.translate,
       icon: AppIcons.edit,
-      color: getSelectedThemeColors(context).iconBlue,
+      color: getSelectedThemeColors().iconBlue,
       onTap: () {
         navigateToPage(
             context,
@@ -99,7 +99,7 @@ class TaskActions extends StatelessWidget {
     return TaskActionButton(
       title: Texts.taskDetailButtonDelete.translate,
       icon: AppIcons.delete,
-      color: getSelectedThemeColors(context).iconRed,
+      color: getSelectedThemeColors().iconRed,
       onTap: () {
         showDeleteDialog(context, onDeleted: () {
           onDelete?.call();

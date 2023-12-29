@@ -46,11 +46,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
     return BlocProvider<TaskCreateOrUpdateBloc>(
       create: (BuildContext context) => _taskCreateOrUpdateBloc,
       child: Material(
-        color: getSelectedThemeColors(context).itemFillColor,
+        color: getSelectedThemeColors().itemFillColor,
         child: Scaffold(
             backgroundColor: isDark()
-                ? getSelectedThemeColors(context).pageBackground
-                : getSelectedThemeColors(context).onBackground,
+                ? getSelectedThemeColors().pageBackground
+                : getSelectedThemeColors().onBackground,
             body: SafeArea(child: showPage(context))),
       ),
     );
@@ -61,18 +61,17 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
     return Column(
       children: [
         ApplicationAppBar(
-            color: getSelectedThemeColors(context).pageBackground,
+            color: getSelectedThemeColors().pageBackground,
             leftWidget: AppBarBackButton(
               onTap: () => Navigator.of(context).maybePop(),
             ),
             centerWidget: Text(
               Texts.addTaskPageTitle.translate,
-              style:
-                  TextStyles.h2Bold.copyWith(color: getSelectedThemeColors(context).primaryColor),
+              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
             )),
         Expanded(
           child: Container(
-            color: getSelectedThemeColors(context).pageBackground,
+            color: getSelectedThemeColors().pageBackground,
             child: Column(
               children: [Expanded(child: _taskRows(context)), _createButton()],
             ),
@@ -135,7 +134,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
   }
 
   Widget _dateWidget() {
-    Color color = getSelectedThemeColors(context).primaryText;
+    Color color = getSelectedThemeColors().primaryText;
     return FormItem(
       title: Texts.addTaskRowDate.translate,
       child: ButtonFiledItem(
@@ -169,7 +168,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           hint: Texts.addTaskRowDescriptionHint.translate,
           text: widget.taskItem.description,
           icon: AppIcons.descriptionOutline,
-          iconColor: getSelectedThemeColors(context).primaryText,
+          iconColor: getSelectedThemeColors().primaryText,
           onValueChange: (desc) {
             widget.taskItem.description = desc;
           },
@@ -178,8 +177,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
 
   Widget _categoryWidget(BuildContext context) {
     Color color = (widget.taskItem.categoryItem?.title ?? "").isNotEmpty
-        ? getSelectedThemeColors(context).primaryText
-        : getSelectedThemeColors(context).secondaryText;
+        ? getSelectedThemeColors().primaryText
+        : getSelectedThemeColors().secondaryText;
     return FormItem(
         title: Texts.addTaskRowCategory.translate,
         child: ButtonFiledItem(
@@ -196,7 +195,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             showRoundBottomSheet(
                     context,
                     titleView: BottomSheetTitleItem(
-                        color: getSelectedThemeColors(context).iconGreen,
+                        color: getSelectedThemeColors().iconGreen,
                         title: Texts.categoryListPageTitle.translate,
                         iconSrc: AppIcons.categoryOutline),
                     SizedBox(
@@ -231,10 +230,10 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             detail += "${Texts.taskSelectCategoryError.translate}\n";
           }
           var snackBar = SnackBar(
-              backgroundColor: getSelectedThemeColors(context).onBackground,
+              backgroundColor: getSelectedThemeColors().onBackground,
               content: Text(
                 detail,
-                style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText),
+                style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
               ));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
@@ -246,11 +245,10 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           padding: EdgeInsets.all(Insets.pagePadding),
           child: CustomRaisedButton(
             size: Size(double.infinity, Insets.buttonHeight),
-            fillColor: getSelectedThemeColors(context).primaryColor,
+            fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
               Texts.addTaskButtonAdd.translate,
-              style: TextStyles.h2Bold
-                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
+              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
               context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(widget.taskItem));

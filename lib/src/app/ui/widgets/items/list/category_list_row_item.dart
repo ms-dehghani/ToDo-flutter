@@ -33,12 +33,12 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
             child: CustomFlatButton(
               elevation: 0,
               size: Size(double.infinity, Insets.buttonHeight),
-              fillColor: getSelectedThemeColors(context).pageBackground,
+              fillColor: getSelectedThemeColors().pageBackground,
               child: Align(
                 alignment: isRTL() ? Alignment.centerRight : Alignment.centerLeft,
                 child: Text(
                   widget.categoryItem.title,
-                  style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).primaryText),
+                  style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
                 ),
               ),
               onTap: () {
@@ -52,14 +52,14 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
             child: CustomFlatButton(
               elevation: 0,
               size: Size(Insets.buttonHeight, Insets.buttonHeight),
-              fillColor: getSelectedThemeColors(context).iconBlue.withOpacity(0.05),
-              rippleColor: getSelectedThemeColors(context).iconBlue.withOpacity(0.5),
+              fillColor: getSelectedThemeColors().iconBlue.withOpacity(0.05),
+              rippleColor: getSelectedThemeColors().iconBlue.withOpacity(0.5),
               child: Align(
                 alignment: Alignment.center,
                 child: ImageView(
                   src: AppIcons.edit,
                   size: Insets.iconSizeXL,
-                  color: getSelectedThemeColors(context).iconBlue,
+                  color: getSelectedThemeColors().iconBlue,
                 ),
               ),
               onTap: () {

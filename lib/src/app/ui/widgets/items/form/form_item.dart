@@ -19,7 +19,7 @@ class FormItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: Insets.sm),
           child: Text(
             title,
-            style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).primaryText),
+            style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
           ),
         ),
         ItemSplitter.ultraThinSplitter,

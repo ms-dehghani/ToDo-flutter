@@ -28,14 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIcon: AppIcons.taskSelect,
         deselectedIcon: AppIcons.taskDeselect,
         pageBackgroundColor: isDark()
-            ? getSelectedThemeColors(context).pageBackground
-            : getSelectedThemeColors(context).onBackground,
+            ? getSelectedThemeColors().pageBackground
+            : getSelectedThemeColors().onBackground,
       ),
       BottomNavigationItem(
           page: SettingScreen(),
           selectedIcon: AppIcons.settingSelect,
           deselectedIcon: AppIcons.settingDeselect,
-          pageBackgroundColor: getSelectedThemeColors(context).pageBackground)
+          pageBackgroundColor: getSelectedThemeColors().pageBackground)
     ];
     return Scaffold(
       backgroundColor: pages[pageIndex].pageBackgroundColor,
@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
         pages: pages,
-        backgroundColor: getSelectedThemeColors(context).onBackground,
+        backgroundColor: getSelectedThemeColors().onBackground,
         callback: (selectedPage) {
           setState(() {
             pageIndex = selectedPage;
@@ -62,10 +62,10 @@ class _HomeScreenState extends State<HomeScreen> {
             (pages[0] as TaskListPage).reload();
           });
         },
-        backgroundColor: getSelectedThemeColors(context).primaryColor,
+        backgroundColor: getSelectedThemeColors().primaryColor,
         child: ImageView(
           src: AppIcons.addFill,
-          color: getSelectedThemeColors(context).textOnAccentColor,
+          color: getSelectedThemeColors().textOnAccentColor,
           size: Insets.iconSize2XL,
         ),
       ),

@@ -47,16 +47,15 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     return Card(
       margin: EdgeInsets.symmetric(vertical: Insets.sm),
       elevation: widget.taskItem.isDone || !clickable ? 0 : Insets.xs,
-      color: isDark()
-          ? getSelectedThemeColors(context).onBackground
-          : getSelectedThemeColors(context).itemFillColor,
-      shadowColor: getSelectedThemeColors(context).shadowColor,
+      color:
+          isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor,
+      shadowColor: getSelectedThemeColors().shadowColor,
       shape: Borders.thinAndHighRadiosBorder(context).copyWith(
           side: Borders.thinBorder(context).copyWith(
-              color: isDark() ? Colors.transparent : getSelectedThemeColors(context).borderColor)),
+              color: isDark() ? Colors.transparent : getSelectedThemeColors().borderColor)),
       child: InkWell(
         borderRadius: Corners.hgBorder,
-        splashColor: getSelectedThemeColors(context).disableColor.withOpacity(0.3),
+        splashColor: getSelectedThemeColors().disableColor.withOpacity(0.3),
         highlightColor: Colors.transparent,
         onTap: () {
           widget.onTap.call();
@@ -89,9 +88,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
           decoration: BoxDecoration(
               borderRadius: Corners.smBorder,
               color: widget.taskItem.isDone
-                  ? getSelectedThemeColors(context).disableColor
-                  : widget.taskItem.priorityItem?.color ??
-                      getSelectedThemeColors(context).disableColor),
+                  ? getSelectedThemeColors().disableColor
+                  : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
         ),
         ItemSplitter.ultraThinSplitter,
         _checkBox(clickable),
@@ -105,8 +103,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                   decoration:
                       widget.taskItem.isDone ? TextDecoration.lineThrough : TextDecoration.none,
                   color: widget.taskItem.isDone
-                      ? getSelectedThemeColors(context).disableColor
-                      : getSelectedThemeColors(context).primaryText),
+                      ? getSelectedThemeColors().disableColor
+                      : getSelectedThemeColors().primaryText),
             ),
           ),
         ),
@@ -121,7 +119,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               margin: EdgeInsets.symmetric(horizontal: Insets.sm),
               child: ImageView(
                 src: AppIcons.dotsHorizontal,
-                color: getSelectedThemeColors(context).secondaryText,
+                color: getSelectedThemeColors().secondaryText,
                 size: Insets.iconSizeXL,
               ),
             ),
@@ -167,13 +165,13 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               ItemSplitter.ultraThinSplitter,
               RoundColoredContainer(
                 color: !widget.taskItem.isDone
-                    ? getSelectedThemeColors(context).iconBlue.withOpacity(0.1)
-                    : getSelectedThemeColors(context).disableColor.withOpacity(0.1),
+                    ? getSelectedThemeColors().iconBlue.withOpacity(0.1)
+                    : getSelectedThemeColors().disableColor.withOpacity(0.1),
                 child: Row(
                   children: [
                     ImageView(
                       src: AppIcons.category,
-                      color: getSelectedThemeColors(context).iconBlue,
+                      color: getSelectedThemeColors().iconBlue,
                       size: Insets.iconSizeS,
                     ),
                     ItemSplitter.ultraThinSplitter,
@@ -181,8 +179,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                       widget.taskItem.categoryItem?.title ?? "",
                       style: TextStyles.h3.copyWith(
                           color: !widget.taskItem.isDone
-                              ? getSelectedThemeColors(context).iconBlue
-                              : getSelectedThemeColors(context).disableColor),
+                              ? getSelectedThemeColors().iconBlue
+                              : getSelectedThemeColors().disableColor),
                     )
                   ],
                 ),
@@ -202,14 +200,14 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         height: 34,
         margin: EdgeInsets.symmetric(horizontal: Insets.xs),
         color: !widget.taskItem.isDone
-            ? getSelectedThemeColors(context).disableColor.withOpacity(0.1)
-            : getSelectedThemeColors(context).disableColor.withOpacity(0.1),
+            ? getSelectedThemeColors().disableColor.withOpacity(0.1)
+            : getSelectedThemeColors().disableColor.withOpacity(0.1),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
             ImageView(
               src: AppIcons.calendar,
-              color: getSelectedThemeColors(context).secondaryText,
+              color: getSelectedThemeColors().secondaryText,
               size: Insets.iconSizeM,
             ),
             ItemSplitter.ultraThinSplitter,
@@ -220,8 +218,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyles.h3.copyWith(
                     color: !widget.taskItem.isDone
-                        ? getSelectedThemeColors(context).secondaryText
-                        : getSelectedThemeColors(context).disableColor),
+                        ? getSelectedThemeColors().secondaryText
+                        : getSelectedThemeColors().disableColor),
               ),
             )
           ],
@@ -252,7 +250,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     Widget actions = Container(
       width: double.infinity,
       height: Insets.taskActionBarHeight,
-      decoration: Drawable.simpleBorder(getSelectedThemeColors(context)),
+      decoration: Drawable.simpleBorder(getSelectedThemeColors()),
       child: TaskActions(
           taskItem: widget.taskItem,
           onDone: () {

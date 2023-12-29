@@ -65,8 +65,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
-      child: Container(
-          color: getSelectedThemeColors(context).pageBackground, child: showPage(context)),
+      child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
     );
   }
 
@@ -75,8 +74,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return Scaffold(
       body: Container(
         color: isDark()
-            ? getSelectedThemeColors(context).onBackground
-            : getSelectedThemeColors(context).pageBackground,
+            ? getSelectedThemeColors().onBackground
+            : getSelectedThemeColors().pageBackground,
         child: SafeArea(
           child: Stack(
             children: [
@@ -88,7 +87,7 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                     CustomPaint(
                       size: Size(getWidth(context), Insets.buttonHeight * 1.5),
                       painter: CustomRoundNavigationBackground(
-                          context, getSelectedThemeColors(context).itemFillColor),
+                          context, getSelectedThemeColors().itemFillColor),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: Insets.xl),
@@ -97,11 +96,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                         height: double.infinity,
                         padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
                         color: isDark()
-                            ? getSelectedThemeColors(context).pageBackground
-                            : getSelectedThemeColors(context).onBackground,
+                            ? getSelectedThemeColors().pageBackground
+                            : getSelectedThemeColors().onBackground,
                         child: Text(Texts.taskListTitle.translate,
                             style: TextStyles.h1Bold
-                                .copyWith(color: getSelectedThemeColors(context).primaryColor)),
+                                .copyWith(color: getSelectedThemeColors().primaryColor)),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: Insets.lg), child: _taskList()),
@@ -153,8 +152,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         width: double.infinity,
         height: double.infinity,
         color: isDark()
-            ? getSelectedThemeColors(context).pageBackground
-            : getSelectedThemeColors(context).onBackground,
+            ? getSelectedThemeColors().pageBackground
+            : getSelectedThemeColors().onBackground,
         child: Center(child: InPageProgress()));
   }
 
@@ -211,14 +210,13 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           ItemSplitter.thickSplitter,
           RichText(
             text: TextSpan(
-              style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText),
+              style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
               children: <TextSpan>[
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
                 TextSpan(
                     text:
                         " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
-                    style: TextStyles.h3Bold
-                        .copyWith(color: getSelectedThemeColors(context).primaryText)),
+                    style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
               ],
             ),

@@ -20,13 +20,13 @@ class AppBarBackButton extends StatelessWidget {
         height: Insets.backButtonHeight,
         child: InkWell(
           borderRadius: Corners.hgBorder,
-          splashColor: getSelectedThemeColors(context).primaryColor.withOpacity(0.2),
+          splashColor: getSelectedThemeColors().primaryColor.withOpacity(0.2),
           highlightColor: Colors.transparent,
           onTap: () {
             onTap.call();
           },
           child: Ink(
-            decoration: Drawable.backButtonDecoration(getSelectedThemeColors(context)),
+            decoration: Drawable.backButtonDecoration(getSelectedThemeColors()),
             child: Container(
               width: Insets.backButtonHeight,
               height: Insets.backButtonHeight,
@@ -36,7 +36,7 @@ class AppBarBackButton extends StatelessWidget {
                 child: ImageView(
                   src: AppIcons.back,
                   size: Insets.iconSizeXL,
-                  color: getSelectedThemeColors(context).primaryText,
+                  color: getSelectedThemeColors().primaryText,
                 ),
               ),
             ),

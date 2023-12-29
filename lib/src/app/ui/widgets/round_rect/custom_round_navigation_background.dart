@@ -24,7 +24,7 @@ class CustomRoundNavigationBackground extends CustomPainter {
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
     paint_0_fill.color = backgroundColor;
-    canvas.drawShadow(path_0, getSelectedThemeColors(context).secondaryText, 10.0, true);
+    canvas.drawShadow(path_0, getSelectedThemeColors().secondaryText, 10.0, true);
     canvas.drawPath(path_0, paint_0_fill);
   }
 

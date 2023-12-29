@@ -72,18 +72,18 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
     widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
 
     _animationText = ColorTween(
-      begin: getSelectedThemeColor().primaryText,
-      end: getSelectedThemeColor().textOnAccentColor,
+      begin: getSelectedThemeColors().primaryText,
+      end: getSelectedThemeColors().textOnAccentColor,
     ).animate(widget.textAnimationController!);
 
     _borderContainer = ColorTween(
-      begin: getSelectedThemeColor().borderColor,
-      end: getSelectedThemeColor().accentColor,
+      begin: getSelectedThemeColors().borderColor,
+      end: getSelectedThemeColors().accentColor,
     ).animate(widget.borderAnimationController!);
 
     _animationBackground = ColorTween(
-      begin: getSelectedThemeColor().itemFillColor,
-      end: getSelectedThemeColor().accentColor,
+      begin: getSelectedThemeColors().itemFillColor,
+      end: getSelectedThemeColors().accentColor,
     ).animate(widget.backgroundAnimationController!);
 
     if (widget.isSelected) {
@@ -111,7 +111,7 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
             height: Insets.calenderItemHeight,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.calendarItemBorder(getSelectedThemeColors(context)).copyWith(
+            decoration: Drawable.calendarItemBorder(getSelectedThemeColors()).copyWith(
                 color: _animationBackground?.value,
                 border: Border.all(color: _borderContainer!.value!, width: Strokes.thin)),
             child: Column(
