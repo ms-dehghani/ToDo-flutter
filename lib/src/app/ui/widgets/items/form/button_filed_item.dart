@@ -30,7 +30,6 @@ class ButtonFiledItem extends StatefulWidget {
       this.onTap,
       this.rippleColor}) {
     rippleColor = rippleColor ?? borderColor!.withAlpha(80);
-
     iconColor = iconColor ?? borderColor;
   }
 

@@ -25,12 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
     var pages = [
       BottomNavigationItem(
         page: TaskListPage(),
+        selectedIcon: AppIcons.taskSelect,
+        deselectedIcon: AppIcons.taskDeselect,
         pageBackgroundColor: isDark()
             ? getSelectedThemeColors(context).pageBackground
             : getSelectedThemeColors(context).onBackground,
       ),
       BottomNavigationItem(
           page: SettingScreen(),
+          selectedIcon: AppIcons.settingSelect,
+          deselectedIcon: AppIcons.settingDeselect,
           pageBackgroundColor: getSelectedThemeColors(context).pageBackground)
     ];
     return Scaffold(
@@ -53,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(
-                    timestamp: (pages[0] as TaskListPage).selectedDay.millisecondsSinceEpoch),
+                    timestamp: (pages[0].page as TaskListPage).selectedDay.millisecondsSinceEpoch),
               )).then((value) {
             (pages[0] as TaskListPage).reload();
           });
