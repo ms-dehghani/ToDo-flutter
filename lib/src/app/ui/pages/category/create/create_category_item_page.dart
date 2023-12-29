@@ -29,7 +29,7 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
       create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
           categoryUseCase: DI.instance().getCategoryUseCase(), categoryItem: categoryItem),
       child: Material(
-        color: getSelectedThemeColors(context).onBackground,
+        color: getSelectedThemeColors().onBackground,
         child: SafeArea(child: showPage(context)),
       ),
     );
@@ -73,15 +73,14 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
             elevation: 0,
             size: Size(double.infinity, Insets.buttonHeight),
             fillColor: state.item!.title.isEmpty
-                ? getSelectedThemeColors(context).accentLiteColor
-                : getSelectedThemeColors(context).accentColor,
-            rippleColor: getSelectedThemeColors(context).accentColor,
+                ? getSelectedThemeColors().accentLiteColor
+                : getSelectedThemeColors().accentColor,
+            rippleColor: getSelectedThemeColors().accentColor,
             child: Text(
               categoryItem.ID.isEmpty
                   ? Texts.categoryAddPageButtonAdd.translate
                   : Texts.categoryEditPageButtonEdit.translate,
-              style: TextStyles.h2Bold
-                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
+              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
               bloc.add(CategoryCreateOrUpdateResultEvent(categoryItem));

@@ -9,15 +9,15 @@ Widget getCheckBox(BuildContext context, bool value, ValueChanged<bool?>? onChan
     shape: const RoundedRectangleBorder(borderRadius: Corners.medBorder),
     fillColor: MaterialStateProperty.resolveWith((states) {
       if (states.contains(MaterialState.selected)) {
-        return getSelectedThemeColors(context).primaryColor;
+        return getSelectedThemeColors().primaryColor;
       } else {
-        return getSelectedThemeColors(context).itemFillColor;
+        return getSelectedThemeColors().itemFillColor;
       }
     }),
     side: Borders.thinBorder(context).copyWith(
         color: isDark()
-            ? getSelectedThemeColors(context).primaryText
-            : getSelectedThemeColors(context).disableColor),
+            ? getSelectedThemeColors().primaryText
+            : getSelectedThemeColors().disableColor),
   );
 }
 

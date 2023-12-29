@@ -26,8 +26,8 @@ class TaskDetailRowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    decoration = decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors(context));
-    titleColor = titleColor ?? getSelectedThemeColors(context).primaryText;
+    decoration = decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors());
+    titleColor = titleColor ?? getSelectedThemeColors().primaryText;
     return GestureDetector(
       onTap: () => onTap?.call(),
       child: Container(

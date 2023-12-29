@@ -138,7 +138,7 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
       children: [
         Text(
           timeToText(items[_selectedItemIndex].timestamp, withDay: false),
-          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors(context).primaryText),
+          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryText),
         )
       ],
     );
@@ -155,7 +155,7 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
         },
         child: Text(
           Texts.goToday.translate,
-          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors(context).accentColor),
+          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
         ));
   }
 }

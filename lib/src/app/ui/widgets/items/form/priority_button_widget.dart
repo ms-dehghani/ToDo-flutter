@@ -51,7 +51,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
     ).animate(widget.textAnimationController);
 
     _animationBackground = ColorTween(
-      begin: getSelectedThemeColors(context).itemFillColor,
+      begin: getSelectedThemeColors().itemFillColor,
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
 
@@ -76,7 +76,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
             height: 48,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.simpleBorder(getSelectedThemeColors(context)).copyWith(
+            decoration: Drawable.simpleBorder(getSelectedThemeColors()).copyWith(
                 color: _animationBackground.value,
                 border: Border.all(color: widget.priorityItem.color, width: Strokes.thin)),
             child: Text(

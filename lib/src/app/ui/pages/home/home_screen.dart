@@ -25,13 +25,17 @@ class _HomeScreenState extends State<HomeScreen> {
     var pages = [
       BottomNavigationItem(
         page: TaskListPage(),
+        selectedIcon: AppIcons.taskSelect,
+        deselectedIcon: AppIcons.taskDeselect,
         pageBackgroundColor: isDark()
-            ? getSelectedThemeColors(context).pageBackground
-            : getSelectedThemeColors(context).onBackground,
+            ? getSelectedThemeColors().pageBackground
+            : getSelectedThemeColors().onBackground,
       ),
       BottomNavigationItem(
           page: SettingScreen(),
-          pageBackgroundColor: getSelectedThemeColors(context).pageBackground)
+          selectedIcon: AppIcons.settingSelect,
+          deselectedIcon: AppIcons.settingDeselect,
+          pageBackgroundColor: getSelectedThemeColors().pageBackground)
     ];
     return Scaffold(
       backgroundColor: pages[pageIndex].pageBackgroundColor,
@@ -39,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
         pages: pages,
-        backgroundColor: getSelectedThemeColors(context).onBackground,
+        backgroundColor: getSelectedThemeColors().onBackground,
         callback: (selectedPage) {
           setState(() {
             pageIndex = selectedPage;
@@ -53,15 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(
-                    timestamp: (pages[0] as TaskListPage).selectedDay.millisecondsSinceEpoch),
+                    timestamp: (pages[0].page as TaskListPage).selectedDay.millisecondsSinceEpoch),
               )).then((value) {
             (pages[0] as TaskListPage).reload();
           });
         },
-        backgroundColor: getSelectedThemeColors(context).primaryColor,
+        backgroundColor: getSelectedThemeColors().primaryColor,
         child: ImageView(
           src: AppIcons.addFill,
-          color: getSelectedThemeColors(context).textOnAccentColor,
+          color: getSelectedThemeColors().textOnAccentColor,
           size: Insets.iconSize2XL,
         ),
       ),

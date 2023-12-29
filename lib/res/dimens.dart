@@ -92,7 +92,7 @@ class Borders {
       RoundedRectangleBorder(borderRadius: Corners.hgBorder, side: thinBorder(context));
 
   static BorderSide thinBorder(BuildContext context) =>
-      BorderSide(width: Strokes.thin, color: getSelectedThemeColors(context).borderColor);
+      BorderSide(width: Strokes.thin, color: getSelectedThemeColors().borderColor);
 }
 
 class ItemSplitter {

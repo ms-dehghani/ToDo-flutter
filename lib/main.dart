@@ -2,6 +2,7 @@ import 'package:ToDo/res/texts.dart';
 import 'package:ToDo/res/theme/themes.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
+import 'package:ToDo/src/base/navigation_service.dart';
 import 'package:ToDo/src/domain/models/setting/setting_item.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/ht/html.dart';
@@ -65,6 +66,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: NavigationService.navigatorKey,
       title: Texts.appName,
       theme: Themes.light,
       darkTheme: Themes.dark,

@@ -128,8 +128,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text("${years[index]}",
               style: TextStyles.h3Bold.copyWith(
                   color: index == year
-                      ? getSelectedThemeColors(context).primaryColor
-                      : getSelectedThemeColors(context).primaryText,
+                      ? getSelectedThemeColors().primaryColor
+                      : getSelectedThemeColors().primaryText,
                   fontSize: index == year ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -154,8 +154,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text(Texts.monthName[index].translate,
               style: TextStyles.h3Bold.copyWith(
                   color: index == month
-                      ? getSelectedThemeColors(context).primaryColor
-                      : getSelectedThemeColors(context).primaryText,
+                      ? getSelectedThemeColors().primaryColor
+                      : getSelectedThemeColors().primaryText,
                   fontSize: index == month ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -180,8 +180,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text(index < 9 ? "0${index + 1}" : "${index + 1}",
               style: TextStyles.h3Bold.copyWith(
                   color: index == day
-                      ? getSelectedThemeColors(context).primaryColor
-                      : getSelectedThemeColors(context).primaryText,
+                      ? getSelectedThemeColors().primaryColor
+                      : getSelectedThemeColors().primaryText,
                   fontSize: index == day ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -189,7 +189,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
 
     return Container(
       height: Insets.scale * 280,
-      color: getSelectedThemeColors(context).pageBackground,
+      color: getSelectedThemeColors().pageBackground,
       child: Column(
         children: [
           Container(
@@ -202,8 +202,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
               children: [
                 Text(
                   "${!widget.showOnlyYearMonth ? "${day + 1} " : ""}${Texts.monthName[month].translate} ${years[year]}",
-                  style: TextStyles.h3Bold
-                      .copyWith(color: getSelectedThemeColors(context).primaryColor),
+                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryColor),
                 ),
                 CustomFlatButton(
                   elevation: 0,
@@ -214,12 +213,11 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     _setSelectedDay();
                     _goToDay();
                   },
-                  fillColor: getSelectedThemeColors(context).itemFillColor,
-                  rippleColor: getSelectedThemeColors(context).primaryColor,
+                  fillColor: getSelectedThemeColors().itemFillColor,
+                  rippleColor: getSelectedThemeColors().primaryColor,
                   child: Text(
                     Texts.today.translate,
-                    style:
-                        TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryColor),
+                    style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryColor),
                   ),
                 )
               ],
@@ -229,7 +227,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
             height: Insets.scale * 160,
             width: getWidth(context) * 0.9,
             decoration: BoxDecoration(
-              color: getSelectedThemeColors(context).pageBackground,
+              color: getSelectedThemeColors().pageBackground,
               borderRadius: Corners.hgBorder,
             ),
             child: Row(
@@ -243,7 +241,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                             alignment: Alignment.center,
                             child: Container(
                               decoration: Drawable.timeAndDatePickerBackItemDecoration(
-                                  getSelectedThemeColors(context)),
+                                  getSelectedThemeColors()),
                               width: listItemWidth,
                               height: Insets.backButtonHeight,
                             ),
@@ -261,8 +259,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        decoration: Drawable.timeAndDatePickerBackItemDecoration(
-                            getSelectedThemeColors(context)),
+                        decoration:
+                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -280,8 +278,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        decoration: Drawable.timeAndDatePickerBackItemDecoration(
-                            getSelectedThemeColors(context)),
+                        decoration:
+                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -299,11 +297,10 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           ItemSplitter.thickSplitter,
           CustomRaisedButton(
             size: Size(getWidth(context) * 0.9, Insets.backButtonHeight),
-            fillColor: getSelectedThemeColors(context).primaryColor,
+            fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
               Texts.ok.translate,
-              style: TextStyles.h3Bold
-                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
+              style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
               if (widget.onDateSelected != null) {

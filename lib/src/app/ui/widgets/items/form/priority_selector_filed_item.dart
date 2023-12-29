@@ -58,12 +58,12 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
         ImageView(
           src: AppIcons.priorityOutline,
           size: Insets.iconSizeS,
-          color: getSelectedThemeColors(context).secondaryText,
+          color: getSelectedThemeColors().secondaryText,
         ),
         ItemSplitter.ultraThinSplitter,
         Text(
           Texts.addTaskRowPrioritySelect.translate,
-          style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).secondaryText),
+          style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
         ),
         ItemSplitter.ultraThinSplitter,
         Expanded(
