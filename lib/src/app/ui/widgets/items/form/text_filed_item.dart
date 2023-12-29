@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../../image/image_view.dart';
 
@@ -31,9 +30,7 @@ class TextFiledItem extends StatefulWidget {
       this.icon = "",
       this.iconColor = Colors.white,
       this.hintTextStyle,
-      this.onValueChange}) {
-    textStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText);
-  }
+      this.onValueChange});
 
   @override
   State<StatefulWidget> createState() {
@@ -47,6 +44,11 @@ class _TextFiledItemState extends State<TextFiledItem> {
   @override
   void initState() {
     super.initState();
+
+    widget.textStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText);
+    widget.hintTextStyle ??=
+        TextStyles.h3.copyWith(color: getSelectedThemeColors(context).secondaryText);
+
     _controler = TextEditingController();
     _controler.text = widget.text;
   }
@@ -60,7 +62,7 @@ class _TextFiledItemState extends State<TextFiledItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: Drawable.simpleBorder(getSelectedThemeColors()),
+      decoration: Drawable.simpleBorder(getSelectedThemeColors(context)),
       padding: EdgeInsets.symmetric(horizontal: Insets.sm),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -72,7 +74,7 @@ class _TextFiledItemState extends State<TextFiledItem> {
                   child: ImageView(
                     src: widget.icon!,
                     color: _controler.text.isEmpty
-                        ? getSelectedThemeColors().disableColor
+                        ? getSelectedThemeColors(context).disableColor
                         : widget.iconColor,
                     size: Insets.iconSizeS,
                   ),

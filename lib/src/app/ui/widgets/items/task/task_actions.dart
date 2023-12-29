@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/texts.dart';
@@ -8,6 +6,8 @@ import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/navigator.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../bottomsheet/round_bottom_sheet.dart';
 import '../../buttons/task_action_button.dart';
@@ -51,8 +51,8 @@ class TaskActions extends StatelessWidget {
           : Texts.taskDetailButtonDone.translate,
       icon: taskItem.isDone ? AppIcons.done : AppIcons.doneChecked,
       color: taskItem.isDone
-          ? getSelectedThemeColors().disableColor
-          : getSelectedThemeColors().iconGreen,
+          ? getSelectedThemeColors(context).disableColor
+          : getSelectedThemeColors(context).iconGreen,
       onTap: () {
         if (taskItem.isDone) {
           showUnDoneTaskDialog(
@@ -85,7 +85,7 @@ class TaskActions extends StatelessWidget {
           taskItem.taskTimestamp = timestamp;
         }).then((value) => onChangeDate?.call());
       },
-      color: getSelectedThemeColors().accentColor,
+      color: getSelectedThemeColors(context).accentColor,
     );
   }
 
@@ -93,7 +93,7 @@ class TaskActions extends StatelessWidget {
     return TaskActionButton(
       title: Texts.taskDetailButtonEdit.translate,
       icon: AppIcons.edit,
-      color: getSelectedThemeColors().iconBlue,
+      color: getSelectedThemeColors(context).iconBlue,
       onTap: () {
         navigateToPage(
             context,
@@ -108,7 +108,7 @@ class TaskActions extends StatelessWidget {
     return TaskActionButton(
       title: Texts.taskDetailButtonDelete.translate,
       icon: AppIcons.delete,
-      color: getSelectedThemeColors().iconRed,
+      color: getSelectedThemeColors(context).iconRed,
       onTap: () {
         showDeleteDialog(context, onDeleted: () {
           onDelete?.call();

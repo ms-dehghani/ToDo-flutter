@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 class Insets {
   static double scale = 1;
@@ -85,14 +85,14 @@ class Corners {
 }
 
 class Borders {
-  static RoundedRectangleBorder thinAndMedRadiosBorder =
-      RoundedRectangleBorder(borderRadius: Corners.medBorder, side: thinBorder);
+  static RoundedRectangleBorder thinAndMedRadiosBorder(BuildContext context) =>
+      RoundedRectangleBorder(borderRadius: Corners.medBorder, side: thinBorder(context));
 
-  static RoundedRectangleBorder thinAndHighRadiosBorder =
-      RoundedRectangleBorder(borderRadius: Corners.hgBorder, side: thinBorder);
+  static RoundedRectangleBorder thinAndHighRadiosBorder(BuildContext context) =>
+      RoundedRectangleBorder(borderRadius: Corners.hgBorder, side: thinBorder(context));
 
-  static BorderSide thinBorder =
-      BorderSide(width: Strokes.thin, color: getSelectedThemeColors().borderColor);
+  static BorderSide thinBorder(BuildContext context) =>
+      BorderSide(width: Strokes.thin, color: getSelectedThemeColors(context).borderColor);
 }
 
 class ItemSplitter {

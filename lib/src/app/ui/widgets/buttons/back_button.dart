@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../image/image_view.dart';
 
@@ -15,18 +14,19 @@ class AppBarBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
       child: SizedBox(
         width: Insets.backButtonHeight,
         height: Insets.backButtonHeight,
         child: InkWell(
           borderRadius: Corners.hgBorder,
-          splashColor: getSelectedThemeColors().primaryColor.withOpacity(0.2),
+          splashColor: getSelectedThemeColors(context).primaryColor.withOpacity(0.2),
           highlightColor: Colors.transparent,
           onTap: () {
             onTap.call();
           },
           child: Ink(
-            decoration: Drawable.backButtonDecoration(getSelectedThemeColors()),
+            decoration: Drawable.backButtonDecoration(getSelectedThemeColors(context)),
             child: Container(
               width: Insets.backButtonHeight,
               height: Insets.backButtonHeight,
@@ -36,7 +36,7 @@ class AppBarBackButton extends StatelessWidget {
                 child: ImageView(
                   src: AppIcons.back,
                   size: Insets.iconSizeXL,
-                  color: getSelectedThemeColors().primaryText,
+                  color: getSelectedThemeColors(context).primaryText,
                 ),
               ),
             ),

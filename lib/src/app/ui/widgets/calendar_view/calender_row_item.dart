@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/cupertino.dart';
 
 class CalenderRowItem extends StatefulWidget {
   int timestamp;
@@ -72,18 +72,18 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
     widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
 
     _animationText = ColorTween(
-      begin: getSelectedThemeColors().primaryText,
-      end: getSelectedThemeColors().textOnAccentColor,
+      begin: getSelectedThemeColor().primaryText,
+      end: getSelectedThemeColor().textOnAccentColor,
     ).animate(widget.textAnimationController!);
 
     _borderContainer = ColorTween(
-      begin: getSelectedThemeColors().borderColor,
-      end: getSelectedThemeColors().accentColor,
+      begin: getSelectedThemeColor().borderColor,
+      end: getSelectedThemeColor().accentColor,
     ).animate(widget.borderAnimationController!);
 
     _animationBackground = ColorTween(
-      begin: getSelectedThemeColors().itemFillColor,
-      end: getSelectedThemeColors().accentColor,
+      begin: getSelectedThemeColor().itemFillColor,
+      end: getSelectedThemeColor().accentColor,
     ).animate(widget.backgroundAnimationController!);
 
     if (widget.isSelected) {
@@ -111,7 +111,7 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
             height: Insets.calenderItemHeight,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.calendarItemBorder(getSelectedThemeColors()).copyWith(
+            decoration: Drawable.calendarItemBorder(getSelectedThemeColors(context)).copyWith(
                 color: _animationBackground?.value,
                 border: Border.all(color: _borderContainer!.value!, width: Strokes.thin)),
             child: Column(

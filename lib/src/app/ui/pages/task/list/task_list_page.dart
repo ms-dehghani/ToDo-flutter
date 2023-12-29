@@ -1,35 +1,34 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
-import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
-import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
-import 'package:ToDo/src/app/logic/task/get/bloc/task_get_event.dart';
-import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
 import 'package:ToDo/src/app/logic/task/get/bloc/task_get_bloc.dart';
+import 'package:ToDo/src/app/logic/task/get/bloc/task_get_event.dart';
 import 'package:ToDo/src/app/logic/task/get/bloc/task_get_page_data.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/pages/task/detail/task_detail_page.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:ToDo/src/app/ui/widgets/calendar_view/calendar_view.dart';
-import 'package:ToDo/src/app/ui/widgets/progress/in_page_progress.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/ui/widgets/items/list/task_list_row_item.dart';
+import 'package:ToDo/src/app/ui/widgets/progress/in_page_progress.dart';
+import 'package:ToDo/src/app/ui/widgets/round_rect/custom_round_navigation_background.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/extensions/date_extensions.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/navigator.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
-
-import '../create/create_task_item_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   final TaskGetBloc _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
@@ -44,8 +43,15 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
 
   TaskListPage({super.key});
 
+  void reload() {
+    _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+  }
+
+  late BuildContext context;
+
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
     return MultiBlocProvider(
       providers: [
@@ -59,32 +65,18 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
-      child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
+      child: Container(
+          color: getSelectedThemeColors(context).pageBackground, child: showPage(context)),
     );
   }
 
   @override
   Widget phoneView(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          navigateToPage(
-              context,
-              CreateTaskItemPage(
-                taskItem: TaskItem.empty(timestamp: selectedDay.millisecondsSinceEpoch),
-              )).then((value) {
-            _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
-          });
-        },
-        backgroundColor: getSelectedThemeColors().primaryColor,
-        child: ImageView(
-          src: AppIcons.addFill,
-          color: getSelectedThemeColors().textOnAccentColor,
-          size: Insets.iconSize2XL,
-        ),
-      ),
       body: Container(
-        color: getSelectedThemeColors().pageBackground,
+        color: isDark()
+            ? getSelectedThemeColors(context).onBackground
+            : getSelectedThemeColors(context).pageBackground,
         child: SafeArea(
           child: Stack(
             children: [
@@ -95,7 +87,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                   children: [
                     CustomPaint(
                       size: Size(getWidth(context), Insets.buttonHeight * 1.5),
-                      painter: RPSCustomPainter(),
+                      painter: CustomRoundNavigationBackground(
+                          context, getSelectedThemeColors(context).itemFillColor),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: Insets.xl),
@@ -103,10 +96,12 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                         width: getWidth(context),
                         height: double.infinity,
                         padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
-                        color: getSelectedThemeColors().onBackground,
+                        color: isDark()
+                            ? getSelectedThemeColors(context).pageBackground
+                            : getSelectedThemeColors(context).onBackground,
                         child: Text(Texts.taskListTitle.translate,
                             style: TextStyles.h1Bold
-                                .copyWith(color: getSelectedThemeColors().primaryColor)),
+                                .copyWith(color: getSelectedThemeColors(context).primaryColor)),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: Insets.lg), child: _taskList()),
@@ -157,7 +152,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return Container(
         width: double.infinity,
         height: double.infinity,
-        color: getSelectedThemeColors().onBackground,
+        color: isDark()
+            ? getSelectedThemeColors(context).pageBackground
+            : getSelectedThemeColors(context).onBackground,
         child: Center(child: InPageProgress()));
   }
 
@@ -214,13 +211,14 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           ItemSplitter.thickSplitter,
           RichText(
             text: TextSpan(
-              style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText),
               children: <TextSpan>[
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
                 TextSpan(
                     text:
                         " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
-                    style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
+                    style: TextStyles.h3Bold
+                        .copyWith(color: getSelectedThemeColors(context).primaryText)),
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
               ],
             ),
@@ -229,33 +227,5 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         ],
       ),
     );
-  }
-}
-
-class RPSCustomPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Path path_0 = Path();
-    path_0.moveTo(0, size.height * 0.5839956);
-    path_0.cubicTo(0, size.height * 0.4104515, size.width * 0.02082729, size.height * 0.2623382,
-        size.width * 0.04901401, size.height * 0.2364794);
-    path_0.cubicTo(size.width * 0.3934372, size.height * -0.07949706, size.width * 0.6065145,
-        size.height * -0.07820441, size.width * 0.9509469, size.height * 0.2366294);
-    path_0.cubicTo(size.width * 0.9791522, size.height * 0.2624088, size.width,
-        size.height * 0.4105676, size.width, size.height * 0.5842029);
-    path_0.lineTo(size.width, size.height * 0.5735294);
-    path_0.lineTo(0, size.height * 0.5735294);
-    path_0.lineTo(0, size.height * 0.5839956);
-    path_0.close();
-
-    Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = getSelectedThemeColors().itemFillColor;
-    canvas.drawShadow(path_0, getSelectedThemeColors().shadowColor, 6.0, true);
-    canvas.drawPath(path_0, paint_0_fill);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }

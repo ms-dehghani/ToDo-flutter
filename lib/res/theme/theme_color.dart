@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
+import 'package:flutter/material.dart';
 
 class ThemeColor extends ThemeExtension<ThemeColor> {
   Color iconGreen;
@@ -21,6 +21,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   Color accentColor;
   Color accentLiteColor;
   Color textOnAccentColor;
+  Color navigationColor;
 
   ThemeColor({
     required this.iconBlue,
@@ -42,6 +43,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     required this.iconRed,
     required this.accentLiteColor,
     required this.textOnAccentColor,
+    required this.navigationColor,
   });
 
   @override
@@ -65,6 +67,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
     Color? accentColor,
     Color? accentLiteColor,
     Color? textOnAccentColor,
+    Color? navigationColor,
   }) {
     return ThemeColor(
         iconBlue: iconBlue ?? this.iconBlue,
@@ -85,6 +88,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
         accentLiteColor: accentLiteColor ?? this.accentLiteColor,
         iconRed: iconRed ?? this.iconRed,
         textOnAccentColor: textOnAccentColor ?? this.textOnAccentColor,
+        navigationColor: navigationColor ?? this.navigationColor,
         iconGray: iconGray ?? this.iconGray);
   }
 
@@ -111,6 +115,7 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
       accentColor: Color.lerp(accentColor, other.accentColor, t)!,
       accentLiteColor: Color.lerp(accentLiteColor, other.accentLiteColor, t)!,
+      navigationColor: Color.lerp(navigationColor, other.navigationColor, t)!,
       iconRed: Color.lerp(iconRed, other.iconRed, t)!,
       textOnAccentColor: Color.lerp(textOnAccentColor, other.textOnAccentColor, t)!,
     );
@@ -136,25 +141,27 @@ ThemeColor lightThemeColors = ThemeColor(
     accentLiteColor: UiColors.orangeLite,
     iconRed: UiColors.iconRed,
     textOnAccentColor: UiColors.whiteBackground,
+    navigationColor: UiColors.liteBackground,
     iconGray: UiColors.iconGray);
 
 ThemeColor darkThemeColors = ThemeColor(
-    iconBlue: UiColors.iconBlue,
-    disableColor: UiColors.disableColor,
-    primaryText: UiColors.primaryText,
-    secondaryText: UiColors.secondaryText,
-    iconGreen: UiColors.iconGreen,
-    iconPurple: UiColors.iconPurple,
-    iconPink: UiColors.iconPink,
-    iconDeepBlue: UiColors.iconDeepBlue,
-    borderColor: UiColors.borderColor,
-    itemFillColor: UiColors.itemFillColor,
-    shadowColor: UiColors.shadowColor,
-    pageBackground: UiColors.pageBackground,
-    onBackground: UiColors.whiteBackground,
-    primaryColor: UiColors.green,
-    iconRed: UiColors.iconRed,
-    accentColor: UiColors.orange,
-    accentLiteColor: UiColors.orangeLite,
+    iconBlue: UiColors.iconBlueDark,
+    disableColor: UiColors.disableColorDark,
+    primaryText: UiColors.primaryTextDark,
+    secondaryText: UiColors.secondaryTextDark,
+    iconGreen: UiColors.iconGreenDark,
+    iconPurple: UiColors.iconPurpleDark,
+    iconPink: UiColors.iconPinkDark,
+    iconDeepBlue: UiColors.iconDeepBlueDark,
+    borderColor: UiColors.borderColorDark,
+    itemFillColor: UiColors.itemFillColorDark,
+    shadowColor: UiColors.shadowColorDark,
+    pageBackground: UiColors.pageBackgroundDark,
+    onBackground: UiColors.whiteBackgroundDark,
+    primaryColor: UiColors.greenDark,
+    iconRed: UiColors.iconRedDark,
+    accentColor: UiColors.orangeDark,
+    accentLiteColor: UiColors.orangeLiteDark,
     textOnAccentColor: UiColors.whiteBackground,
-    iconGray: UiColors.iconGray);
+    navigationColor: UiColors.liteBackgroundDark,
+    iconGray: UiColors.iconGrayDark);

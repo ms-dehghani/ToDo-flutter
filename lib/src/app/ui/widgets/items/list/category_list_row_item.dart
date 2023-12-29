@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../buttons/custom_flat_button.dart';
 import '../../image/image_view.dart';
@@ -33,12 +33,12 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
             child: CustomFlatButton(
               elevation: 0,
               size: Size(double.infinity, Insets.buttonHeight),
-              fillColor: getSelectedThemeColors().pageBackground,
+              fillColor: getSelectedThemeColors(context).pageBackground,
               child: Align(
                 alignment: isRTL() ? Alignment.centerRight : Alignment.centerLeft,
                 child: Text(
                   widget.categoryItem.title,
-                  style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                  style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).primaryText),
                 ),
               ),
               onTap: () {
@@ -52,14 +52,14 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
             child: CustomFlatButton(
               elevation: 0,
               size: Size(Insets.buttonHeight, Insets.buttonHeight),
-              fillColor: getSelectedThemeColors().iconBlue.withOpacity(0.05),
-              rippleColor: getSelectedThemeColors().iconBlue.withOpacity(0.5),
+              fillColor: getSelectedThemeColors(context).iconBlue.withOpacity(0.05),
+              rippleColor: getSelectedThemeColors(context).iconBlue.withOpacity(0.5),
               child: Align(
                 alignment: Alignment.center,
                 child: ImageView(
                   src: AppIcons.edit,
                   size: Insets.iconSizeXL,
-                  color: getSelectedThemeColors().iconBlue,
+                  color: getSelectedThemeColors(context).iconBlue,
                 ),
               ),
               onTap: () {

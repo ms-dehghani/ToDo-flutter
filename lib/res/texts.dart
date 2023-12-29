@@ -11,6 +11,9 @@ class Texts {
   static const String taskListTitle = "taskListTitle";
   static const String noCat = "noCat";
 
+  static const String settingPageTitle = "settingPageTitle";
+  static const String themeTitle = "themeTitle";
+  static const String languageTitle = "languageTitle";
 
   ///////// tasks create update
   static const String addTaskPageTitle = "addTaskPageTitle";
@@ -94,7 +97,6 @@ class Texts {
     "month12",
   ];
 
-
   static const List<String> weekNameMini = [
     "day1m",
     "day2m",
@@ -114,6 +116,4 @@ class Texts {
     "day6",
     "day7",
   ];
-
-
 }

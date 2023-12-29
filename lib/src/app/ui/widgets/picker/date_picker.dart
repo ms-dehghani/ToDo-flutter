@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/texts.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
-import 'package:shamsi_date/shamsi_date.dart';
 import 'package:flutter/material.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 
 import '../base/base_stateful_widget.dart';
 import '../buttons/custom_flat_button.dart';
@@ -22,7 +22,8 @@ class DatePicker extends StatefulWidget {
   Function(int timestamp)? onDateSelected;
 
   DatePicker(
-      {super.key, this.title = "",
+      {super.key,
+      this.title = "",
       this.initialTime = 0,
       this.onDateSelected,
       this.showJalali = false,
@@ -127,8 +128,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text("${years[index]}",
               style: TextStyles.h3Bold.copyWith(
                   color: index == year
-                      ? getSelectedThemeColors().primaryColor
-                      : getSelectedThemeColors().primaryText,
+                      ? getSelectedThemeColors(context).primaryColor
+                      : getSelectedThemeColors(context).primaryText,
                   fontSize: index == year ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -153,8 +154,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text(Texts.monthName[index].translate,
               style: TextStyles.h3Bold.copyWith(
                   color: index == month
-                      ? getSelectedThemeColors().primaryColor
-                      : getSelectedThemeColors().primaryText,
+                      ? getSelectedThemeColors(context).primaryColor
+                      : getSelectedThemeColors(context).primaryText,
                   fontSize: index == month ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -179,8 +180,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           child: Text(index < 9 ? "0${index + 1}" : "${index + 1}",
               style: TextStyles.h3Bold.copyWith(
                   color: index == day
-                      ? getSelectedThemeColors().primaryColor
-                      : getSelectedThemeColors().primaryText,
+                      ? getSelectedThemeColors(context).primaryColor
+                      : getSelectedThemeColors(context).primaryText,
                   fontSize: index == day ? FontSizes.s16 : FontSizes.s12)),
         ),
       ),
@@ -188,7 +189,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
 
     return Container(
       height: Insets.scale * 280,
-      color: getSelectedThemeColors().pageBackground,
+      color: getSelectedThemeColors(context).pageBackground,
       child: Column(
         children: [
           Container(
@@ -201,7 +202,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
               children: [
                 Text(
                   "${!widget.showOnlyYearMonth ? "${day + 1} " : ""}${Texts.monthName[month].translate} ${years[year]}",
-                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+                  style: TextStyles.h3Bold
+                      .copyWith(color: getSelectedThemeColors(context).primaryColor),
                 ),
                 CustomFlatButton(
                   elevation: 0,
@@ -212,11 +214,12 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     _setSelectedDay();
                     _goToDay();
                   },
-                  fillColor: getSelectedThemeColors().itemFillColor,
-                  rippleColor: getSelectedThemeColors().primaryColor,
+                  fillColor: getSelectedThemeColors(context).itemFillColor,
+                  rippleColor: getSelectedThemeColors(context).primaryColor,
                   child: Text(
                     Texts.today.translate,
-                    style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryColor),
+                    style:
+                        TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryColor),
                   ),
                 )
               ],
@@ -226,7 +229,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
             height: Insets.scale * 160,
             width: getWidth(context) * 0.9,
             decoration: BoxDecoration(
-              color: getSelectedThemeColors().pageBackground,
+              color: getSelectedThemeColors(context).pageBackground,
               borderRadius: Corners.hgBorder,
             ),
             child: Row(
@@ -240,7 +243,7 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                             alignment: Alignment.center,
                             child: Container(
                               decoration: Drawable.timeAndDatePickerBackItemDecoration(
-                                  getSelectedThemeColors()),
+                                  getSelectedThemeColors(context)),
                               width: listItemWidth,
                               height: Insets.backButtonHeight,
                             ),
@@ -258,8 +261,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        decoration:
-                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
+                        decoration: Drawable.timeAndDatePickerBackItemDecoration(
+                            getSelectedThemeColors(context)),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -277,8 +280,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                     Align(
                       alignment: Alignment.center,
                       child: Container(
-                        decoration:
-                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
+                        decoration: Drawable.timeAndDatePickerBackItemDecoration(
+                            getSelectedThemeColors(context)),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -296,10 +299,11 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           ItemSplitter.thickSplitter,
           CustomRaisedButton(
             size: Size(getWidth(context) * 0.9, Insets.backButtonHeight),
-            fillColor: getSelectedThemeColors().primaryColor,
+            fillColor: getSelectedThemeColors(context).primaryColor,
             child: Text(
               Texts.ok.translate,
-              style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h3Bold
+                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
             ),
             onTap: () {
               if (widget.onDateSelected != null) {
@@ -331,7 +335,6 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
     });
   }
-
 }
 
 // class SnappingListScrollPhysics extends ScrollPhysics {
