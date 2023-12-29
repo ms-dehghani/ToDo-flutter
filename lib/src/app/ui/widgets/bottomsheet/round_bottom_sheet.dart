@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
@@ -11,6 +9,7 @@ import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../buttons/custom_flat_button.dart';
 import '../buttons/flat_border_button.dart';
@@ -19,7 +18,8 @@ import '../picker/date_picker.dart';
 import 'bottomsheet_title_item.dart';
 
 Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
-    {bool showClose = true, Widget? titleView, Color? color = Colors.white}) {
+    {bool showClose = true, Widget? titleView, Color? color}) {
+  color ??= getSelectedThemeColors(context).onBackground;
   return showModalBottomSheet(
       shape: RoundedRectangleBorder(borderRadius: Corners.bottomSheetTopBorder),
       backgroundColor: Colors.transparent,
@@ -44,7 +44,10 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
                             Expanded(child: titleView ?? Container()),
                             ItemSplitter.thickSplitter,
                             GestureDetector(
-                              child: ImageView(src: AppIcons.closeOutline, size: Insets.iconSizeXL),
+                              child: ImageView(
+                                  src: AppIcons.closeOutline,
+                                  size: Insets.iconSizeXL,
+                                  color: getSelectedThemeColors(context).secondaryText),
                               onTap: () {
                                 Navigator.of(context).maybePop();
                               },
@@ -69,7 +72,7 @@ Future<dynamic> showDatePickerDialog(BuildContext context,
   return showRoundBottomSheet(
       context,
       titleView: BottomSheetTitleItem(
-          color: getSelectedThemeColors().iconGreen,
+          color: getSelectedThemeColors(context).iconGreen,
           title: Texts.selectDateTitle.translate,
           iconSrc: AppIcons.calendar),
       SizedBox(
@@ -116,7 +119,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                   child: ImageView(
                     size: Insets.iconSizeL,
                     src: titleBarIcon,
-                    color: getSelectedThemeColors().itemFillColor,
+                    color: getSelectedThemeColors(context).itemFillColor,
                   ),
                 ),
               ),
@@ -129,16 +132,16 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                   Container(
                     height: Insets.buttonHeight * 3,
                     padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
-                    decoration:
-                        Drawable.bottomSheetDecoration(getSelectedThemeColors().itemFillColor),
+                    decoration: Drawable.bottomSheetDecoration(
+                        getSelectedThemeColors(context).itemFillColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ItemSplitter.thickSplitter,
                         Text(
                           text,
-                          style:
-                              TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                          style: TextStyles.h2
+                              .copyWith(color: getSelectedThemeColors(context).primaryText),
                         ),
                         ItemSplitter.thickSplitter,
                         Row(
@@ -150,8 +153,8 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                               fillColor: leftButtonColor,
                               child: Text(
                                 leftButtonText,
-                                style: TextStyles.h2Bold
-                                    .copyWith(color: getSelectedThemeColors().textOnAccentColor),
+                                style: TextStyles.h2Bold.copyWith(
+                                    color: getSelectedThemeColors(context).textOnAccentColor),
                               ),
                               onTap: () {
                                 Navigator.of(context)
@@ -162,7 +165,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                             FlatBorderButton(
                               size: Size(getWidth(context) / 2 - Insets.d24, Insets.buttonHeight),
                               borderColor: rightButtonColor,
-                              backColor: getSelectedThemeColors().itemFillColor,
+                              backColor: getSelectedThemeColors(context).itemFillColor,
                               rippleColor: rightButtonColor,
                               onTap: () {
                                 Navigator.of(context)
@@ -172,7 +175,7 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                               child: Text(
                                 rightButtonText,
                                 style: TextStyles.h2Bold
-                                    .copyWith(color: getSelectedThemeColors().secondaryText),
+                                    .copyWith(color: getSelectedThemeColors(context).secondaryText),
                               ),
                             )
                           ],

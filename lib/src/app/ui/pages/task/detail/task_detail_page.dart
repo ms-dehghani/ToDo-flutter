@@ -1,28 +1,28 @@
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
-import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
-import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
 import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_bloc.dart';
+import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_event.dart';
 import 'package:ToDo/src/app/logic/task/delete/bloc/task_delete_page_data.dart';
-import 'package:ToDo/src/app/ui/widgets/items/task/task_actions.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
 import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/ui/widgets/items/detail/task_detail_row_item.dart';
+import 'package:ToDo/src/app/ui/widgets/items/task/task_actions.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   TaskItem taskItem;
@@ -35,8 +35,11 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   final TaskDeleteBloc _taskDeleteBloc =
       TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
 
+  late BuildContext context;
+
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return MultiBlocProvider(
       providers: [
         BlocProvider<TaskCreateOrUpdateBloc>(
@@ -52,7 +55,10 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         },
         builder: (context, state) {
           return Container(
-              color: getSelectedThemeColors().pageBackground, child: showPage(context));
+              color: isDark()
+                  ? getSelectedThemeColors(context).pageBackground
+                  : getSelectedThemeColors(context).onBackground,
+              child: showPage(context));
         },
       ),
     );
@@ -61,7 +67,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   @override
   Widget phoneView(BuildContext context) {
     return Container(
-      color: getSelectedThemeColors().pageBackground,
+      color: getSelectedThemeColors(context).pageBackground,
       child: SafeArea(
         child: Column(
           children: [
@@ -71,7 +77,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                 ),
                 centerWidget: Text(
                   Texts.taskDetailPageTitle.translate,
-                  style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+                  style: TextStyles.h2Bold
+                      .copyWith(color: getSelectedThemeColors(context).primaryColor),
                 )),
             Expanded(child: _taskDetail()),
             _taskActions(context)
@@ -92,10 +99,10 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
           child: TaskDetailRowItem(
             title: Texts.addTaskRowDescription.translate,
             icon: AppIcons.descriptionFill,
-            titleColor: getSelectedThemeColors().iconPink,
+            titleColor: getSelectedThemeColors(context).iconPink,
             child: Text(
               taskItem.description,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
+              style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).secondaryText),
             ),
           ),
         ),
@@ -106,7 +113,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
   Widget _taskTitle() {
     return Container(
       padding: EdgeInsets.all(Insets.pagePadding),
-      decoration: Drawable.itemDetailDecoration(getSelectedThemeColors()),
+      decoration: Drawable.itemDetailDecoration(getSelectedThemeColors(context)),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -114,7 +121,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         children: [
           Text(
             taskItem.title,
-            style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
+            style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors(context).primaryText),
           ),
           ItemSplitter.thickSplitter,
           _taskDetailRow2(),
@@ -138,7 +145,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                   Container(
                     width: Strokes.thin,
                     height: Insets.lg,
-                    color: getSelectedThemeColors().borderColor,
+                    color: getSelectedThemeColors(context).borderColor,
                   ),
                   ItemSplitter.thickSplitter,
                   _taskCategory()
@@ -176,17 +183,17 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ImageView(
           src: AppIcons.category,
           size: Insets.iconSizeM,
-          color: getSelectedThemeColors().iconBlue,
+          color: getSelectedThemeColors(context).iconBlue,
         ),
         ItemSplitter.ultraThinSplitter,
         Text(
           Texts.taskDetailPageCategory.translate,
-          style: TextStyles.h3.copyWith(color: getSelectedThemeColors().iconBlue),
+          style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).iconBlue),
         ),
         ItemSplitter.ultraThinSplitter,
         Text(
           taskItem.categoryItem?.title ?? "",
-          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().iconBlue),
+          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors(context).iconBlue),
         )
       ],
     );
@@ -194,7 +201,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
 
   Widget _dotedDetail() {
     return DottedBorder(
-      color: getSelectedThemeColors().iconGreen,
+      color: getSelectedThemeColors(context).iconGreen,
       strokeWidth: 1,
       dashPattern: const [5, 5],
       borderType: BorderType.RRect,
@@ -203,13 +210,13 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         height: Insets.appBarHeight,
         width: double.infinity,
         alignment: Alignment.center,
-        decoration: Drawable.dotedBorderDecoration(getSelectedThemeColors()),
+        decoration: Drawable.dotedBorderDecoration(getSelectedThemeColors(context)),
         child: Row(
           children: [
             ItemSplitter.medSplitter,
             ImageView(
                 src: AppIcons.calendarFill,
-                color: getSelectedThemeColors().iconGreen,
+                color: getSelectedThemeColors(context).iconGreen,
                 size: Insets.iconSizeL),
             ItemSplitter.ultraThinSplitter,
             ItemSplitter.ultraThinSplitter,
@@ -219,12 +226,12 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
               children: [
                 Text(Texts.addTaskRowDescription.translate,
                     style: TextStyles.h3.copyWith(
-                      color: getSelectedThemeColors().iconGreen,
+                      color: getSelectedThemeColors(context).iconGreen,
                     )),
                 Text(
                   timeToText(taskItem.taskTimestamp),
                   style: TextStyles.h3Bold.copyWith(
-                    color: getSelectedThemeColors().iconGreen,
+                    color: getSelectedThemeColors(context).iconGreen,
                   ),
                 )
               ],
@@ -254,7 +261,7 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         height: Insets.taskActionBarHeight,
         margin: EdgeInsets.only(
             left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
-        decoration: Drawable.taskActionsDecoration(getSelectedThemeColors()),
+        decoration: Drawable.taskActionsDecoration(getSelectedThemeColors(context)),
         child: TaskActions(
             taskItem: taskItem,
             onDone: () {

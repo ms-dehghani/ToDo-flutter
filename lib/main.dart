@@ -2,13 +2,14 @@ import 'package:ToDo/res/texts.dart';
 import 'package:ToDo/res/theme/themes.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
+import 'package:ToDo/src/domain/models/setting/setting_item.dart';
+import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/ht/html.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'applic.dart';
-import 'src/utils/direction_util.dart';
 import 'translations.dart';
 
 void main() {
@@ -25,12 +26,15 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   late SpecificLocalizationDelegate _localeOverrideDelegate;
 
+  SettingItem? setting;
+
   @override
   void initState() {
     HtmlFormatter.format();
     super.initState();
     _localeOverrideDelegate = const SpecificLocalizationDelegate(Locale("fa"));
     applic.onLocaleChanged = onLocaleChange;
+    applic.onThemeChanged = onThemeChange;
   }
 
   onLocaleChange(Locale locale) {
@@ -39,10 +43,24 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  onThemeChange(bool isDark) {
+    if (isDark && _themeMode == ThemeMode.dark) return;
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
   Future<void> initDI() async {
-    await DI.instance().provideDependencies();
+    if (setting == null) {
+      await DI.instance().provideDependencies();
+      setting = await DI.instance().getSettingUseCase().getSetting();
+      APPLIC.changeLang(setting!.langCode);
+      APPLIC.changeTheme(setting!.isDark);
+    }
     return Future.value();
   }
+
+  ThemeMode _themeMode = ThemeMode.light;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       title: Texts.appName,
       theme: Themes.light,
       darkTheme: Themes.dark,
-      themeMode: ThemeMode.light,
+      themeMode: _themeMode,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         _localeOverrideDelegate,

@@ -3,6 +3,7 @@ import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/src/app/ui/pages/setting/setting_screen.dart';
 import 'package:ToDo/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/ui/widgets/navigation/bottom_navigation_item.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/navigator.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -19,21 +20,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 0;
 
-  final pages = [
-    SettingScreen(),
-    TaskListPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var pages = [
+      BottomNavigationItem(
+        page: TaskListPage(),
+        pageBackgroundColor: isDark()
+            ? getSelectedThemeColors(context).pageBackground
+            : getSelectedThemeColors(context).onBackground,
+      ),
+      BottomNavigationItem(
+          page: SettingScreen(),
+          pageBackgroundColor: getSelectedThemeColors(context).pageBackground)
+    ];
     return Scaffold(
-      // backgroundColor: getSelectedThemeColors().onBackground,
-      backgroundColor: getSelectedThemeColors().onBackground,
-      body: pages[pageIndex],
+      backgroundColor: pages[pageIndex].pageBackgroundColor,
+      body: pages[pageIndex].page,
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
         pages: pages,
-        backgroundColor: getSelectedThemeColors().onBackground,
+        backgroundColor: getSelectedThemeColors(context).onBackground,
         callback: (selectedPage) {
           setState(() {
             pageIndex = selectedPage;
@@ -48,12 +54,14 @@ class _HomeScreenState extends State<HomeScreen> {
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(
                     timestamp: (pages[0] as TaskListPage).selectedDay.millisecondsSinceEpoch),
-              )).then((value) {});
+              )).then((value) {
+            (pages[0] as TaskListPage).reload();
+          });
         },
-        backgroundColor: getSelectedThemeColors().primaryColor,
+        backgroundColor: getSelectedThemeColors(context).primaryColor,
         child: ImageView(
           src: AppIcons.addFill,
-          color: getSelectedThemeColors().textOnAccentColor,
+          color: getSelectedThemeColors(context).textOnAccentColor,
           size: Insets.iconSize2XL,
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/src/app/ui/widgets/navigation/bottom_navigation_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import '../image/image_view.dart';
 import '../round_rect/custom_round_navigation_background.dart';
 
 class BottomNavigation extends StatefulWidget {
-  List<Widget> pages;
+  List<BottomNavigationItem> pages;
   Color backgroundColor;
   Function(int selectedPage) callback;
 
@@ -30,7 +31,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       children: [
         CustomPaint(
           size: Size(getWidth(context), Insets.buttonHeight * 1.5),
-          painter: CustomRoundNavigationBackground(widget.backgroundColor),
+          painter: CustomRoundNavigationBackground(context, widget.backgroundColor),
         ),
         Padding(
           padding: EdgeInsets.only(top: Insets.xl),
@@ -51,8 +52,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
             children: [
               AnimatedSwitcher(
                 layoutBuilder: (currentChild, previousChildren) {
-                  print(currentChild);
-                  print(previousChildren);
                   return currentChild!;
                 },
                 duration: animationDuration,

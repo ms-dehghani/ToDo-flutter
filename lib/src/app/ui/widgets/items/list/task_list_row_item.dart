@@ -1,16 +1,15 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/widgets/check_box/check_box_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/material.dart';
 
 import '../../bottomsheet/round_bottom_sheet.dart';
 import '../../image/image_view.dart';
@@ -48,17 +47,21 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     return Card(
       margin: EdgeInsets.symmetric(vertical: Insets.sm),
       elevation: widget.taskItem.isDone || !clickable ? 0 : Insets.xs,
-      color: getSelectedThemeColors().itemFillColor,
-      shadowColor: getSelectedThemeColors().shadowColor,
-      shape: Borders.thinAndHighRadiosBorder,
+      color: isDark()
+          ? getSelectedThemeColors(context).onBackground
+          : getSelectedThemeColors(context).itemFillColor,
+      shadowColor: getSelectedThemeColors(context).shadowColor,
+      shape: Borders.thinAndHighRadiosBorder(context).copyWith(
+          side: Borders.thinBorder(context).copyWith(
+              color: isDark() ? Colors.transparent : getSelectedThemeColors(context).borderColor)),
       child: InkWell(
         borderRadius: Corners.hgBorder,
-        splashColor: getSelectedThemeColors().disableColor.withOpacity(0.3),
+        splashColor: getSelectedThemeColors(context).disableColor.withOpacity(0.3),
         highlightColor: Colors.transparent,
         onTap: () {
           widget.onTap.call();
         },
-        onLongPress:() {
+        onLongPress: () {
           _showMenuDialog();
         },
         child: Column(
@@ -86,14 +89,15 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
           decoration: BoxDecoration(
               borderRadius: Corners.smBorder,
               color: widget.taskItem.isDone
-                  ? getSelectedThemeColors().disableColor
-                  : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
+                  ? getSelectedThemeColors(context).disableColor
+                  : widget.taskItem.priorityItem?.color ??
+                      getSelectedThemeColors(context).disableColor),
         ),
         ItemSplitter.ultraThinSplitter,
         _checkBox(clickable),
         Expanded(
           child: Padding(
-            padding: EdgeInsets.only(top:Insets.xs ,bottom: Insets.xs),
+            padding: EdgeInsets.only(top: Insets.xs, bottom: Insets.xs),
             child: Text(
               widget.taskItem.title,
               maxLines: 2,
@@ -101,8 +105,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                   decoration:
                       widget.taskItem.isDone ? TextDecoration.lineThrough : TextDecoration.none,
                   color: widget.taskItem.isDone
-                      ? getSelectedThemeColors().disableColor
-                      : getSelectedThemeColors().primaryText),
+                      ? getSelectedThemeColors(context).disableColor
+                      : getSelectedThemeColors(context).primaryText),
             ),
           ),
         ),
@@ -117,7 +121,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               margin: EdgeInsets.symmetric(horizontal: Insets.sm),
               child: ImageView(
                 src: AppIcons.dotsHorizontal,
-                color: getSelectedThemeColors().secondaryText,
+                color: getSelectedThemeColors(context).secondaryText,
                 size: Insets.iconSizeXL,
               ),
             ),
@@ -129,6 +133,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
 
   Widget _checkBox(bool clickable) {
     return getScaledCheckBox(
+        context,
         widget.taskItem.isDone,
         clickable
             ? (value) {
@@ -162,13 +167,13 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               ItemSplitter.ultraThinSplitter,
               RoundColoredContainer(
                 color: !widget.taskItem.isDone
-                    ? getSelectedThemeColors().iconBlue.withOpacity(0.1)
-                    : getSelectedThemeColors().disableColor.withOpacity(0.1),
+                    ? getSelectedThemeColors(context).iconBlue.withOpacity(0.1)
+                    : getSelectedThemeColors(context).disableColor.withOpacity(0.1),
                 child: Row(
                   children: [
                     ImageView(
                       src: AppIcons.category,
-                      color: getSelectedThemeColors().iconBlue,
+                      color: getSelectedThemeColors(context).iconBlue,
                       size: Insets.iconSizeS,
                     ),
                     ItemSplitter.ultraThinSplitter,
@@ -176,8 +181,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                       widget.taskItem.categoryItem?.title ?? "",
                       style: TextStyles.h3.copyWith(
                           color: !widget.taskItem.isDone
-                              ? getSelectedThemeColors().iconBlue
-                              : getSelectedThemeColors().disableColor),
+                              ? getSelectedThemeColors(context).iconBlue
+                              : getSelectedThemeColors(context).disableColor),
                     )
                   ],
                 ),
@@ -197,14 +202,14 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
         height: 34,
         margin: EdgeInsets.symmetric(horizontal: Insets.xs),
         color: !widget.taskItem.isDone
-            ? getSelectedThemeColors().disableColor.withOpacity(0.1)
-            : getSelectedThemeColors().disableColor.withOpacity(0.1),
+            ? getSelectedThemeColors(context).disableColor.withOpacity(0.1)
+            : getSelectedThemeColors(context).disableColor.withOpacity(0.1),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           children: [
             ImageView(
               src: AppIcons.calendar,
-              color: getSelectedThemeColors().secondaryText,
+              color: getSelectedThemeColors(context).secondaryText,
               size: Insets.iconSizeM,
             ),
             ItemSplitter.ultraThinSplitter,
@@ -215,8 +220,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyles.h3.copyWith(
                     color: !widget.taskItem.isDone
-                        ? getSelectedThemeColors().secondaryText
-                        : getSelectedThemeColors().disableColor),
+                        ? getSelectedThemeColors(context).secondaryText
+                        : getSelectedThemeColors(context).disableColor),
               ),
             )
           ],
@@ -247,7 +252,7 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     Widget actions = Container(
       width: double.infinity,
       height: Insets.taskActionBarHeight,
-      decoration: Drawable.simpleBorder(getSelectedThemeColors()),
+      decoration: Drawable.simpleBorder(getSelectedThemeColors(context)),
       child: TaskActions(
           taskItem: widget.taskItem,
           onDone: () {

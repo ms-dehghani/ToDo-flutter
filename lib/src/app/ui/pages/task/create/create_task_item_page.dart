@@ -1,32 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
-import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
-import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_event.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_page_data.dart';
-import 'package:ToDo/src/domain/models/category/category_item.dart';
-import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/app/ui/pages/category/list/category_list_page.dart';
+import 'package:ToDo/src/app/ui/widgets/app_bar.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
 import 'package:ToDo/src/app/ui/widgets/bottomsheet/round_bottom_sheet.dart';
 import 'package:ToDo/src/app/ui/widgets/buttons/back_button.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
+import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/button_filed_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/form_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/priority_selector_filed_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
-import 'package:ToDo/src/app/ui/widgets/bottomsheet/bottomsheet_title_item.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
+import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTaskItemPage extends StatefulWidget {
   TaskItem taskItem;
@@ -46,8 +46,12 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
     return BlocProvider<TaskCreateOrUpdateBloc>(
       create: (BuildContext context) => _taskCreateOrUpdateBloc,
       child: Material(
-        color: getSelectedThemeColors().itemFillColor,
-        child: Scaffold(body: SafeArea(child: showPage(context))),
+        color: getSelectedThemeColors(context).itemFillColor,
+        child: Scaffold(
+            backgroundColor: isDark()
+                ? getSelectedThemeColors(context).pageBackground
+                : getSelectedThemeColors(context).onBackground,
+            body: SafeArea(child: showPage(context))),
       ),
     );
   }
@@ -57,17 +61,21 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
     return Column(
       children: [
         ApplicationAppBar(
-            color: getSelectedThemeColors().pageBackground,
+            color: getSelectedThemeColors(context).pageBackground,
             leftWidget: AppBarBackButton(
               onTap: () => Navigator.of(context).maybePop(),
             ),
             centerWidget: Text(
               Texts.addTaskPageTitle.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+              style:
+                  TextStyles.h2Bold.copyWith(color: getSelectedThemeColors(context).primaryColor),
             )),
         Expanded(
-          child: Column(
-            children: [Expanded(child: _taskRows(context)), _createButton()],
+          child: Container(
+            color: getSelectedThemeColors(context).pageBackground,
+            child: Column(
+              children: [Expanded(child: _taskRows(context)), _createButton()],
+            ),
           ),
         )
       ],
@@ -127,7 +135,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
   }
 
   Widget _dateWidget() {
-    Color color = getSelectedThemeColors().primaryText;
+    Color color = getSelectedThemeColors(context).primaryText;
     return FormItem(
       title: Texts.addTaskRowDate.translate,
       child: ButtonFiledItem(
@@ -161,7 +169,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           hint: Texts.addTaskRowDescriptionHint.translate,
           text: widget.taskItem.description,
           icon: AppIcons.descriptionOutline,
-          iconColor: getSelectedThemeColors().primaryText,
+          iconColor: getSelectedThemeColors(context).primaryText,
           onValueChange: (desc) {
             widget.taskItem.description = desc;
           },
@@ -170,8 +178,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
 
   Widget _categoryWidget(BuildContext context) {
     Color color = (widget.taskItem.categoryItem?.title ?? "").isNotEmpty
-        ? getSelectedThemeColors().primaryText
-        : getSelectedThemeColors().secondaryText;
+        ? getSelectedThemeColors(context).primaryText
+        : getSelectedThemeColors(context).secondaryText;
     return FormItem(
         title: Texts.addTaskRowCategory.translate,
         child: ButtonFiledItem(
@@ -188,7 +196,7 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             showRoundBottomSheet(
                     context,
                     titleView: BottomSheetTitleItem(
-                        color: getSelectedThemeColors().iconGreen,
+                        color: getSelectedThemeColors(context).iconGreen,
                         title: Texts.categoryListPageTitle.translate,
                         iconSrc: AppIcons.categoryOutline),
                     SizedBox(
@@ -223,10 +231,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             detail += "${Texts.taskSelectCategoryError.translate}\n";
           }
           var snackBar = SnackBar(
+              backgroundColor: getSelectedThemeColors(context).onBackground,
               content: Text(
-            detail,
-            style: TextStyles.h3.copyWith(color: Colors.white),
-          ));
+                detail,
+                style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText),
+              ));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
       },
@@ -237,10 +246,11 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
           padding: EdgeInsets.all(Insets.pagePadding),
           child: CustomRaisedButton(
             size: Size(double.infinity, Insets.buttonHeight),
-            fillColor: getSelectedThemeColors().primaryColor,
+            fillColor: getSelectedThemeColors(context).primaryColor,
             child: Text(
               Texts.addTaskButtonAdd.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h2Bold
+                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
             ),
             onTap: () {
               context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(widget.taskItem));

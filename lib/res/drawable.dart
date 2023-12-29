@@ -1,6 +1,7 @@
 import 'package:ToDo/res/color.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/theme/theme_color.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class Drawable {
       );
 
   static BoxDecoration simpleBorder(ThemeColor color) => BoxDecoration(
-      color: color.itemFillColor,
+      color: isDark() ? color.onBackground : color.itemFillColor,
       borderRadius: Corners.hgBorder,
       border: Border.all(color: color.borderColor, width: Strokes.thin));
 
@@ -37,12 +38,12 @@ class Drawable {
       );
 
   static BoxDecoration taskActionsDecoration(ThemeColor color) => BoxDecoration(
-      color: UiColors.liteBackground,
+      color: isDark() ? color.onBackground : color.itemFillColor,
       borderRadius: Corners.xxxlBorder,
       border: Border.all(color: color.borderColor, width: Strokes.thin));
 
   static BoxDecoration backButtonDecoration(ThemeColor color) => BoxDecoration(
-      color: UiColors.liteBackground,
+      color: color.onBackground,
       borderRadius: Corners.hgBorder,
       border: Border.all(color: color.borderColor, width: Strokes.thin));
 
@@ -51,8 +52,8 @@ class Drawable {
         borderRadius: Corners.hgBorder,
       );
 
-  static BoxDecoration itemDetailDecoration(ThemeColor color) =>
-      BoxDecoration(color: color.itemFillColor, boxShadow: Shadows.small);
+  static BoxDecoration itemDetailDecoration(ThemeColor color) => BoxDecoration(
+      color: isDark() ? color.onBackground : color.itemFillColor, boxShadow: Shadows.small);
 
   static BoxDecoration timeAndDatePickerBackItemDecoration(ThemeColor color) => BoxDecoration(
       shape: BoxShape.rectangle,

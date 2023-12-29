@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(microseconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) {
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     this.context = context;
     return Container(
-      color: getSelectedThemeColors().onBackground,
+      color: getSelectedThemeColors(context).onBackground,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

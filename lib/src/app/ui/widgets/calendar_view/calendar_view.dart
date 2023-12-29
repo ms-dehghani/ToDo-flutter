@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
@@ -10,6 +8,8 @@ import 'package:ToDo/src/utils/extensions/date_extensions.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'calender_row_item.dart';
 
@@ -138,7 +138,7 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
       children: [
         Text(
           timeToText(items[_selectedItemIndex].timestamp, withDay: false),
-          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryText),
+          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors(context).primaryText),
         )
       ],
     );
@@ -155,7 +155,7 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
         },
         child: Text(
           Texts.goToday.translate,
-          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors(context).accentColor),
         ));
   }
 }

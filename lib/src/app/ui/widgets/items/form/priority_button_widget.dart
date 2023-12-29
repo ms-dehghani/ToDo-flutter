@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 class PriorityButtonWidget extends StatefulWidget {
   PriorityItem priorityItem;
@@ -52,7 +51,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
     ).animate(widget.textAnimationController);
 
     _animationBackground = ColorTween(
-      begin: getSelectedThemeColors().itemFillColor,
+      begin: getSelectedThemeColors(context).itemFillColor,
       end: widget.priorityItem.color,
     ).animate(widget.backgroundAnimationController);
 
@@ -77,7 +76,7 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
             height: 48,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.simpleBorder(getSelectedThemeColors()).copyWith(
+            decoration: Drawable.simpleBorder(getSelectedThemeColors(context)).copyWith(
                 color: _animationBackground.value,
                 border: Border.all(color: widget.priorityItem.color, width: Strokes.thin)),
             child: Text(

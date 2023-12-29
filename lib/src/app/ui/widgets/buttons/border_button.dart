@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
+import 'package:flutter/material.dart';
 
 class BorderButton extends StatelessWidget {
   Size? size;
@@ -12,7 +12,13 @@ class BorderButton extends StatelessWidget {
   Widget child;
 
   BorderButton(
-      {super.key, required this.child, this.size, this.borderColor,this.backColor, this.rippleColor, this.onTap});
+      {super.key,
+      required this.child,
+      this.size,
+      this.borderColor,
+      this.backColor,
+      this.rippleColor,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +26,11 @@ class BorderButton extends StatelessWidget {
       onPressed: () => onTap?.call(),
       style: ElevatedButton.styleFrom(
           fixedSize: size,
-          backgroundColor: backColor??Colors.transparent,
+          backgroundColor: backColor ?? Colors.transparent,
           foregroundColor: rippleColor,
-          shape: Borders.thinAndHighRadiosBorder.copyWith(
-              side: Borders.thinAndHighRadiosBorder.side
+          shape: Borders.thinAndHighRadiosBorder(context).copyWith(
+              side: Borders.thinAndHighRadiosBorder(context)
+                  .side
                   .copyWith(color: borderColor ?? Colors.transparent))),
       child: child,
     );
