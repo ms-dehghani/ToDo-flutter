@@ -7,6 +7,10 @@ ThemeColor getSelectedThemeColors(BuildContext context) {
   return APPLIC.currentThemeIsDark ? darkThemeColors : lightThemeColors;
 }
 
+ThemeColor getSelectedThemeColor() {
+  return APPLIC.currentThemeIsDark ? darkThemeColors : lightThemeColors;
+}
+
 bool isDark() {
   return APPLIC.currentThemeIsDark;
 }

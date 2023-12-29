@@ -72,18 +72,18 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
     widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
 
     _animationText = ColorTween(
-      begin: getSelectedThemeColors(context).primaryText,
-      end: getSelectedThemeColors(context).textOnAccentColor,
+      begin: getSelectedThemeColor().primaryText,
+      end: getSelectedThemeColor().textOnAccentColor,
     ).animate(widget.textAnimationController!);
 
     _borderContainer = ColorTween(
-      begin: getSelectedThemeColors(context).borderColor,
-      end: getSelectedThemeColors(context).accentColor,
+      begin: getSelectedThemeColor().borderColor,
+      end: getSelectedThemeColor().accentColor,
     ).animate(widget.borderAnimationController!);
 
     _animationBackground = ColorTween(
-      begin: getSelectedThemeColors(context).itemFillColor,
-      end: getSelectedThemeColors(context).accentColor,
+      begin: getSelectedThemeColor().itemFillColor,
+      end: getSelectedThemeColor().accentColor,
     ).animate(widget.backgroundAnimationController!);
 
     if (widget.isSelected) {
