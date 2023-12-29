@@ -3,6 +3,7 @@ import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/src/app/ui/pages/setting/setting_screen.dart';
 import 'package:ToDo/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
+import 'package:ToDo/src/app/ui/widgets/navigation/bottom_navigation_item.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/navigator.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -19,18 +20,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int pageIndex = 0;
 
-  final pages = [
-    TaskListPage(),
-    SettingScreen(),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    var pages = [
+      BottomNavigationItem(
+        page: TaskListPage(),
+        pageBackgroundColor: isDark()
+            ? getSelectedThemeColors(context).pageBackground
+            : getSelectedThemeColors(context).onBackground,
+      ),
+      BottomNavigationItem(
+          page: SettingScreen(),
+          pageBackgroundColor: getSelectedThemeColors(context).pageBackground)
+    ];
     return Scaffold(
-      backgroundColor: isDark()
-          ? getSelectedThemeColors(context).pageBackground
-          : getSelectedThemeColors(context).onBackground,
-      body: pages[pageIndex],
+      backgroundColor: pages[pageIndex].pageBackgroundColor,
+      body: pages[pageIndex].page,
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
         pages: pages,

@@ -1,5 +1,6 @@
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/src/app/ui/widgets/navigation/bottom_navigation_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +8,7 @@ import '../image/image_view.dart';
 import '../round_rect/custom_round_navigation_background.dart';
 
 class BottomNavigation extends StatefulWidget {
-  List<Widget> pages;
+  List<BottomNavigationItem> pages;
   Color backgroundColor;
   Function(int selectedPage) callback;
 
