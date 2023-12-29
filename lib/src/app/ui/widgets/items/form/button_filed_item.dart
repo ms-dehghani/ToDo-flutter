@@ -29,10 +29,8 @@ class ButtonFiledItem extends StatefulWidget {
       this.alignment,
       this.onTap,
       this.rippleColor}) {
-    borderColor = borderColor ?? getSelectedThemeColors().borderColor;
     rippleColor = rippleColor ?? borderColor!.withAlpha(80);
-    fillColor = fillColor ??
-        (isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor);
+
     iconColor = iconColor ?? borderColor;
   }
 
@@ -43,6 +41,16 @@ class ButtonFiledItem extends StatefulWidget {
 }
 
 class _ButtonFiledItemState extends State<ButtonFiledItem> {
+  @override
+  void initState() {
+    super.initState();
+    widget.borderColor = widget.borderColor ?? getSelectedThemeColors(context).borderColor;
+    widget.fillColor = widget.fillColor ??
+        (isDark()
+            ? getSelectedThemeColors(context).onBackground
+            : getSelectedThemeColors(context).itemFillColor);
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextButton(

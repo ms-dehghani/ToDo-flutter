@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
+import 'package:flutter/material.dart';
 
 class CustomFlatButton extends StatelessWidget {
   Size? size;
@@ -29,8 +29,9 @@ class CustomFlatButton extends StatelessWidget {
           fixedSize: size,
           backgroundColor: fillColor,
           foregroundColor: rippleColor,
-          shape: Borders.thinAndHighRadiosBorder.copyWith(
-              side: Borders.thinAndHighRadiosBorder.side
+          shape: Borders.thinAndHighRadiosBorder(context).copyWith(
+              side: Borders.thinAndHighRadiosBorder(context)
+                  .side
                   .copyWith(color: fillColor ?? Colors.transparent))),
       child: child,
     );

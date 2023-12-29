@@ -30,7 +30,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       children: [
         CustomPaint(
           size: Size(getWidth(context), Insets.buttonHeight * 1.5),
-          painter: CustomRoundNavigationBackground(widget.backgroundColor),
+          painter: CustomRoundNavigationBackground(context, widget.backgroundColor),
         ),
         Padding(
           padding: EdgeInsets.only(top: Insets.xl),

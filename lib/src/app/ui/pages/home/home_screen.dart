@@ -28,13 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: isDark()
-          ? getSelectedThemeColors().pageBackground
-          : getSelectedThemeColors().onBackground,
+          ? getSelectedThemeColors(context).pageBackground
+          : getSelectedThemeColors(context).onBackground,
       body: pages[pageIndex],
       bottomNavigationBar: BottomNavigation(
         key: const ValueKey("navigation"),
         pages: pages,
-        backgroundColor: getSelectedThemeColors().onBackground,
+        backgroundColor: getSelectedThemeColors(context).onBackground,
         callback: (selectedPage) {
           setState(() {
             pageIndex = selectedPage;
@@ -53,10 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
             (pages[0] as TaskListPage).reload();
           });
         },
-        backgroundColor: getSelectedThemeColors().primaryColor,
+        backgroundColor: getSelectedThemeColors(context).primaryColor,
         child: ImageView(
           src: AppIcons.addFill,
-          color: getSelectedThemeColors().textOnAccentColor,
+          color: getSelectedThemeColors(context).textOnAccentColor,
           size: Insets.iconSize2XL,
         ),
       ),

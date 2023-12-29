@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
 
 import '../../image/image_view.dart';
 
@@ -23,13 +22,12 @@ class TaskDetailRowItem extends StatelessWidget {
       this.icon,
       this.titleColor,
       this.decoration,
-      this.onTap}) {
-    decoration = decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors());
-    titleColor = titleColor ?? getSelectedThemeColors().primaryText;
-  }
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
+    decoration = decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors(context));
+    titleColor = titleColor ?? getSelectedThemeColors(context).primaryText;
     return GestureDetector(
       onTap: () => onTap?.call(),
       child: Container(

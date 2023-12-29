@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/drawable.dart';
 import 'package:ToDo/res/text_style.dart';
@@ -7,6 +5,8 @@ import 'package:ToDo/res/texts.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../image/image_view.dart';
 import 'priority_button_widget.dart';
@@ -58,12 +58,12 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
         ImageView(
           src: AppIcons.priorityOutline,
           size: Insets.iconSizeS,
-          color: getSelectedThemeColors().secondaryText,
+          color: getSelectedThemeColors(context).secondaryText,
         ),
         ItemSplitter.ultraThinSplitter,
         Text(
           Texts.addTaskRowPrioritySelect.translate,
-          style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
+          style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).secondaryText),
         ),
         ItemSplitter.ultraThinSplitter,
         Expanded(

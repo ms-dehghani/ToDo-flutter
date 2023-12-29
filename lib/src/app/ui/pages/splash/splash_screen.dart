@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     this.context = context;
     return Container(
-      color: getSelectedThemeColors().onBackground,
+      color: getSelectedThemeColors(context).onBackground,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

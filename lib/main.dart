@@ -69,7 +69,6 @@ class _MyAppState extends State<MyApp> {
       theme: Themes.light,
       darkTheme: Themes.dark,
       themeMode: _themeMode,
-      themeAnimationDuration: Duration(seconds: 2),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         _localeOverrideDelegate,

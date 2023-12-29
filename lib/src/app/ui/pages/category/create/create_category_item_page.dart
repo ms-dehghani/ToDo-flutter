@@ -1,20 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ToDo/res/dimens.dart';
 import 'package:ToDo/res/text_style.dart';
 import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/src/app/logic/base/page_status.dart';
-import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_event.dart';
-import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
 import 'package:ToDo/src/app/di/di.dart';
+import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_bloc.dart';
+import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_event.dart';
 import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_page_data.dart';
-import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/app/ui/widgets/base/widget_view_template.dart';
+import 'package:ToDo/src/app/ui/widgets/buttons/custom_raised_button.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/form_item.dart';
 import 'package:ToDo/src/app/ui/widgets/items/form/text_filed_item.dart';
+import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
   late final CategoryCreateOrUpdateBloc bloc;
@@ -29,7 +29,7 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
       create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
           categoryUseCase: DI.instance().getCategoryUseCase(), categoryItem: categoryItem),
       child: Material(
-        color: getSelectedThemeColors().onBackground,
+        color: getSelectedThemeColors(context).onBackground,
         child: SafeArea(child: showPage(context)),
       ),
     );
@@ -73,14 +73,15 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
             elevation: 0,
             size: Size(double.infinity, Insets.buttonHeight),
             fillColor: state.item!.title.isEmpty
-                ? getSelectedThemeColors().accentLiteColor
-                : getSelectedThemeColors().accentColor,
-            rippleColor: getSelectedThemeColors().accentColor,
+                ? getSelectedThemeColors(context).accentLiteColor
+                : getSelectedThemeColors(context).accentColor,
+            rippleColor: getSelectedThemeColors(context).accentColor,
             child: Text(
               categoryItem.ID.isEmpty
                   ? Texts.categoryAddPageButtonAdd.translate
                   : Texts.categoryEditPageButtonEdit.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h2Bold
+                  .copyWith(color: getSelectedThemeColors(context).textOnAccentColor),
             ),
             onTap: () {
               bloc.add(CategoryCreateOrUpdateResultEvent(categoryItem));

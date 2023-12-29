@@ -47,8 +47,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
   }
 
+  late BuildContext context;
+
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
     return MultiBlocProvider(
       providers: [
@@ -62,7 +65,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
-      child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
+      child: Container(
+          color: getSelectedThemeColors(context).pageBackground, child: showPage(context)),
     );
   }
 
@@ -71,8 +75,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
     return Scaffold(
       body: Container(
         color: isDark()
-            ? getSelectedThemeColors().onBackground
-            : getSelectedThemeColors().pageBackground,
+            ? getSelectedThemeColors(context).onBackground
+            : getSelectedThemeColors(context).pageBackground,
         child: SafeArea(
           child: Stack(
             children: [
@@ -83,8 +87,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                   children: [
                     CustomPaint(
                       size: Size(getWidth(context), Insets.buttonHeight * 1.5),
-                      painter:
-                          CustomRoundNavigationBackground(getSelectedThemeColors().itemFillColor),
+                      painter: CustomRoundNavigationBackground(
+                          context, getSelectedThemeColors(context).itemFillColor),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: Insets.xl),
@@ -93,11 +97,11 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                         height: double.infinity,
                         padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
                         color: isDark()
-                            ? getSelectedThemeColors().pageBackground
-                            : getSelectedThemeColors().onBackground,
+                            ? getSelectedThemeColors(context).pageBackground
+                            : getSelectedThemeColors(context).onBackground,
                         child: Text(Texts.taskListTitle.translate,
                             style: TextStyles.h1Bold
-                                .copyWith(color: getSelectedThemeColors().primaryColor)),
+                                .copyWith(color: getSelectedThemeColors(context).primaryColor)),
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: Insets.lg), child: _taskList()),
@@ -149,8 +153,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
         width: double.infinity,
         height: double.infinity,
         color: isDark()
-            ? getSelectedThemeColors().pageBackground
-            : getSelectedThemeColors().onBackground,
+            ? getSelectedThemeColors(context).pageBackground
+            : getSelectedThemeColors(context).onBackground,
         child: Center(child: InPageProgress()));
   }
 
@@ -207,13 +211,14 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           ItemSplitter.thickSplitter,
           RichText(
             text: TextSpan(
-              style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h3.copyWith(color: getSelectedThemeColors(context).primaryText),
               children: <TextSpan>[
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
                 TextSpan(
                     text:
                         " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
-                    style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
+                    style: TextStyles.h3Bold
+                        .copyWith(color: getSelectedThemeColors(context).primaryText)),
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
               ],
             ),

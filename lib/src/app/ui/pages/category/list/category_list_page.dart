@@ -41,7 +41,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
   @override
   Widget phoneView(BuildContext context) {
     return Container(
-      color: getSelectedThemeColors().onBackground,
+      color: getSelectedThemeColors(context).onBackground,
       padding: EdgeInsets.only(
           left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
       child: Column(
@@ -49,14 +49,14 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
           Expanded(child: _categoryList(context)),
           BorderButton(
             size: Size(getWidth(context), Insets.buttonHeight),
-            borderColor: getSelectedThemeColors().accentColor,
-            backColor: getSelectedThemeColors().onBackground,
-            rippleColor: getSelectedThemeColors().accentColor,
+            borderColor: getSelectedThemeColors(context).accentColor,
+            backColor: getSelectedThemeColors(context).onBackground,
+            rippleColor: getSelectedThemeColors(context).accentColor,
             onTap: () {
               showRoundBottomSheet(
                       context,
                       titleView: BottomSheetTitleItem(
-                          color: getSelectedThemeColors().accentColor,
+                          color: getSelectedThemeColors(context).accentColor,
                           title: Texts.categoryAddPageTitle.translate,
                           iconSrc: AppIcons.addCategory),
                       SizedBox(
@@ -74,12 +74,13 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                 ImageView(
                   src: AppIcons.addCategory,
                   size: Insets.iconSizeL,
-                  color: getSelectedThemeColors().accentColor,
+                  color: getSelectedThemeColors(context).accentColor,
                 ),
                 ItemSplitter.thinSplitter,
                 Text(
                   Texts.categoryListPageButtonAdd.translate,
-                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+                  style: TextStyles.h3Bold
+                      .copyWith(color: getSelectedThemeColors(context).accentColor),
                 ),
               ],
             ),
@@ -97,7 +98,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
       bloc: _categoryGetBloc,
       builder: (context, state) {
         return Container(
-            color: getSelectedThemeColors().onBackground,
+            color: getSelectedThemeColors(context).onBackground,
             child: state.pageStatus == PageStatus.success
                 ? _categoryListDetail(context, state.categoryList)
                 : _loadingWidget());
@@ -116,7 +117,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
             width: getWidth(context),
             child: Text(
               Texts.categoryListPageDescription.translate,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).primaryText),
             )),
         ItemSplitter.ultraThinSplitter,
         Expanded(
@@ -132,7 +133,7 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                   showRoundBottomSheet(
                       context,
                       titleView: BottomSheetTitleItem(
-                          color: getSelectedThemeColors().accentColor,
+                          color: getSelectedThemeColors(context).accentColor,
                           title: Texts.categoryEditPageTitle.translate,
                           iconSrc: AppIcons.addCategory),
                       SizedBox(

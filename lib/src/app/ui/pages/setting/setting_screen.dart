@@ -43,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
         builder: (context, state) {
           this.state = state;
           return Container(
-              color: getSelectedThemeColors().pageBackground,
+              color: getSelectedThemeColors(context).pageBackground,
               width: double.infinity,
               child: showPage(context));
         },
@@ -62,7 +62,8 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
               padding: EdgeInsets.all(Insets.lg),
               child: Text(
                 Texts.settingPageTitle.translate,
-                style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
+                style:
+                    TextStyles.h1Bold.copyWith(color: getSelectedThemeColors(context).primaryText),
               )),
           _rowTheme(state),
           SizedBox(
@@ -80,8 +81,8 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
         Texts.themeTitle.translate,
         SwitchView(
           key: UniqueKey(),
-          checkColor: getSelectedThemeColors().primaryColor,
-          uncheckColor: getSelectedThemeColors().disableColor,
+          checkColor: getSelectedThemeColors(context).primaryColor,
+          uncheckColor: getSelectedThemeColors(context).disableColor,
           onChanged: (value) {
             _settingBloc.add(SettingChangeEvent(settingItem.copyWith(isDark: value)));
           },
@@ -98,10 +99,11 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  !isRtl ? Colors.transparent : getSelectedThemeColors().iconGreen.withOpacity(0.2),
+              color: !isRtl
+                  ? Colors.transparent
+                  : getSelectedThemeColors(context).iconGreen.withOpacity(0.2),
               border: Border.fromBorderSide(BorderSide(
-                  color: !isRtl ? Colors.transparent : getSelectedThemeColors().iconGreen))),
+                  color: !isRtl ? Colors.transparent : getSelectedThemeColors(context).iconGreen))),
           child: InkWell(
             onTap: () {
               _settingBloc.add(SettingChangeEvent(settingItem.copyWith(langCode: "fa")));
@@ -119,10 +121,11 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
           padding: const EdgeInsets.all(5.0),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color:
-                  isRtl ? Colors.transparent : getSelectedThemeColors().iconGreen.withOpacity(0.2),
+              color: isRtl
+                  ? Colors.transparent
+                  : getSelectedThemeColors(context).iconGreen.withOpacity(0.2),
               border: Border.fromBorderSide(BorderSide(
-                  color: isRtl ? Colors.transparent : getSelectedThemeColors().iconGreen))),
+                  color: isRtl ? Colors.transparent : getSelectedThemeColors(context).iconGreen))),
           child: InkWell(
             onTap: () {
               _settingBloc.add(SettingChangeEvent(settingItem.copyWith(langCode: "en")));
@@ -145,7 +148,7 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       decoration: BoxDecoration(
-          color: getSelectedThemeColors().onBackground, boxShadow: Shadows.topAndBottom),
+          color: getSelectedThemeColors(context).onBackground, boxShadow: Shadows.topAndBottom),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -160,7 +163,7 @@ class _SettingScreenState extends State<SettingScreen> with WidgetViewTemplate {
           Expanded(
             child: Text(
               title,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
+              style: TextStyles.h2.copyWith(color: getSelectedThemeColors(context).secondaryText),
             ),
           ),
           child
