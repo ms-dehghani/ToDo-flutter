@@ -27,7 +27,7 @@ this is schema of the architecture:
 ![Alt text](./resource/architecture.png?raw=true "Architecture")
 
 ## UI
-The UI is built using Jetpack Compose. The UI is divided into 2 screens:
+The UI is divided into 3 screens:
 * `ToDo List Screen` - The main screen that contains the list of todos.
 * `ToDo Detail Screen` - The screen that contains the details of a task.
 * `Setting Screen` - The screen that contains the application settings.
