@@ -24,8 +24,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../create/create_category_item_page.dart';
 
 class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
-  final CategoryGetBloc _categoryGetBloc =
-      CategoryGetBloc(categoryUseCase: DI.instance().getCategoryUseCase());
+  final CategoryGetBloc _categoryGetBloc = CategoryGetBloc(
+      categoryAllItemsUseCase:
+          DI.instance().getCategoryRetrieveAllItemsUseCase());
 
   CategoryListPage({super.key});
 
@@ -61,7 +62,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                           iconSrc: AppIcons.addCategory),
                       SizedBox(
                           height: Insets.addCategoryBottomSheetHeight,
-                          child: CreateCategoryItemPage(categoryItem: CategoryItem.empty())))
+                          child: CreateCategoryItemPage(
+                              categoryItem: CategoryItem.empty())))
                   .then((value) {
                 if (value != null && value is CategoryItem) {
                   _categoryGetBloc.add(GetAllCategoryEvent());
@@ -79,7 +81,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                 ItemSplitter.thinSplitter,
                 Text(
                   Texts.categoryListPageButtonAdd.translate,
-                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+                  style: TextStyles.h3Bold
+                      .copyWith(color: getSelectedThemeColors().accentColor),
                 ),
               ],
             ),
@@ -109,14 +112,16 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
     return Center(child: InPageProgress());
   }
 
-  Widget _categoryListDetail(BuildContext context, List<CategoryItem> categoryList) {
+  Widget _categoryListDetail(
+      BuildContext context, List<CategoryItem> categoryList) {
     return Column(
       children: [
         SizedBox(
             width: getWidth(context),
             child: Text(
               Texts.categoryListPageDescription.translate,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h2
+                  .copyWith(color: getSelectedThemeColors().primaryText),
             )),
         ItemSplitter.ultraThinSplitter,
         Expanded(
