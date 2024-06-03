@@ -5,7 +5,7 @@ import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_pa
 import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
-import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/createupdate/task_create_update_usecase.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,15 +14,15 @@ import 'package:mockito/mockito.dart';
 
 import 'task_create_update_bloc_test.mocks.dart';
 
-@GenerateMocks([TaskUseCase])
+@GenerateMocks([TaskCreateUpdateUseCase])
 void main() {
   late TaskCreateOrUpdateBloc taskBloc;
-  late TaskUseCase taskUseCase;
+  late TaskCreateUpdateUseCase taskUseCase;
 
   setUp(() {
     EquatableConfig.stringify = true;
-    taskUseCase = MockTaskUseCase();
-    taskBloc = TaskCreateOrUpdateBloc(taskUseCase: taskUseCase);
+    taskUseCase = MockTaskCreateUpdateUseCase();
+    taskBloc = TaskCreateOrUpdateBloc(createUpdateUseCase: taskUseCase);
   });
 
   group("Create task", () {
@@ -46,14 +46,14 @@ void main() {
         TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: null)
       ],
       verify: (bloc) {
-        verifyNever(taskUseCase.createOrUpdateTask(TaskItem.empty()));
+        verifyNever(taskUseCase.invoke(TaskItem.empty()));
       },
     );
 
     blocTest<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
       "Given task without id to create Then return failure",
       build: () {
-        when(taskUseCase.createOrUpdateTask(emptyIDTask)).thenAnswer((realInvocation) {
+        when(taskUseCase.invoke(emptyIDTask)).thenAnswer((realInvocation) {
           return Future.value(realInvocation.positionalArguments[0]);
         });
         return taskBloc;
@@ -61,10 +61,11 @@ void main() {
       act: (bloc) => bloc.add(TaskCreateOrUpdateEvent(emptyIDTask)),
       expect: () => <TaskCreateUpdateBlocPageData>[
         TaskCreateUpdateBlocPageData(status: PageStatus.loading, item: null),
-        TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: emptyIDTask)
+        TaskCreateUpdateBlocPageData(
+            status: PageStatus.failure, item: emptyIDTask)
       ],
       verify: (bloc) {
-        verify(taskUseCase.createOrUpdateTask(emptyIDTask)).called(1);
+        verify(taskUseCase.invoke(emptyIDTask)).called(1);
       },
     );
 
@@ -82,7 +83,7 @@ void main() {
         TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: null)
       ],
       verify: (bloc) {
-        verifyNever(taskUseCase.createOrUpdateTask(emptyIDTask));
+        verifyNever(taskUseCase.invoke(emptyIDTask));
       },
     );
 
@@ -100,7 +101,7 @@ void main() {
         TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: null)
       ],
       verify: (bloc) {
-        verifyNever(taskUseCase.createOrUpdateTask(emptyIDTask));
+        verifyNever(taskUseCase.invoke(emptyIDTask));
       },
     );
 
@@ -110,8 +111,8 @@ void main() {
         return taskBloc;
       },
       act: (bloc) {
-        var item =
-            TaskItem.empty().copyWith(taskId: "d", title: "t", priorityItem: PriorityItem.empty());
+        var item = TaskItem.empty().copyWith(
+            taskId: "d", title: "t", priorityItem: PriorityItem.empty());
         bloc.add(TaskCreateOrUpdateEvent(item));
       },
       expect: () => <TaskCreateUpdateBlocPageData>[
@@ -119,14 +120,14 @@ void main() {
         TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: null)
       ],
       verify: (bloc) {
-        verifyNever(taskUseCase.createOrUpdateTask(emptyIDTask));
+        verifyNever(taskUseCase.invoke(emptyIDTask));
       },
     );
 
     blocTest<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
       "Given task to create but not added to DB Then return failure",
       build: () {
-        when(taskUseCase.createOrUpdateTask(taskItem)).thenAnswer((realInvocation) {
+        when(taskUseCase.invoke(taskItem)).thenAnswer((realInvocation) {
           return Future.value(taskItem.copyWith(taskId: ""));
         });
         return taskBloc;
@@ -134,17 +135,18 @@ void main() {
       act: (bloc) => bloc.add(TaskCreateOrUpdateEvent(taskItem)),
       expect: () => <TaskCreateUpdateBlocPageData>[
         TaskCreateUpdateBlocPageData(status: PageStatus.loading, item: null),
-        TaskCreateUpdateBlocPageData(status: PageStatus.failure, item: taskItem.copyWith(taskId: ""))
+        TaskCreateUpdateBlocPageData(
+            status: PageStatus.failure, item: taskItem.copyWith(taskId: ""))
       ],
       verify: (bloc) {
-        verify(taskUseCase.createOrUpdateTask(taskItem)).called(1);
+        verify(taskUseCase.invoke(taskItem)).called(1);
       },
     );
 
     blocTest<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
       "Given task to create Then return success",
       build: () {
-        when(taskUseCase.createOrUpdateTask(taskItem)).thenAnswer((realInvocation) {
+        when(taskUseCase.invoke(taskItem)).thenAnswer((realInvocation) {
           return Future.value(realInvocation.positionalArguments[0]);
         });
         return taskBloc;
@@ -155,7 +157,7 @@ void main() {
         TaskCreateUpdateBlocPageData(status: PageStatus.success, item: taskItem)
       ],
       verify: (bloc) {
-        verify(taskUseCase.createOrUpdateTask(taskItem)).called(1);
+        verify(taskUseCase.invoke(taskItem)).called(1);
       },
     );
   });

@@ -37,9 +37,10 @@ class CreateTaskItemPage extends StatefulWidget {
   State<CreateTaskItemPage> createState() => _CreateTaskItemPageState();
 }
 
-class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetViewTemplate {
-  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
-      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+class _CreateTaskItemPageState extends State<CreateTaskItemPage>
+    with WidgetViewTemplate {
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc = TaskCreateOrUpdateBloc(
+      createUpdateUseCase: DI.instance().getTaskCreateUpdateUseCase());
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             ),
             centerWidget: Text(
               Texts.addTaskPageTitle.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+              style: TextStyles.h2Bold
+                  .copyWith(color: getSelectedThemeColors().primaryColor),
             )),
         Expanded(
           child: Container(
@@ -148,7 +150,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               color: color,
             )),
         onTap: () {
-          showDatePickerDialog(context, initialTime: widget.taskItem.taskTimestamp,
+          showDatePickerDialog(context,
+              initialTime: widget.taskItem.taskTimestamp,
               onDateSelected: (timestamp) {
             setState(() {
               widget.taskItem.taskTimestamp = timestamp;
@@ -187,7 +190,9 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             size: Insets.iconSizeS,
             color: color,
           ),
-          child: Text(widget.taskItem.categoryItem?.title ?? Texts.addTaskRowCategoryHint.translate,
+          child: Text(
+              widget.taskItem.categoryItem?.title ??
+                  Texts.addTaskRowCategoryHint.translate,
               style: TextStyles.h3.copyWith(
                 color: color,
               )),
@@ -199,7 +204,9 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
                         title: Texts.categoryListPageTitle.translate,
                         iconSrc: AppIcons.categoryOutline),
                     SizedBox(
-                        height: getHeight(context) / 2 > 500 ? getHeight(context) / 2 : 500,
+                        height: getHeight(context) / 2 > 500
+                            ? getHeight(context) / 2
+                            : 500,
                         child: CategoryListPage()))
                 .then((value) {
               if (value != null && value is CategoryItem) {
@@ -233,7 +240,8 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
               backgroundColor: getSelectedThemeColors().onBackground,
               content: Text(
                 detail,
-                style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+                style: TextStyles.h3
+                    .copyWith(color: getSelectedThemeColors().primaryText),
               ));
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
         }
@@ -248,10 +256,13 @@ class _CreateTaskItemPageState extends State<CreateTaskItemPage> with WidgetView
             fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
               Texts.addTaskButtonAdd.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h2Bold
+                  .copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
-              context.read<TaskCreateOrUpdateBloc>().add(TaskCreateOrUpdateEvent(widget.taskItem));
+              context
+                  .read<TaskCreateOrUpdateBloc>()
+                  .add(TaskCreateOrUpdateEvent(widget.taskItem));
             },
           ),
         );

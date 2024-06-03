@@ -31,13 +31,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TaskListPage extends StatelessWidget with WidgetViewTemplate {
-  final TaskGetBloc _taskGetBloc = TaskGetBloc(taskUseCase: DI.instance().getTaskUseCase());
+  final TaskGetBloc _taskGetBloc = TaskGetBloc(
+      checkExistenceUseCase: DI.instance().getTaskCheckExistenceUseCase(),
+      dayListItemsUseCase: DI.instance().getTaskRetrieveDayListItemsUseCase());
 
-  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
-      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc = TaskCreateOrUpdateBloc(
+      createUpdateUseCase: DI.instance().getTaskCreateUpdateUseCase());
 
-  final TaskDeleteBloc _taskDeleteBloc =
-      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
+  final TaskDeleteBloc _taskDeleteBloc = TaskDeleteBloc(
+      taskDeleteItemUseCase: DI.instance().getTaskDeleteUseCase());
 
   DateTime selectedDay = DateTime.now();
 
@@ -65,7 +67,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           create: (BuildContext context) => _taskDeleteBloc,
         ),
       ],
-      child: Container(color: getSelectedThemeColors().pageBackground, child: showPage(context)),
+      child: Container(
+          color: getSelectedThemeColors().pageBackground,
+          child: showPage(context)),
     );
   }
 
@@ -81,7 +85,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
             children: [
               _calender(),
               Padding(
-                padding: EdgeInsets.only(top: Insets.calenderListInTaskHeight - Insets.sm),
+                padding: EdgeInsets.only(
+                    top: Insets.calenderListInTaskHeight - Insets.sm),
                 child: Stack(
                   children: [
                     CustomPaint(
@@ -94,16 +99,19 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                       child: Container(
                         width: getWidth(context),
                         height: double.infinity,
-                        padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Insets.pagePadding),
                         color: isDark()
                             ? getSelectedThemeColors().pageBackground
                             : getSelectedThemeColors().onBackground,
                         child: Text(Texts.taskListTitle.translate,
-                            style: TextStyles.h1Bold
-                                .copyWith(color: getSelectedThemeColors().primaryColor)),
+                            style: TextStyles.h1Bold.copyWith(
+                                color: getSelectedThemeColors().primaryColor)),
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: Insets.lg), child: _taskList()),
+                    Padding(
+                        padding: EdgeInsets.only(top: Insets.lg),
+                        child: _taskList()),
                   ],
                 ),
               ),
@@ -120,7 +128,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       end: DateTime.now().add(Duration(days: 150)),
       onSelect: (dateTime) {
         selectedDay = dateTime;
-        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+        _taskGetBloc
+            .add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
       },
     );
   }
@@ -128,7 +137,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
   Widget _taskList() {
     return BlocListener<TaskDeleteBloc, TaskDeleteBlocPageData>(
       listener: (context, state) {
-        _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+        _taskGetBloc
+            .add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
       },
       child: BlocBuilder<TaskGetBloc, TaskGetBlocPageData>(
         buildWhen: (previous, current) {
@@ -140,7 +150,9 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
               margin: EdgeInsets.only(top: Insets.buttonHeight),
               height: double.infinity,
               child: state.pageStatus == PageStatus.success
-                  ? (state.taskList.isNotEmpty ? _taskListDetail(state.taskList) : _emptyView())
+                  ? (state.taskList.isNotEmpty
+                      ? _taskListDetail(state.taskList)
+                      : _emptyView())
                   : _loadingWidget());
         },
       ),
@@ -162,14 +174,16 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
       children: taskList.map((e) {
-        return BlocBuilder<TaskCreateOrUpdateBloc, TaskCreateUpdateBlocPageData>(
+        return BlocBuilder<TaskCreateOrUpdateBloc,
+            TaskCreateUpdateBlocPageData>(
           buildWhen: (previous, current) {
             return current.pageStatus == PageStatus.success;
           },
           bloc: _taskCreateOrUpdateBloc,
           builder: (context, state) {
             if (!selectedDay.isSameDay(timestamp: e.taskTimestamp)) {
-              _taskGetBloc.add(GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
+              _taskGetBloc.add(
+                  GetAllTaskInDayEvent(selectedDay.millisecondsSinceEpoch));
               return Container();
             }
             return TaskListRowItem(
@@ -184,7 +198,8 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
                     TaskDetailPage(
                       taskItem: e,
                     )).then((value) {
-                  _taskGetBloc.add(RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
+                  _taskGetBloc.add(
+                      RefreshTaskListEvent(selectedDay.millisecondsSinceEpoch));
                 });
               },
               onEdit: () {
@@ -210,13 +225,15 @@ class TaskListPage extends StatelessWidget with WidgetViewTemplate {
           ItemSplitter.thickSplitter,
           RichText(
             text: TextSpan(
-              style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h3
+                  .copyWith(color: getSelectedThemeColors().primaryText),
               children: <TextSpan>[
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[0]),
                 TextSpan(
                     text:
                         " «${selectedDay.isSameDay(date: DateTime.now()) ? Texts.today.translate : fullTimeToText(selectedDay.millisecondsSinceEpoch)}» ",
-                    style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryText)),
+                    style: TextStyles.h3Bold
+                        .copyWith(color: getSelectedThemeColors().primaryText)),
                 TextSpan(text: Texts.taskEmptyMessage.translate.split("%")[1]),
               ],
             ),

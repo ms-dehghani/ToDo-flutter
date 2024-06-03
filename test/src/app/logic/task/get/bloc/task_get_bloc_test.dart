@@ -3,7 +3,9 @@ import 'package:ToDo/src/app/logic/task/get/bloc/task_get_bloc.dart';
 import 'package:ToDo/src/app/logic/task/get/bloc/task_get_event.dart';
 import 'package:ToDo/src/app/logic/task/get/bloc/task_get_page_data.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
-import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/existence/task_check_existence_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/retrieve/daylist/task_retrieve_day_list_items_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/retrieve/item/task_retrieve_item_usecase.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,15 +14,19 @@ import 'package:mockito/mockito.dart';
 
 import 'task_get_bloc_test.mocks.dart';
 
-@GenerateMocks([TaskUseCase])
+@GenerateMocks([TaskCheckExistenceUseCase, TaskRetrieveDayListItemsUseCase])
 void main() {
   late TaskGetBloc taskBloc;
-  late TaskUseCase taskUseCase;
+  late TaskCheckExistenceUseCase taskCheckExistenceUseCase;
+  late TaskRetrieveDayListItemsUseCase taskRetrieveDayListItemsUseCase;
 
   setUp(() {
     EquatableConfig.stringify = true;
-    taskUseCase = MockTaskUseCase();
-    taskBloc = TaskGetBloc(taskUseCase: taskUseCase);
+    taskCheckExistenceUseCase = MockTaskCheckExistenceUseCase();
+    taskRetrieveDayListItemsUseCase = MockTaskRetrieveDayListItemsUseCase();
+    taskBloc = TaskGetBloc(
+        dayListItemsUseCase: taskRetrieveDayListItemsUseCase,
+        checkExistenceUseCase: taskCheckExistenceUseCase);
   });
 
   group("Get Day task list", () {
@@ -29,17 +35,23 @@ void main() {
     blocTest<TaskGetBloc, TaskGetBlocPageData>(
       "Emit GetAllTaskInDayEvent then call get empty task list",
       build: () {
-        when(taskUseCase.getTaskListFromData(today.millisecondsSinceEpoch))
+        when(taskRetrieveDayListItemsUseCase
+                .invoke(today.millisecondsSinceEpoch))
             .thenAnswer((realInvocation) => Future.value([]));
         return taskBloc;
       },
-      act: (bloc) => bloc.add(GetAllTaskInDayEvent(today.millisecondsSinceEpoch)),
+      act: (bloc) =>
+          bloc.add(GetAllTaskInDayEvent(today.millisecondsSinceEpoch)),
       expect: () => <TaskGetBlocPageData>[
-        TaskGetBlocPageData(status: PageStatus.loading, taskList: [], calenderDetail: {}),
-        TaskGetBlocPageData(status: PageStatus.success, taskList: [], calenderDetail: {})
+        TaskGetBlocPageData(
+            status: PageStatus.loading, taskList: [], calenderDetail: {}),
+        TaskGetBlocPageData(
+            status: PageStatus.success, taskList: [], calenderDetail: {})
       ],
       verify: (bloc) {
-        verify(taskUseCase.getTaskListFromData(today.millisecondsSinceEpoch)).called(1);
+        verify(taskRetrieveDayListItemsUseCase
+                .invoke(today.millisecondsSinceEpoch))
+            .called(1);
       },
     );
 
@@ -48,17 +60,25 @@ void main() {
     blocTest<TaskGetBloc, TaskGetBlocPageData>(
       "Emit GetAllTaskInDayEvent then call get today tasks",
       build: () {
-        when(taskUseCase.getTaskListFromData(today.millisecondsSinceEpoch))
+        when(taskRetrieveDayListItemsUseCase
+                .invoke(today.millisecondsSinceEpoch))
             .thenAnswer((realInvocation) => Future.value([taskItem]));
         return taskBloc;
       },
-      act: (bloc) => bloc.add(GetAllTaskInDayEvent(today.millisecondsSinceEpoch)),
+      act: (bloc) =>
+          bloc.add(GetAllTaskInDayEvent(today.millisecondsSinceEpoch)),
       expect: () => <TaskGetBlocPageData>[
-        TaskGetBlocPageData(status: PageStatus.loading, taskList: [], calenderDetail: {}),
-        TaskGetBlocPageData(status: PageStatus.success, taskList: [taskItem], calenderDetail: {})
+        TaskGetBlocPageData(
+            status: PageStatus.loading, taskList: [], calenderDetail: {}),
+        TaskGetBlocPageData(
+            status: PageStatus.success,
+            taskList: [taskItem],
+            calenderDetail: {})
       ],
       verify: (bloc) {
-        verify(taskUseCase.getTaskListFromData(today.millisecondsSinceEpoch)).called(1);
+        verify(taskRetrieveDayListItemsUseCase
+                .invoke(today.millisecondsSinceEpoch))
+            .called(1);
       },
     );
   });
@@ -69,8 +89,9 @@ void main() {
     blocTest<TaskGetBloc, TaskGetBlocPageData>(
       "Emit GetAllTaskInCalenderEvent then get empty task list and empty calender detail",
       build: () {
-        when(taskUseCase.getTaskListFromData(1)).thenAnswer((realInvocation) => Future.value([]));
-        when(taskUseCase.isAnyTaskExistInRange(
+        when(taskRetrieveDayListItemsUseCase.invoke(1))
+            .thenAnswer((realInvocation) => Future.value([]));
+        when(taskCheckExistenceUseCase.invoke(
                 today.millisecondsSinceEpoch, today.millisecondsSinceEpoch))
             .thenAnswer((realInvocation) => Future.value({}));
         return taskBloc;
@@ -80,12 +101,14 @@ void main() {
           endTime: today.millisecondsSinceEpoch,
           selectedDay: 1)),
       expect: () => <TaskGetBlocPageData>[
-        TaskGetBlocPageData(status: PageStatus.loading, taskList: [], calenderDetail: {}),
-        TaskGetBlocPageData(status: PageStatus.success, taskList: [], calenderDetail: {})
+        TaskGetBlocPageData(
+            status: PageStatus.loading, taskList: [], calenderDetail: {}),
+        TaskGetBlocPageData(
+            status: PageStatus.success, taskList: [], calenderDetail: {})
       ],
       verify: (bloc) {
-        verify(taskUseCase.getTaskListFromData(1)).called(1);
-        verify(taskUseCase.isAnyTaskExistInRange(
+        verify(taskRetrieveDayListItemsUseCase.invoke(1)).called(1);
+        verify(taskCheckExistenceUseCase.invoke(
                 today.millisecondsSinceEpoch, today.millisecondsSinceEpoch))
             .called(1);
       },
@@ -96,9 +119,9 @@ void main() {
     blocTest<TaskGetBloc, TaskGetBlocPageData>(
       "Emit GetAllTaskInCalenderEvent then get empty task list and empty calender detail",
       build: () {
-        when(taskUseCase.getTaskListFromData(1))
+        when(taskRetrieveDayListItemsUseCase.invoke(1))
             .thenAnswer((realInvocation) => Future.value([taskItem]));
-        when(taskUseCase.isAnyTaskExistInRange(
+        when(taskCheckExistenceUseCase.invoke(
                 today.millisecondsSinceEpoch, today.millisecondsSinceEpoch))
             .thenAnswer((realInvocation) => Future.value({1: false, 2: true}));
         return taskBloc;
@@ -108,13 +131,16 @@ void main() {
           endTime: today.millisecondsSinceEpoch,
           selectedDay: 1)),
       expect: () => <TaskGetBlocPageData>[
-        TaskGetBlocPageData(status: PageStatus.loading, taskList: [], calenderDetail: {}),
         TaskGetBlocPageData(
-            status: PageStatus.success, taskList: [taskItem], calenderDetail: {1: false, 2: true})
+            status: PageStatus.loading, taskList: [], calenderDetail: {}),
+        TaskGetBlocPageData(
+            status: PageStatus.success,
+            taskList: [taskItem],
+            calenderDetail: {1: false, 2: true})
       ],
       verify: (bloc) {
-        verify(taskUseCase.getTaskListFromData(1)).called(1);
-        verify(taskUseCase.isAnyTaskExistInRange(
+        verify(taskRetrieveDayListItemsUseCase.invoke(1)).called(1);
+        verify(taskCheckExistenceUseCase.invoke(
                 today.millisecondsSinceEpoch, today.millisecondsSinceEpoch))
             .called(1);
       },

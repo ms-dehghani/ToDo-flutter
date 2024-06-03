@@ -11,9 +11,11 @@ import 'package:ToDo/src/domain/usecase/priority/create/priority_create_usecase.
 import 'package:ToDo/src/domain/usecase/priority/retrieve/priority_retrieve_all_items_usecase.dart';
 import 'package:ToDo/src/domain/usecase/setting/createupdate/setting_create_update_usecase.dart';
 import 'package:ToDo/src/domain/usecase/setting/retrieve/setting_retrieve_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/createupdate/task_create_update_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/delete/task_delete_item_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/existence/task_check_existence_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/retrieve/daylist/task_retrieve_day_list_items_usecase.dart';
 import 'package:get_it/get_it.dart';
-
-import '../usecase/task/task_usecase.dart';
 
 class DomainDI {
   final getIt = GetIt.instance;
@@ -21,9 +23,7 @@ class DomainDI {
   DomainDI() {
     _provideCategoryUseCases();
     _providePriorityUseCases();
-
-    getIt.registerSingleton<TaskUseCase>(
-        TaskUseCase(repository: getIt<TaskRepository>()));
+    _provideTaskUseCases();
     _provideSettingUseCases();
   }
 
@@ -49,10 +49,21 @@ class DomainDI {
             repository: getIt<PriorityRepository>()));
   }
 
-  void _provideSettingUseCases() {
+  void _provideTaskUseCases() {
     getIt.registerSingleton<SettingCreateUpdateUseCase>(
         SettingCreateUpdateUseCase(repository: getIt<SettingRepository>()));
     getIt.registerSingleton<SettingRetrieveUseCase>(
         SettingRetrieveUseCase(repository: getIt<SettingRepository>()));
+  }
+
+  void _provideSettingUseCases() {
+    getIt.registerSingleton<TaskCreateUpdateUseCase>(
+        TaskCreateUpdateUseCase(repository: getIt<TaskRepository>()));
+    getIt.registerSingleton<TaskDeleteItemUseCase>(
+        TaskDeleteItemUseCase(repository: getIt<TaskRepository>()));
+    getIt.registerSingleton<TaskRetrieveDayListItemsUseCase>(
+        TaskRetrieveDayListItemsUseCase(repository: getIt<TaskRepository>()));
+    getIt.registerSingleton<TaskCheckExistenceUseCase>(
+        TaskCheckExistenceUseCase(repository: getIt<TaskRepository>()));
   }
 }

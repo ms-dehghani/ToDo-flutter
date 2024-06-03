@@ -9,7 +9,10 @@ import 'package:ToDo/src/domain/usecase/priority/create/priority_create_usecase.
 import 'package:ToDo/src/domain/usecase/priority/retrieve/priority_retrieve_all_items_usecase.dart';
 import 'package:ToDo/src/domain/usecase/setting/createupdate/setting_create_update_usecase.dart';
 import 'package:ToDo/src/domain/usecase/setting/retrieve/setting_retrieve_usecase.dart';
-import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/createupdate/task_create_update_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/delete/task_delete_item_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/existence/task_check_existence_usecase.dart';
+import 'package:ToDo/src/domain/usecase/task/retrieve/daylist/task_retrieve_day_list_items_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
@@ -62,8 +65,20 @@ class DI {
     return Future.value(true);
   }
 
-  TaskUseCase getTaskUseCase() {
-    return getIt<TaskUseCase>();
+  TaskCheckExistenceUseCase getTaskCheckExistenceUseCase() {
+    return getIt<TaskCheckExistenceUseCase>();
+  }
+
+  TaskRetrieveDayListItemsUseCase getTaskRetrieveDayListItemsUseCase() {
+    return getIt<TaskRetrieveDayListItemsUseCase>();
+  }
+
+  TaskDeleteItemUseCase getTaskDeleteUseCase() {
+    return getIt<TaskDeleteItemUseCase>();
+  }
+
+  TaskCreateUpdateUseCase getTaskCreateUpdateUseCase() {
+    return getIt<TaskCreateUpdateUseCase>();
   }
 
   CategoryDeleteUseCase getCategoryDeleteUseCase() {
