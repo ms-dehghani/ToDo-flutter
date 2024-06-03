@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initDI() async {
     if (setting == null) {
       await DI.instance().provideDependencies();
-      setting = await DI.instance().getSettingUseCase().getSetting();
+      setting = await DI.instance().getSettingRetrieveUseCase().invoke();
       APPLIC.changeLang(setting!.langCode);
       APPLIC.changeTheme(setting!.isDark);
     }

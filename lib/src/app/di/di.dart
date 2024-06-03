@@ -7,7 +7,8 @@ import 'package:ToDo/src/domain/usecase/category/delete/category_delete_item_use
 import 'package:ToDo/src/domain/usecase/category/retrieve/all/category_retrieve_all_items_usecase.dart';
 import 'package:ToDo/src/domain/usecase/priority/create/priority_create_usecase.dart';
 import 'package:ToDo/src/domain/usecase/priority/retrieve/priority_retrieve_all_items_usecase.dart';
-import 'package:ToDo/src/domain/usecase/setting/setting_usecase.dart';
+import 'package:ToDo/src/domain/usecase/setting/createupdate/setting_create_update_usecase.dart';
+import 'package:ToDo/src/domain/usecase/setting/retrieve/setting_retrieve_usecase.dart';
 import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,7 +86,11 @@ class DI {
     return getIt<PriorityRetrieveAllItemsUseCase>();
   }
 
-  SettingUseCase getSettingUseCase() {
-    return getIt<SettingUseCase>();
+  SettingRetrieveUseCase getSettingRetrieveUseCase() {
+    return getIt<SettingRetrieveUseCase>();
+  }
+
+  SettingCreateUpdateUseCase getSettingCreateUpdateUseCase() {
+    return getIt<SettingCreateUpdateUseCase>();
   }
 }

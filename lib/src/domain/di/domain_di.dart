@@ -9,7 +9,8 @@ import 'package:ToDo/src/domain/usecase/category/retrieve/all/category_retrieve_
 import 'package:ToDo/src/domain/usecase/category/retrieve/item/category_retrieve_item_usecase.dart';
 import 'package:ToDo/src/domain/usecase/priority/create/priority_create_usecase.dart';
 import 'package:ToDo/src/domain/usecase/priority/retrieve/priority_retrieve_all_items_usecase.dart';
-import 'package:ToDo/src/domain/usecase/setting/setting_usecase.dart';
+import 'package:ToDo/src/domain/usecase/setting/createupdate/setting_create_update_usecase.dart';
+import 'package:ToDo/src/domain/usecase/setting/retrieve/setting_retrieve_usecase.dart';
 import 'package:get_it/get_it.dart';
 
 import '../usecase/task/task_usecase.dart';
@@ -23,8 +24,7 @@ class DomainDI {
 
     getIt.registerSingleton<TaskUseCase>(
         TaskUseCase(repository: getIt<TaskRepository>()));
-    getIt.registerSingleton<SettingUseCase>(
-        SettingUseCase(repository: getIt<SettingRepository>()));
+    _provideSettingUseCases();
   }
 
   void _provideCategoryUseCases() {
@@ -47,5 +47,12 @@ class DomainDI {
     getIt.registerSingleton<PriorityRetrieveAllItemsUseCase>(
         PriorityRetrieveAllItemsUseCase(
             repository: getIt<PriorityRepository>()));
+  }
+
+  void _provideSettingUseCases() {
+    getIt.registerSingleton<SettingCreateUpdateUseCase>(
+        SettingCreateUpdateUseCase(repository: getIt<SettingRepository>()));
+    getIt.registerSingleton<SettingRetrieveUseCase>(
+        SettingRetrieveUseCase(repository: getIt<SettingRepository>()));
   }
 }
