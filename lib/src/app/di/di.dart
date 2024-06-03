@@ -5,7 +5,8 @@ import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/domain/usecase/category/createupdate/category_create_or_update_usecase.dart';
 import 'package:ToDo/src/domain/usecase/category/delete/category_delete_item_usecase.dart';
 import 'package:ToDo/src/domain/usecase/category/retrieve/all/category_retrieve_all_items_usecase.dart';
-import 'package:ToDo/src/domain/usecase/priority/priority_usecase.dart';
+import 'package:ToDo/src/domain/usecase/priority/create/priority_create_usecase.dart';
+import 'package:ToDo/src/domain/usecase/priority/retrieve/priority_retrieve_all_items_usecase.dart';
 import 'package:ToDo/src/domain/usecase/setting/setting_usecase.dart';
 import 'package:ToDo/src/domain/usecase/task/task_usecase.dart';
 import 'package:get_it/get_it.dart';
@@ -44,13 +45,19 @@ class DI {
   }
 
   Future<bool> _providePriorityList() async {
-    await DI.instance().getPriorityUseCase().createOrUpdatePriority(
-        PriorityItem("1", Texts.priorityHigh, "#FF3B3B"));
-    await DI.instance().getPriorityUseCase().createOrUpdatePriority(
-        PriorityItem("2", Texts.priorityMid, "#FF8800"));
-    await DI.instance().getPriorityUseCase().createOrUpdatePriority(
-        PriorityItem("3", Texts.priorityLow, "#06C270"));
-    prioritiesItem = await getIt<PriorityUseCase>().getPriorities();
+    await DI
+        .instance()
+        .getPriorityCreateUseCase()
+        .invoke(PriorityItem("1", Texts.priorityHigh, "#FF3B3B"));
+    await DI
+        .instance()
+        .getPriorityCreateUseCase()
+        .invoke(PriorityItem("2", Texts.priorityMid, "#FF8800"));
+    await DI
+        .instance()
+        .getPriorityCreateUseCase()
+        .invoke(PriorityItem("3", Texts.priorityLow, "#06C270"));
+    prioritiesItem = await getIt<PriorityRetrieveAllItemsUseCase>().invoke();
     return Future.value(true);
   }
 
@@ -70,8 +77,12 @@ class DI {
     return getIt<CategoryRetrieveAllItemsUseCase>();
   }
 
-  PriorityUseCase getPriorityUseCase() {
-    return getIt<PriorityUseCase>();
+  PriorityCreateUseCase getPriorityCreateUseCase() {
+    return getIt<PriorityCreateUseCase>();
+  }
+
+  PriorityRetrieveAllItemsUseCase getPriorityRetrieveAllItemsUseCase() {
+    return getIt<PriorityRetrieveAllItemsUseCase>();
   }
 
   SettingUseCase getSettingUseCase() {

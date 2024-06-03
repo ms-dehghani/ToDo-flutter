@@ -1,14 +1,17 @@
 import 'package:ToDo/src/data/datasource/priority/priority_data_provider.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
-import 'package:ToDo/src/domain/repositories/priority/priority_item_repository.dart';
+import 'package:ToDo/src/domain/repositories/priority/create/priority_create_item_repository.dart';
+import 'package:ToDo/src/domain/repositories/priority/retrieve/priority_retrieve_all_items_repository.dart';
 
-class PriorityRepository implements PriorityItemRepository {
+class PriorityRepository
+    implements
+        PriorityCreateItemRepository,
+        PriorityRetrieveAllItemsRepository {
   PriorityDataProvider localDB;
   PriorityDataProvider? api;
 
   PriorityRepository(this.localDB, this.api);
 
-  @override
   Future<void> clear() {
     return localDB.clear();
   }
@@ -18,7 +21,6 @@ class PriorityRepository implements PriorityItemRepository {
     return localDB.createOrUpdatePriority(priorityItem);
   }
 
-  @override
   Future<bool> deletePriority(String priorityID) {
     return localDB.deletePriority(priorityID);
   }
@@ -28,7 +30,6 @@ class PriorityRepository implements PriorityItemRepository {
     return localDB.getPriorities();
   }
 
-  @override
   Future<PriorityItem?> getPriority(String priorityID) {
     return localDB.getPriority(priorityID);
   }
