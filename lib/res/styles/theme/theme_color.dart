@@ -1,4 +1,4 @@
-import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/color/color.dart';
 import 'package:flutter/material.dart';
 
 class ThemeColor extends ThemeExtension<ThemeColor> {
@@ -93,7 +93,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
   }
 
   @override
-  ThemeExtension<ThemeColor> lerp(covariant ThemeExtension<ThemeColor>? other, double t) {
+  ThemeExtension<ThemeColor> lerp(
+      covariant ThemeExtension<ThemeColor>? other, double t) {
     if (other is! ThemeColor) {
       return this;
     }
@@ -117,7 +118,8 @@ class ThemeColor extends ThemeExtension<ThemeColor> {
       accentLiteColor: Color.lerp(accentLiteColor, other.accentLiteColor, t)!,
       navigationColor: Color.lerp(navigationColor, other.navigationColor, t)!,
       iconRed: Color.lerp(iconRed, other.iconRed, t)!,
-      textOnAccentColor: Color.lerp(textOnAccentColor, other.textOnAccentColor, t)!,
+      textOnAccentColor:
+          Color.lerp(textOnAccentColor, other.textOnAccentColor, t)!,
     );
   }
 }

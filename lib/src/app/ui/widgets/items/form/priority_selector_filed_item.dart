@@ -1,7 +1,8 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -18,7 +19,10 @@ class PrioritySelectorFiledItem extends StatefulWidget {
   Function(PriorityItem item)? onPriorityChange;
 
   PrioritySelectorFiledItem(
-      {super.key, required this.priorityList, this.selectedItem, this.onPriorityChange});
+      {super.key,
+      required this.priorityList,
+      this.selectedItem,
+      this.onPriorityChange});
 
   @override
   State<StatefulWidget> createState() {
@@ -63,7 +67,8 @@ class _PrioritySelectorFiledItemState extends State<PrioritySelectorFiledItem> {
         ItemSplitter.ultraThinSplitter,
         Text(
           Texts.addTaskRowPrioritySelect.translate,
-          style: TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText),
+          style: TextStyles.h3
+              .copyWith(color: getSelectedThemeColors().secondaryText),
         ),
         ItemSplitter.ultraThinSplitter,
         Expanded(

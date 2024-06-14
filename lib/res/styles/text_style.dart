@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
+import 'package:flutter/material.dart';
 
-import 'dimens.dart';
-import 'fonts.dart';
+import '../font/font_sizes.dart';
+import '../font/fonts.dart';
 
 class TextStyles {
   static final TextStyles _textStyles = TextStyles._internal();
@@ -37,17 +37,23 @@ class TextStyles {
         letterSpacing: -1,
       );
 
-  static TextStyle get h2 => h1.copyWith(fontSize: FontSizes.s16, letterSpacing: -.5);
+  static TextStyle get h2 =>
+      h1.copyWith(fontSize: FontSizes.s16, letterSpacing: -.5);
 
-  static TextStyle get h2Bold => h1Bold.copyWith(fontSize: FontSizes.s16, letterSpacing: -.5);
+  static TextStyle get h2Bold =>
+      h1Bold.copyWith(fontSize: FontSizes.s16, letterSpacing: -.5);
 
-  static TextStyle get h3 => h1.copyWith(fontSize: FontSizes.s14, letterSpacing: -.05);
+  static TextStyle get h3 =>
+      h1.copyWith(fontSize: FontSizes.s14, letterSpacing: -.05);
 
-  static TextStyle get h3Bold => h2Bold.copyWith(fontSize: FontSizes.s14, letterSpacing: -.05);
+  static TextStyle get h3Bold =>
+      h2Bold.copyWith(fontSize: FontSizes.s14, letterSpacing: -.05);
 
-  static TextStyle get h4 => h1.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
+  static TextStyle get h4 =>
+      h1.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
 
-  static TextStyle get h4Bold => h2Bold.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
+  static TextStyle get h4Bold =>
+      h2Bold.copyWith(fontSize: FontSizes.s10, letterSpacing: -.05);
 }
 
 TextStyles textStyles = TextStyles();

@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/dimens/strokes.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:ToDo/src/utils/time_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,7 +54,8 @@ class CalenderRowItem extends StatefulWidget {
   }
 }
 
-class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProviderStateMixin {
+class _CalenderRowItemWidgetState extends State<CalenderRowItem>
+    with TickerProviderStateMixin {
   Duration duration = const Duration(milliseconds: 300);
 
   Animation<Color?>? _animationText;
@@ -67,9 +69,12 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
   }
 
   void setData() {
-    widget.textAnimationController = AnimationController(vsync: this, duration: duration);
-    widget.backgroundAnimationController = AnimationController(vsync: this, duration: duration);
-    widget.borderAnimationController = AnimationController(vsync: this, duration: duration);
+    widget.textAnimationController =
+        AnimationController(vsync: this, duration: duration);
+    widget.backgroundAnimationController =
+        AnimationController(vsync: this, duration: duration);
+    widget.borderAnimationController =
+        AnimationController(vsync: this, duration: duration);
 
     _animationText = ColorTween(
       begin: getSelectedThemeColors().primaryText,
@@ -100,7 +105,8 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
           onTap: () {
             if (widget.onSelect != null) {
               if (!widget.isSelected) {
-                widget.onSelect?.call(DateTime.fromMillisecondsSinceEpoch(widget.timestamp));
+                widget.onSelect?.call(
+                    DateTime.fromMillisecondsSinceEpoch(widget.timestamp));
               }
             } else {
               widget.select(selected: !widget.isSelected);
@@ -111,19 +117,23 @@ class _CalenderRowItemWidgetState extends State<CalenderRowItem> with TickerProv
             height: Insets.calenderItemHeight,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.calendarItemBorder(getSelectedThemeColors()).copyWith(
-                color: _animationBackground?.value,
-                border: Border.all(color: _borderContainer!.value!, width: Strokes.thin)),
+            decoration: Drawable.calendarItemBorder(getSelectedThemeColors())
+                .copyWith(
+                    color: _animationBackground?.value,
+                    border: Border.all(
+                        color: _borderContainer!.value!, width: Strokes.thin)),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Text(
                   dayOfMonth(widget.timestamp),
-                  style: TextStyles.h1Bold.copyWith(color: _animationText!.value),
+                  style:
+                      TextStyles.h1Bold.copyWith(color: _animationText!.value),
                 ),
                 Text(
                   dayOfWeek(widget.timestamp),
-                  style: TextStyles.h3Bold.copyWith(color: _animationText!.value),
+                  style:
+                      TextStyles.h3Bold.copyWith(color: _animationText!.value),
                 ),
               ],
             ),

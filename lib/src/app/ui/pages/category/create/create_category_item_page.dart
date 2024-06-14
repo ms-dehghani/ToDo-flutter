@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_bloc.dart';

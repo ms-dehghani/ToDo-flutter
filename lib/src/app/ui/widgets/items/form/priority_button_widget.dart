@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/dimens/strokes.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -33,7 +34,8 @@ class PriorityButtonWidget extends StatefulWidget {
   }
 }
 
-class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with TickerProviderStateMixin {
+class _PriorityButtonWidgetState extends State<PriorityButtonWidget>
+    with TickerProviderStateMixin {
   Duration duration = const Duration(milliseconds: 300);
 
   late Animation<Color?> _animationText;
@@ -42,8 +44,10 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
   @override
   void initState() {
     super.initState();
-    widget.textAnimationController = AnimationController(vsync: this, duration: duration);
-    widget.backgroundAnimationController = AnimationController(vsync: this, duration: duration);
+    widget.textAnimationController =
+        AnimationController(vsync: this, duration: duration);
+    widget.backgroundAnimationController =
+        AnimationController(vsync: this, duration: duration);
 
     _animationText = ColorTween(
       begin: widget.priorityItem.color,
@@ -76,9 +80,11 @@ class _PriorityButtonWidgetState extends State<PriorityButtonWidget> with Ticker
             height: 48,
             alignment: Alignment.center,
             margin: EdgeInsets.symmetric(horizontal: Insets.sm),
-            decoration: Drawable.simpleBorder(getSelectedThemeColors()).copyWith(
-                color: _animationBackground.value,
-                border: Border.all(color: widget.priorityItem.color, width: Strokes.thin)),
+            decoration: Drawable.simpleBorder(getSelectedThemeColors())
+                .copyWith(
+                    color: _animationBackground.value,
+                    border: Border.all(
+                        color: widget.priorityItem.color, width: Strokes.thin)),
             child: Text(
               widget.priorityItem.title.translate,
               style: TextStyles.h3.copyWith(color: _animationText.value),

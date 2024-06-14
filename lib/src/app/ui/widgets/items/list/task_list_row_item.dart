@@ -1,9 +1,13 @@
 import 'dart:ui';
 
-import 'package:ToDo/res/color.dart';
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/color/color.dart';
+import 'package:ToDo/res/dimens/borders.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/app/ui/widgets/check_box/check_box_item.dart';
 import 'package:ToDo/src/domain/models/task/task_item.dart';
 import 'package:ToDo/src/utils/device.dart';
@@ -47,12 +51,19 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     return Card(
       margin: EdgeInsets.symmetric(vertical: Insets.sm),
       elevation: widget.taskItem.isDone || !clickable ? 0 : Insets.xs,
-      color:
-          isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor,
+      color: isDark()
+          ? getSelectedThemeColors().onBackground
+          : getSelectedThemeColors().itemFillColor,
       shadowColor: getSelectedThemeColors().shadowColor,
-      shape: Borders.thinAndHighRadiosBorder(context).copyWith(
-          side: Borders.thinBorder(context).copyWith(
-              color: isDark() ? Colors.transparent : getSelectedThemeColors().borderColor)),
+      shape: Borders.thinAndHighRadiosBorder(
+              context, getSelectedThemeColors().borderColor)
+          .copyWith(
+              side: Borders.thinBorder(
+                      context, getSelectedThemeColors().borderColor)
+                  .copyWith(
+                      color: isDark()
+                          ? Colors.transparent
+                          : getSelectedThemeColors().borderColor)),
       child: InkWell(
         borderRadius: Corners.hgBorder,
         splashColor: getSelectedThemeColors().disableColor.withOpacity(0.3),
@@ -89,7 +100,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               borderRadius: Corners.smBorder,
               color: widget.taskItem.isDone
                   ? getSelectedThemeColors().disableColor
-                  : widget.taskItem.priorityItem?.color ?? getSelectedThemeColors().disableColor),
+                  : widget.taskItem.priorityItem?.color ??
+                      getSelectedThemeColors().disableColor),
         ),
         ItemSplitter.ultraThinSplitter,
         _checkBox(clickable),
@@ -100,8 +112,9 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
               widget.taskItem.title,
               maxLines: 2,
               style: TextStyles.h2.copyWith(
-                  decoration:
-                      widget.taskItem.isDone ? TextDecoration.lineThrough : TextDecoration.none,
+                  decoration: widget.taskItem.isDone
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
                   color: widget.taskItem.isDone
                       ? getSelectedThemeColors().disableColor
                       : getSelectedThemeColors().primaryText),
@@ -195,7 +208,8 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
 
   Widget _rowReminder() {
     return Padding(
-      padding: EdgeInsets.only(left: Insets.med, top: 0, bottom: Insets.med, right: Insets.med),
+      padding: EdgeInsets.only(
+          left: Insets.med, top: 0, bottom: Insets.med, right: Insets.med),
       child: RoundColoredContainer(
         height: 34,
         margin: EdgeInsets.symmetric(horizontal: Insets.xs),
@@ -280,8 +294,11 @@ class _TaskListRowItemState extends State<TaskListRowItem> {
     Offset position = box.localToGlobal(Offset.zero);
 
     var height = getHeight(context);
-    bool actionIsFirst =
-        box.size.height + Insets.taskActionBarHeight + Insets.med + position.dy > height;
+    bool actionIsFirst = box.size.height +
+            Insets.taskActionBarHeight +
+            Insets.med +
+            position.dy >
+        height;
 
     return Stack(
       children: [

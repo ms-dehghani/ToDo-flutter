@@ -1,5 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../res/dimens/borders.dart';
 
 class CustomRaisedButton extends StatelessWidget {
   Size? size;
@@ -29,10 +31,13 @@ class CustomRaisedButton extends StatelessWidget {
           fixedSize: size,
           backgroundColor: fillColor,
           foregroundColor: rippleColor,
-          shape: Borders.thinAndHighRadiosBorder(context).copyWith(
-              side: Borders.thinAndHighRadiosBorder(context)
-                  .side
-                  .copyWith(color: fillColor ?? Colors.transparent))),
+          shape: Borders.thinAndHighRadiosBorder(
+                  context, getSelectedThemeColors().borderColor)
+              .copyWith(
+                  side: Borders.thinAndHighRadiosBorder(
+                          context, getSelectedThemeColors().borderColor)
+                      .side
+                      .copyWith(color: fillColor ?? Colors.transparent))),
       child: child,
     );
   }

@@ -1,10 +1,13 @@
 import 'dart:ui';
 
-import 'package:ToDo/res/color.dart';
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/color/color.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
@@ -30,7 +33,8 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
           child: Padding(
-            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -47,7 +51,8 @@ Future<dynamic> showRoundBottomSheet(BuildContext context, Widget body,
                               child: ImageView(
                                   src: AppIcons.closeOutline,
                                   size: Insets.iconSizeXL,
-                                  color: getSelectedThemeColors().secondaryText),
+                                  color:
+                                      getSelectedThemeColors().secondaryText),
                               onTap: () {
                                 Navigator.of(context).maybePop();
                               },
@@ -131,17 +136,18 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                   ),
                   Container(
                     height: Insets.buttonHeight * 3,
-                    padding: EdgeInsets.symmetric(horizontal: Insets.pagePadding),
-                    decoration:
-                        Drawable.bottomSheetDecoration(getSelectedThemeColors().itemFillColor),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: Insets.pagePadding),
+                    decoration: Drawable.bottomSheetDecoration(
+                        getSelectedThemeColors().itemFillColor),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         ItemSplitter.thickSplitter,
                         Text(
                           text,
-                          style:
-                              TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                          style: TextStyles.h2.copyWith(
+                              color: getSelectedThemeColors().primaryText),
                         ),
                         ItemSplitter.thickSplitter,
                         Row(
@@ -149,12 +155,14 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                           children: [
                             CustomFlatButton(
                               elevation: 0,
-                              size: Size(getWidth(context) / 2 - Insets.d24, Insets.buttonHeight),
+                              size: Size(getWidth(context) / 2 - Insets.d24,
+                                  Insets.buttonHeight),
                               fillColor: leftButtonColor,
                               child: Text(
                                 leftButtonText,
-                                style: TextStyles.h2Bold
-                                    .copyWith(color: getSelectedThemeColors().textOnAccentColor),
+                                style: TextStyles.h2Bold.copyWith(
+                                    color: getSelectedThemeColors()
+                                        .textOnAccentColor),
                               ),
                               onTap: () {
                                 Navigator.of(context)
@@ -163,19 +171,20 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
                               },
                             ),
                             FlatBorderButton(
-                              size: Size(getWidth(context) / 2 - Insets.d24, Insets.buttonHeight),
+                              size: Size(getWidth(context) / 2 - Insets.d24,
+                                  Insets.buttonHeight),
                               borderColor: rightButtonColor,
                               backColor: getSelectedThemeColors().itemFillColor,
                               rippleColor: rightButtonColor,
                               onTap: () {
-                                Navigator.of(context)
-                                    .maybePop()
-                                    .then((value) => rightButtonOnClick?.call());
+                                Navigator.of(context).maybePop().then(
+                                    (value) => rightButtonOnClick?.call());
                               },
                               child: Text(
                                 rightButtonText,
-                                style: TextStyles.h2Bold
-                                    .copyWith(color: getSelectedThemeColors().secondaryText),
+                                style: TextStyles.h2Bold.copyWith(
+                                    color:
+                                        getSelectedThemeColors().secondaryText),
                               ),
                             )
                           ],
@@ -192,7 +201,8 @@ Future<dynamic> showAskQuestionDialog(BuildContext context,
       });
 }
 
-Future<dynamic> showDeleteDialog(BuildContext context, {String text = "", Function()? onDeleted}) {
+Future<dynamic> showDeleteDialog(BuildContext context,
+    {String text = "", Function()? onDeleted}) {
   return showAskQuestionDialog(context,
       titleBarColor: UiColors.iconRed,
       titleBarIcon: AppIcons.danger,
@@ -203,7 +213,8 @@ Future<dynamic> showDeleteDialog(BuildContext context, {String text = "", Functi
       leftButtonOnClick: onDeleted);
 }
 
-Future<dynamic> showDoneTaskDialog(BuildContext context, {required Function()? onDone}) {
+Future<dynamic> showDoneTaskDialog(BuildContext context,
+    {required Function()? onDone}) {
   return showAskQuestionDialog(context,
       titleBarColor: UiColors.iconGreen,
       titleBarIcon: AppIcons.doneTitle,
@@ -213,7 +224,9 @@ Future<dynamic> showDoneTaskDialog(BuildContext context, {required Function()? o
       leftButtonColor: UiColors.iconGreen,
       leftButtonOnClick: onDone);
 }
-Future<dynamic> showUnDoneTaskDialog(BuildContext context, {required Function()? onDone}) {
+
+Future<dynamic> showUnDoneTaskDialog(BuildContext context,
+    {required Function()? onDone}) {
   return showAskQuestionDialog(context,
       titleBarColor: UiColors.iconGreen,
       titleBarIcon: AppIcons.doneTitle,

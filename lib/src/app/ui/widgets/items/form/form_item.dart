@@ -1,5 +1,6 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +20,8 @@ class FormItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: Insets.sm),
           child: Text(
             title,
-            style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+            style: TextStyles.h2
+                .copyWith(color: getSelectedThemeColors().primaryText),
           ),
         ),
         ItemSplitter.ultraThinSplitter,

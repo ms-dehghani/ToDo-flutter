@@ -1,9 +1,12 @@
 import 'dart:async';
 
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/font/font_sizes.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -62,7 +65,9 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
 
   void _initYears() {
     int year = widget.showJalali
-        ? Jalali.fromDateTime(DateTime.fromMillisecondsSinceEpoch(widget.initialTime)).year
+        ? Jalali.fromDateTime(
+                DateTime.fromMillisecondsSinceEpoch(widget.initialTime))
+            .year
         : DateTime.fromMillisecondsSinceEpoch(widget.initialTime).year;
 
     years[0] = year - 2;
@@ -75,14 +80,16 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
   void _setSelectedYear() {
     var date = DateTime.fromMillisecondsSinceEpoch(widget.initialTime);
 
-    int nowYear = widget.showJalali ? Jalali.fromDateTime(date).year : date.year;
+    int nowYear =
+        widget.showJalali ? Jalali.fromDateTime(date).year : date.year;
     year = years.indexOf(nowYear);
   }
 
   void _setSelectedMonth() {
     var date = DateTime.fromMillisecondsSinceEpoch(widget.initialTime);
 
-    int nowMonth = widget.showJalali ? Jalali.fromDateTime(date).month : date.month;
+    int nowMonth =
+        widget.showJalali ? Jalali.fromDateTime(date).month : date.month;
     month = nowMonth - 1;
   }
 
@@ -97,7 +104,9 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
     var date = DateTime.fromMillisecondsSinceEpoch(widget.initialTime);
     var result = widget.showJalali
         ? Jalali.fromDateTime(date).monthLength
-        : DateTimeRange(start: date.copyWith(day: 1), end: DateTime(date.year, date.month + 1))
+        : DateTimeRange(
+                start: date.copyWith(day: 1),
+                end: DateTime(date.year, date.month + 1))
             .duration
             .inDays;
     return result;
@@ -195,14 +204,16 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
           Container(
             height: Insets.buttonHeight,
             alignment: Alignment.centerRight,
-            padding:
-                EdgeInsets.only(left: getWidth(context) * 0.05, right: getWidth(context) * 0.05),
+            padding: EdgeInsets.only(
+                left: getWidth(context) * 0.05,
+                right: getWidth(context) * 0.05),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "${!widget.showOnlyYearMonth ? "${day + 1} " : ""}${Texts.monthName[month].translate} ${years[year]}",
-                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+                  style: TextStyles.h3Bold
+                      .copyWith(color: getSelectedThemeColors().primaryColor),
                 ),
                 CustomFlatButton(
                   elevation: 0,
@@ -217,7 +228,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                   rippleColor: getSelectedThemeColors().primaryColor,
                   child: Text(
                     Texts.today.translate,
-                    style: TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryColor),
+                    style: TextStyles.h3
+                        .copyWith(color: getSelectedThemeColors().primaryColor),
                   ),
                 )
               ],
@@ -240,8 +252,9 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                           Align(
                             alignment: Alignment.center,
                             child: Container(
-                              decoration: Drawable.timeAndDatePickerBackItemDecoration(
-                                  getSelectedThemeColors()),
+                              decoration:
+                                  Drawable.timeAndDatePickerBackItemDecoration(
+                                      getSelectedThemeColors()),
                               width: listItemWidth,
                               height: Insets.backButtonHeight,
                             ),
@@ -260,7 +273,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                       alignment: Alignment.center,
                       child: Container(
                         decoration:
-                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
+                            Drawable.timeAndDatePickerBackItemDecoration(
+                                getSelectedThemeColors()),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -279,7 +293,8 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
                       alignment: Alignment.center,
                       child: Container(
                         decoration:
-                            Drawable.timeAndDatePickerBackItemDecoration(getSelectedThemeColors()),
+                            Drawable.timeAndDatePickerBackItemDecoration(
+                                getSelectedThemeColors()),
                         width: listItemWidth,
                         height: Insets.backButtonHeight,
                       ),
@@ -300,15 +315,17 @@ class _DatePicker extends BaseStatefulState<DatePicker> {
             fillColor: getSelectedThemeColors().primaryColor,
             child: Text(
               Texts.ok.translate,
-              style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h3Bold
+                  .copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
               if (widget.onDateSelected != null) {
                 var date = widget.showJalali
                     ? Jalali(years[year], month + 1, day + 1).toDateTime()
                     : DateTime(years[year], month + 1, day + 1);
-                date =
-                    date.add(Duration(hours: DateTime.now().hour, minutes: DateTime.now().minute));
+                date = date.add(Duration(
+                    hours: DateTime.now().hour,
+                    minutes: DateTime.now().minute));
                 widget.onDateSelected!.call(date.millisecondsSinceEpoch);
               }
               Navigator.of(context).maybePop();

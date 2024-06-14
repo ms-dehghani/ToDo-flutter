@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/extensions/date_extensions.dart';
 import 'package:ToDo/src/utils/extensions/translates_string_extensions.dart';
@@ -31,7 +31,8 @@ class CalenderView extends StatefulWidget {
   }
 }
 
-class _CalenderViewState extends State<CalenderView> with TickerProviderStateMixin {
+class _CalenderViewState extends State<CalenderView>
+    with TickerProviderStateMixin {
   List<CalenderRowItem> items = [];
   DateTime selectedDay = DateTime.now();
 
@@ -45,7 +46,8 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
     animateToItem(((items.length - 1) ~/ 2));
   }
 
-  void animateToItem(int index, {Duration duration = const Duration(milliseconds: 100)}) {
+  void animateToItem(int index,
+      {Duration duration = const Duration(milliseconds: 100)}) {
     Timer(duration, () {
       controller.animateToItem(index,
           duration: const Duration(milliseconds: 100), curve: Curves.easeIn);
@@ -69,8 +71,13 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
   }
 
   void _setItemClicked(DateTime dTime) {
-    items.firstWhere((element) => selectedDay.isSameDay(timestamp: element.timestamp)).deselect();
-    items.firstWhere((element) => dTime.isSameDay(timestamp: element.timestamp)).select();
+    items
+        .firstWhere(
+            (element) => selectedDay.isSameDay(timestamp: element.timestamp))
+        .deselect();
+    items
+        .firstWhere((element) => dTime.isSameDay(timestamp: element.timestamp))
+        .select();
     selectedDay = dTime;
     widget.onSelect?.call(selectedDay);
     animateToItem(_findItem(selectedDay));
@@ -125,7 +132,8 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
 
   Widget calenderTitle() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: Insets.sm, horizontal: Insets.d24),
+      padding:
+          EdgeInsets.symmetric(vertical: Insets.sm, horizontal: Insets.d24),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [_calenderMonth(), _calenderGoToToday()],
@@ -138,7 +146,8 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
       children: [
         Text(
           timeToText(items[_selectedItemIndex].timestamp, withDay: false),
-          style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryText),
+          style: TextStyles.h2Bold
+              .copyWith(color: getSelectedThemeColors().primaryText),
         )
       ],
     );
@@ -155,7 +164,8 @@ class _CalenderViewState extends State<CalenderView> with TickerProviderStateMix
         },
         child: Text(
           Texts.goToday.translate,
-          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+          style: TextStyles.h3Bold
+              .copyWith(color: getSelectedThemeColors().accentColor),
         ));
   }
 }

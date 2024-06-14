@@ -1,4 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/dimens/strokes.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +34,9 @@ class ButtonFiledItem extends StatefulWidget {
       this.rippleColor}) {
     borderColor = borderColor ?? getSelectedThemeColors().borderColor;
     fillColor = fillColor ??
-        (isDark() ? getSelectedThemeColors().onBackground : getSelectedThemeColors().itemFillColor);
+        (isDark()
+            ? getSelectedThemeColors().onBackground
+            : getSelectedThemeColors().itemFillColor);
     rippleColor = rippleColor ?? borderColor!.withAlpha(80);
     iconColor = iconColor ?? borderColor;
   }
@@ -51,8 +56,10 @@ class _ButtonFiledItemState extends State<ButtonFiledItem> {
           backgroundColor: MaterialStateProperty.all<Color>(widget.fillColor!),
           overlayColor: MaterialStateProperty.all<Color>(widget.rippleColor!),
           elevation: MaterialStateProperty.all<double>(2),
-          minimumSize: MaterialStateProperty.all<Size>(Size(double.infinity, Insets.buttonHeight)),
-          shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
+          minimumSize: MaterialStateProperty.all<Size>(
+              Size(double.infinity, Insets.buttonHeight)),
+          shape:
+              MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
             borderRadius: Corners.hgBorder,
             side: BorderSide(width: Strokes.thin, color: widget.borderColor!),
           )),

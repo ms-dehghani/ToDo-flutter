@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
-import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class InPageProgress extends StatelessWidget {

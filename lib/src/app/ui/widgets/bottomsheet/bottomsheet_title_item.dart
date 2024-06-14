@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
 
 import '../image/image_view.dart';
-
 
 class BottomSheetTitleItem extends StatelessWidget {
   String title;

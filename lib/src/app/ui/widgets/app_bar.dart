@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ToDo/res/dimens/insets.dart';
 import 'package:flutter/material.dart';
-import 'package:ToDo/res/dimens.dart';
 
 class ApplicationAppBar extends StatelessWidget {
   Widget? leftWidget;
@@ -8,8 +7,15 @@ class ApplicationAppBar extends StatelessWidget {
   Widget? centerWidget;
   Color? color;
 
-  ApplicationAppBar({super.key, this.centerWidget, this.leftWidget, this.rightWidget , this.color}) {
-    centerWidget ??= SizedBox(width: Insets.buttonHeight,);
+  ApplicationAppBar(
+      {super.key,
+      this.centerWidget,
+      this.leftWidget,
+      this.rightWidget,
+      this.color}) {
+    centerWidget ??= SizedBox(
+      width: Insets.buttonHeight,
+    );
     leftWidget ??= Container();
     rightWidget ??= Container(width: Insets.buttonHeight);
   }

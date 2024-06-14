@@ -1,4 +1,4 @@
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/string/texts.dart';
 import 'package:ToDo/src/data/di/data_di.dart';
 import 'package:ToDo/src/domain/di/domain_di.dart';
 import 'package:ToDo/src/domain/models/priority/priority_item.dart';

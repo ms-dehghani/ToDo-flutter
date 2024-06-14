@@ -1,4 +1,4 @@
-import 'package:ToDo/res/color.dart';
+import 'package:ToDo/res/color/color.dart';
 import 'package:flutter/material.dart';
 
 import 'theme_color.dart';

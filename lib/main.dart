@@ -1,5 +1,5 @@
-import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/res/theme/themes.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/theme/themes.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
 import 'package:ToDo/src/base/navigation_service.dart';

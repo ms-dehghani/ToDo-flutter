@@ -1,6 +1,6 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +31,10 @@ class TextFiledItem extends StatefulWidget {
       this.iconColor = Colors.white,
       this.hintTextStyle,
       this.onValueChange}) {
-    textStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText);
-    hintTextStyle ??= TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText);
+    textStyle ??=
+        TextStyles.h3.copyWith(color: getSelectedThemeColors().primaryText);
+    hintTextStyle ??=
+        TextStyles.h3.copyWith(color: getSelectedThemeColors().secondaryText);
   }
 
   @override
@@ -68,7 +70,8 @@ class _TextFiledItemState extends State<TextFiledItem> {
         children: [
           widget.icon!.isNotEmpty
               ? Padding(
-                  padding: EdgeInsets.symmetric(vertical: Insets.sm, horizontal: Insets.sm),
+                  padding: EdgeInsets.symmetric(
+                      vertical: Insets.sm, horizontal: Insets.sm),
                   child: ImageView(
                     src: widget.icon!,
                     color: _controler.text.isEmpty

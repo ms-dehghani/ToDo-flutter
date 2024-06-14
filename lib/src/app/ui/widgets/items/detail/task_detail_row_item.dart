@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,8 @@ class TaskDetailRowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    decoration = decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors());
+    decoration =
+        decoration ?? Drawable.itemDetailDecoration(getSelectedThemeColors());
     titleColor = titleColor ?? getSelectedThemeColors().primaryText;
     return GestureDetector(
       onTap: () => onTap?.call(),
@@ -42,8 +44,7 @@ class TaskDetailRowItem extends StatelessWidget {
                   color: titleColor ?? Colors.transparent,
                   size: Insets.iconSizeL,
                 ),
-                ItemSplitter.ultraThinSplitter,
-                ItemSplitter.ultraThinSplitter,
+                ItemSplitter.thinSplitter,
                 Expanded(
                   child: Text(
                     title,
