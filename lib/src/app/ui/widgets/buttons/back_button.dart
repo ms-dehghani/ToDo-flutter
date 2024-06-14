@@ -1,5 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';

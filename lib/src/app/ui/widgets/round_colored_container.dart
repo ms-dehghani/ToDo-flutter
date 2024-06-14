@@ -1,6 +1,6 @@
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
 
 class RoundColoredContainer extends StatelessWidget {
   Widget child;
@@ -10,7 +10,12 @@ class RoundColoredContainer extends StatelessWidget {
   double? width, height;
 
   RoundColoredContainer(
-      {super.key, required this.child, required this.color, this.margin, this.width, this.height});
+      {super.key,
+      required this.child,
+      required this.color,
+      this.margin,
+      this.width,
+      this.height});
 
   @override
   Widget build(BuildContext context) {

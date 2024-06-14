@@ -1,7 +1,11 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/dimens/strokes.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/drawable.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/task/create_update/bloc/task_create_update_bloc.dart';
@@ -29,11 +33,11 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
 
   TaskDetailPage({super.key, required this.taskItem});
 
-  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc =
-      TaskCreateOrUpdateBloc(taskUseCase: DI.instance().getTaskUseCase());
+  final TaskCreateOrUpdateBloc _taskCreateOrUpdateBloc = TaskCreateOrUpdateBloc(
+      createUpdateUseCase: DI.instance().getTaskCreateUpdateUseCase());
 
-  final TaskDeleteBloc _taskDeleteBloc =
-      TaskDeleteBloc(taskUseCase: DI.instance().getTaskUseCase());
+  final TaskDeleteBloc _taskDeleteBloc = TaskDeleteBloc(
+      taskDeleteItemUseCase: DI.instance().getTaskDeleteUseCase());
 
   late BuildContext context;
 
@@ -77,7 +81,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
                 ),
                 centerWidget: Text(
                   Texts.taskDetailPageTitle.translate,
-                  style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().primaryColor),
+                  style: TextStyles.h2Bold
+                      .copyWith(color: getSelectedThemeColors().primaryColor),
                 )),
             Expanded(child: _taskDetail()),
             _taskActions(context)
@@ -101,7 +106,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
             titleColor: getSelectedThemeColors().iconPink,
             child: Text(
               taskItem.description,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().secondaryText),
+              style: TextStyles.h2
+                  .copyWith(color: getSelectedThemeColors().secondaryText),
             ),
           ),
         ),
@@ -120,7 +126,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         children: [
           Text(
             taskItem.title,
-            style: TextStyles.h1Bold.copyWith(color: getSelectedThemeColors().primaryText),
+            style: TextStyles.h1Bold
+                .copyWith(color: getSelectedThemeColors().primaryText),
           ),
           ItemSplitter.thickSplitter,
           _taskDetailRow2(),
@@ -170,7 +177,8 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ItemSplitter.ultraThinSplitter,
         Text(
           taskItem.priorityItem?.title.translate ?? "",
-          style: TextStyles.h3Bold.copyWith(color: taskItem.priorityItem?.color),
+          style:
+              TextStyles.h3Bold.copyWith(color: taskItem.priorityItem?.color),
         )
       ],
     );
@@ -187,12 +195,14 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         ItemSplitter.ultraThinSplitter,
         Text(
           Texts.taskDetailPageCategory.translate,
-          style: TextStyles.h3.copyWith(color: getSelectedThemeColors().iconBlue),
+          style:
+              TextStyles.h3.copyWith(color: getSelectedThemeColors().iconBlue),
         ),
         ItemSplitter.ultraThinSplitter,
         Text(
           taskItem.categoryItem?.title ?? "",
-          style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().iconBlue),
+          style: TextStyles.h3Bold
+              .copyWith(color: getSelectedThemeColors().iconBlue),
         )
       ],
     );
@@ -259,7 +269,9 @@ class TaskDetailPage extends StatelessWidget with WidgetViewTemplate {
         width: double.infinity,
         height: Insets.taskActionBarHeight,
         margin: EdgeInsets.only(
-            left: Insets.pagePadding, right: Insets.pagePadding, bottom: Insets.pagePadding),
+            left: Insets.pagePadding,
+            right: Insets.pagePadding,
+            bottom: Insets.pagePadding),
         decoration: Drawable.taskActionsDecoration(getSelectedThemeColors()),
         child: TaskActions(
             taskItem: taskItem,

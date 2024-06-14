@@ -1,4 +1,4 @@
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:flutter/material.dart';
 
 import 'translations.dart';
@@ -9,7 +9,8 @@ typedef void ThemeChangeCallback(bool isDark);
 class APPLIC {
   final List<String> supportedLanguages = ['en', 'fa'];
 
-  Iterable<Locale> supportedLocales() => supportedLanguages.map<Locale>((lang) => Locale(lang, ''));
+  Iterable<Locale> supportedLocales() =>
+      supportedLanguages.map<Locale>((lang) => Locale(lang, ''));
   LocaleChangeCallback? onLocaleChanged;
   ThemeChangeCallback? onThemeChanged;
 

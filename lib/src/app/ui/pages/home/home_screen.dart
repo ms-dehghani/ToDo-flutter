@@ -1,5 +1,5 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
 import 'package:ToDo/src/app/ui/pages/setting/setting_screen.dart';
 import 'package:ToDo/src/app/ui/pages/task/list/task_list_page.dart';
 import 'package:ToDo/src/app/ui/widgets/image/image_view.dart';
@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               CreateTaskItemPage(
                 taskItem: TaskItem.empty(
-                    timestamp: (pages[0].page as TaskListPage).selectedDay.millisecondsSinceEpoch),
+                    timestamp: (pages[0].page as TaskListPage)
+                        .selectedDay
+                        .millisecondsSinceEpoch),
               )).then((value) {
             (pages[0] as TaskListPage).reload();
           });

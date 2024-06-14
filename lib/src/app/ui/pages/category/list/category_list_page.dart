@@ -1,7 +1,8 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/category/get/bloc/category_get_bloc.dart';
@@ -24,8 +25,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../create/create_category_item_page.dart';
 
 class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
-  final CategoryGetBloc _categoryGetBloc =
-      CategoryGetBloc(categoryUseCase: DI.instance().getCategoryUseCase());
+  final CategoryGetBloc _categoryGetBloc = CategoryGetBloc(
+      categoryAllItemsUseCase:
+          DI.instance().getCategoryRetrieveAllItemsUseCase());
 
   CategoryListPage({super.key});
 
@@ -61,7 +63,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                           iconSrc: AppIcons.addCategory),
                       SizedBox(
                           height: Insets.addCategoryBottomSheetHeight,
-                          child: CreateCategoryItemPage(categoryItem: CategoryItem.empty())))
+                          child: CreateCategoryItemPage(
+                              categoryItem: CategoryItem.empty())))
                   .then((value) {
                 if (value != null && value is CategoryItem) {
                   _categoryGetBloc.add(GetAllCategoryEvent());
@@ -79,7 +82,8 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
                 ItemSplitter.thinSplitter,
                 Text(
                   Texts.categoryListPageButtonAdd.translate,
-                  style: TextStyles.h3Bold.copyWith(color: getSelectedThemeColors().accentColor),
+                  style: TextStyles.h3Bold
+                      .copyWith(color: getSelectedThemeColors().accentColor),
                 ),
               ],
             ),
@@ -109,14 +113,16 @@ class CategoryListPage extends StatelessWidget with WidgetViewTemplate {
     return Center(child: InPageProgress());
   }
 
-  Widget _categoryListDetail(BuildContext context, List<CategoryItem> categoryList) {
+  Widget _categoryListDetail(
+      BuildContext context, List<CategoryItem> categoryList) {
     return Column(
       children: [
         SizedBox(
             width: getWidth(context),
             child: Text(
               Texts.categoryListPageDescription.translate,
-              style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+              style: TextStyles.h2
+                  .copyWith(color: getSelectedThemeColors().primaryText),
             )),
         ItemSplitter.ultraThinSplitter,
         Expanded(

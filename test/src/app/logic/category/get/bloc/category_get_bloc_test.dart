@@ -3,7 +3,8 @@ import 'package:ToDo/src/app/logic/category/get/bloc/category_get_bloc.dart';
 import 'package:ToDo/src/app/logic/category/get/bloc/category_get_event.dart';
 import 'package:ToDo/src/app/logic/category/get/bloc/category_get_page_data.dart';
 import 'package:ToDo/src/domain/models/category/category_item.dart';
-import 'package:ToDo/src/domain/usecase/category/category_usecase.dart';
+import 'package:ToDo/src/domain/usecase/category/retrieve/all/category_retrieve_all_items_usecase.dart';
+import 'package:ToDo/src/domain/usecase/category/retrieve/item/category_retrieve_item_usecase.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,21 +13,21 @@ import 'package:mockito/mockito.dart';
 
 import 'category_get_bloc_test.mocks.dart';
 
-@GenerateMocks([CategoryUseCase])
+@GenerateMocks([CategoryRetrieveItemUseCase, CategoryRetrieveAllItemsUseCase])
 void main() {
   late CategoryGetBloc getBloc;
-  late MockCategoryUseCase categoryUseCase;
+  late MockCategoryRetrieveAllItemsUseCase useCase;
 
   setUp(() {
     EquatableConfig.stringify = true;
-    categoryUseCase = MockCategoryUseCase();
-    getBloc = CategoryGetBloc(categoryUseCase: categoryUseCase);
+    useCase = MockCategoryRetrieveAllItemsUseCase();
+    getBloc = CategoryGetBloc(categoryAllItemsUseCase: useCase);
   });
 
   blocTest<CategoryGetBloc, CategoryGetBlocPageData>(
     "Get empty category list",
     build: () {
-      when(categoryUseCase.getCategories()).thenAnswer((realInvocation) {
+      when(useCase.invoke()).thenAnswer((realInvocation) {
         return Future.value([]);
       });
       return getBloc;
@@ -43,7 +44,7 @@ void main() {
   blocTest<CategoryGetBloc, CategoryGetBlocPageData>(
     "Get single item in category list",
     build: () {
-      when(categoryUseCase.getCategories()).thenAnswer((realInvocation) {
+      when(useCase.invoke()).thenAnswer((realInvocation) {
         return Future.value([CategoryItem.empty()]);
       });
       return getBloc;
@@ -52,7 +53,8 @@ void main() {
     expect: () {
       return [
         CategoryGetBlocPageData(status: PageStatus.loading),
-        CategoryGetBlocPageData(status: PageStatus.success, categoryList: [CategoryItem.empty()])
+        CategoryGetBlocPageData(
+            status: PageStatus.success, categoryList: [CategoryItem.empty()])
       ];
     },
   );

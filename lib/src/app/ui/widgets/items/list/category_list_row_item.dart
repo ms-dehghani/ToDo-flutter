@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/drawable.dart';
-import 'package:ToDo/res/text_style.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/app_icons.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/domain/models/category/category_item.dart';
 import 'package:ToDo/src/utils/direction_util.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
@@ -15,7 +16,8 @@ class CategoryListRowItem extends StatefulWidget {
   Function()? onTap;
   Function()? onEditTap;
 
-  CategoryListRowItem({super.key, required this.categoryItem, this.onTap, this.onEditTap});
+  CategoryListRowItem(
+      {super.key, required this.categoryItem, this.onTap, this.onEditTap});
 
   @override
   State<CategoryListRowItem> createState() => _TaskListRowItemState();
@@ -35,10 +37,12 @@ class _TaskListRowItemState extends State<CategoryListRowItem> {
               size: Size(double.infinity, Insets.buttonHeight),
               fillColor: getSelectedThemeColors().pageBackground,
               child: Align(
-                alignment: isRTL() ? Alignment.centerRight : Alignment.centerLeft,
+                alignment:
+                    isRTL() ? Alignment.centerRight : Alignment.centerLeft,
                 child: Text(
                   widget.categoryItem.title,
-                  style: TextStyles.h2.copyWith(color: getSelectedThemeColors().primaryText),
+                  style: TextStyles.h2
+                      .copyWith(color: getSelectedThemeColors().primaryText),
                 ),
               ),
               onTap: () {

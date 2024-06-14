@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:ToDo/res/dimens/corners.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
 
 import '../image/image_view.dart';
 
@@ -14,7 +14,12 @@ class TaskActionButton extends StatelessWidget {
   Function()? onTap;
 
   TaskActionButton(
-      {super.key, required this.icon, required this.title, required this.color, this.rippleColor, this.onTap});
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.color,
+      this.rippleColor,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {

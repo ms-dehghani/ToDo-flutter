@@ -1,6 +1,7 @@
-import 'package:ToDo/res/dimens.dart';
-import 'package:ToDo/res/text_style.dart';
-import 'package:ToDo/res/texts.dart';
+import 'package:ToDo/res/dimens/insets.dart';
+import 'package:ToDo/res/drawable/item_splitter.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/text_style.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/logic/base/page_status.dart';
 import 'package:ToDo/src/app/logic/category/create_update/bloc/category_create_update_bloc.dart';
@@ -27,7 +28,8 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
   Widget build(BuildContext context) {
     return BlocProvider<CategoryCreateOrUpdateBloc>(
       create: (BuildContext context) => bloc = CategoryCreateOrUpdateBloc(
-          categoryUseCase: DI.instance().getCategoryUseCase(), categoryItem: categoryItem),
+          categoryUseCase: DI.instance().getCategoryCreateOrUpdateUseCase(),
+          categoryItem: categoryItem),
       child: Material(
         color: getSelectedThemeColors().onBackground,
         child: SafeArea(child: showPage(context)),
@@ -38,7 +40,8 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
   @override
   Widget phoneView(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: Insets.d24, right: Insets.d24, bottom: Insets.med),
+      padding: EdgeInsets.only(
+          left: Insets.d24, right: Insets.d24, bottom: Insets.med),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -65,7 +68,8 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
   }
 
   Widget _createButton() {
-    return BlocConsumer<CategoryCreateOrUpdateBloc, CategoryCreateUpdateBlocPageData>(
+    return BlocConsumer<CategoryCreateOrUpdateBloc,
+        CategoryCreateUpdateBlocPageData>(
       builder: (context, state) {
         return SizedBox(
           width: double.infinity,
@@ -80,7 +84,8 @@ class CreateCategoryItemPage extends StatelessWidget with WidgetViewTemplate {
               categoryItem.ID.isEmpty
                   ? Texts.categoryAddPageButtonAdd.translate
                   : Texts.categoryEditPageButtonEdit.translate,
-              style: TextStyles.h2Bold.copyWith(color: getSelectedThemeColors().textOnAccentColor),
+              style: TextStyles.h2Bold
+                  .copyWith(color: getSelectedThemeColors().textOnAccentColor),
             ),
             onTap: () {
               bloc.add(CategoryCreateOrUpdateResultEvent(categoryItem));

@@ -1,4 +1,4 @@
-import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/dimens/insets.dart';
 import 'package:ToDo/src/app/ui/widgets/navigation/bottom_navigation_item.dart';
 import 'package:ToDo/src/utils/device.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,10 @@ class BottomNavigation extends StatefulWidget {
   final Function(int selectedPage) callback;
 
   BottomNavigation(
-      {required this.pages, required this.backgroundColor, required this.callback, super.key});
+      {required this.pages,
+      required this.backgroundColor,
+      required this.callback,
+      super.key});
 
   @override
   State<BottomNavigation> createState() => _BottomNavigationState();
@@ -30,7 +33,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
       children: [
         CustomPaint(
           size: Size(getWidth(context), Insets.buttonHeight * 1.5),
-          painter: CustomRoundNavigationBackground(context, widget.backgroundColor),
+          painter:
+              CustomRoundNavigationBackground(context, widget.backgroundColor),
         ),
         Padding(
           padding: EdgeInsets.only(top: Insets.xl),
@@ -53,7 +57,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
                 .keys
                 .toList()
                 .map((index) => _navigationBottomItem(
-                    index, widget.pages[index].selectedIcon, widget.pages[index].deselectedIcon))
+                    index,
+                    widget.pages[index].selectedIcon,
+                    widget.pages[index].deselectedIcon))
                 .toList(),
           ),
         ),
@@ -61,7 +67,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
     );
   }
 
-  Widget _navigationBottomItem(int index, String selectedIcon, String deselectedIcon) {
+  Widget _navigationBottomItem(
+      int index, String selectedIcon, String deselectedIcon) {
     return AnimatedSwitcher(
       duration: animationDuration,
       child: IconButton(

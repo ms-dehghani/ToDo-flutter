@@ -1,8 +1,10 @@
-import 'package:ToDo/res/dimens.dart';
+import 'package:ToDo/res/dimens/borders.dart';
+import 'package:ToDo/res/dimens/corners.dart';
 import 'package:ToDo/src/utils/theme_utils.dart';
 import 'package:flutter/material.dart';
 
-Widget getCheckBox(BuildContext context, bool value, ValueChanged<bool?>? onChanged) {
+Widget getCheckBox(
+    BuildContext context, bool value, ValueChanged<bool?>? onChanged) {
   return Checkbox(
     value: value,
     onChanged: onChanged,
@@ -14,14 +16,16 @@ Widget getCheckBox(BuildContext context, bool value, ValueChanged<bool?>? onChan
         return getSelectedThemeColors().itemFillColor;
       }
     }),
-    side: Borders.thinBorder(context).copyWith(
-        color: isDark()
-            ? getSelectedThemeColors().primaryText
-            : getSelectedThemeColors().disableColor),
+    side: Borders.thinBorder(context, getSelectedThemeColors().borderColor)
+        .copyWith(
+            color: isDark()
+                ? getSelectedThemeColors().primaryText
+                : getSelectedThemeColors().disableColor),
   );
 }
 
-Widget getScaledCheckBox(BuildContext context, bool value, ValueChanged<bool?>? onChanged) {
+Widget getScaledCheckBox(
+    BuildContext context, bool value, ValueChanged<bool?>? onChanged) {
   return Transform.scale(
     scale: 1.2,
     child: getCheckBox(context, value, onChanged),

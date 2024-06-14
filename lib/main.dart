@@ -1,5 +1,5 @@
-import 'package:ToDo/res/texts.dart';
-import 'package:ToDo/res/theme/themes.dart';
+import 'package:ToDo/res/string/texts.dart';
+import 'package:ToDo/res/styles/theme/themes.dart';
 import 'package:ToDo/src/app/di/di.dart';
 import 'package:ToDo/src/app/ui/pages/splash/splash_screen.dart';
 import 'package:ToDo/src/base/navigation_service.dart';
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> initDI() async {
     if (setting == null) {
       await DI.instance().provideDependencies();
-      setting = await DI.instance().getSettingUseCase().getSetting();
+      setting = await DI.instance().getSettingRetrieveUseCase().invoke();
       APPLIC.changeLang(setting!.langCode);
       APPLIC.changeTheme(setting!.isDark);
     }
