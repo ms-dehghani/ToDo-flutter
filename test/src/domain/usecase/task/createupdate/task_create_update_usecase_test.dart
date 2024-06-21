@@ -17,14 +17,37 @@ void main() {
     usecase = TaskCreateUpdateUseCase(repository: repository);
   });
 
-  test("When call createOrUpdateTask then call clear on provider", () async {
+  test("When call createOrUpdateTask then call createOrUpdate on repository",
+      () async {
+    var sampleTask = TaskItem.empty();
+    when(repository.createOrUpdateTask(any))
+        .thenAnswer((realInvocation) => Future.value(sampleTask));
+    await usecase.invoke(sampleTask);
+    verify(repository.createOrUpdateTask(any)).called(1);
+  });
+
+  test("When call createOrUpdateTask then return expected value ", () async {
     var sampleTask = TaskItem.empty();
     when(repository.createOrUpdateTask(any))
         .thenAnswer((realInvocation) => Future.value(sampleTask));
     var result = await usecase.invoke(sampleTask);
-
     expect(result, sampleTask);
+  });
 
+  test("When call createOrUpdateTask then return error", () async {
+    var sampleTask = TaskItem.empty();
+    var exceptionMessage = "ex";
+    when(repository.createOrUpdateTask(any))
+        .thenAnswer((realInvocation) => Future.error(exceptionMessage));
+    try {
+      await usecase.invoke(sampleTask);
+    } catch (ex) {
+      expect(ex, exceptionMessage);
+    }
     verify(repository.createOrUpdateTask(any)).called(1);
+  });
+
+  tearDown(() {
+    reset(repository);
   });
 }
